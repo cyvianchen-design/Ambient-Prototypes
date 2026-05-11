@@ -265,18 +265,19 @@ function SetCard({
           const meta = childMeta[child.id] ?? makeNoteMeta();
           return (
             <div key={child.id} className="flex flex-col gap-[6px]">
-              <div className="flex items-center gap-[4px] min-h-[28px]">
+              <div className="flex items-center gap-[8px] min-h-[28px]">
                 <Checkbox
+                  className="ml-[3px]"
                   state={child.checked ? "selected" : "unselected"}
                   onChange={() => onToggleChild(child.id)}
                 />
-                <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap px-[8px]">
+                <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                   {child.label}
                 </span>
                 <Chip label={child.company} color="neutral" onClick={(e) => onChildCompanyClick(e, child.id)} />
               </div>
               {child.checked && (
-                <div className="ml-[22px] flex flex-col gap-[6px]">
+                <div className="ml-[29px] flex flex-col gap-[6px]">
                   <NoteFields
                     meta={meta}
                     onMetaChange={(patch) => onChildMetaChange(child.id, patch)}

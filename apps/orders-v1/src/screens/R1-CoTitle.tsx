@@ -296,14 +296,15 @@ export default function R2HoverReveal() {
                   </div>
 
                   {/* Children — company in title, no per-child ICD (shared at set level) */}
-                  <div className="ml-[12px] pl-[12px] border-l-2 border-[#ebebeb] flex flex-col gap-[4px]">
+                  <div className="flex flex-col gap-[4px]">
                     {set.children.map((child) => (
                       <div key={child.id} className="flex items-center gap-[4px] min-h-[28px]">
                         <Checkbox
+                          className="ml-[3px]"
                           state={child.checked ? "selected" : "unselected"}
                           onChange={() => toggleSetChild(set.id, child.id)}
                         />
-                        <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap px-[8px]">
+                        <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                           {child.label} ({child.company})
                         </span>
                       </div>

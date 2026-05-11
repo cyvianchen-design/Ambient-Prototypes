@@ -12,7 +12,7 @@ const screens: ScreenDef[] = [
   { round: "R1", direction: "Co. Chip",  component: R1CoChip },
   { round: "R1", direction: "Co. Title", component: R1CoTitle },
   { round: "R1", direction: "Edit Mode", component: R1EditMode },
-  { round: "R2", direction: "Cards",     component: R2Cards },
+  { round: "R1", direction: "Date&Notes", component: R2Cards },
 ];
 
 export default function App() {
