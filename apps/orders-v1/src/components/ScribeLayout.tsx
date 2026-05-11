@@ -4,7 +4,6 @@ import {
   Tabs,
   SecondaryNavItem,
   Button,
-  Link,
   Icon,
   MagicButton,
   MagicDocument,
@@ -132,11 +131,13 @@ export function ScribeLayout({ activeTab, onTabChange, children }: Props) {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex items-center justify-between max-w-[640px] w-full px-[20px] pt-[8px] pb-[24px] shrink-0">
-          <Button variant="primary" size="large" prefix={<Icon name="cloud_upload" size={20} />}>
+        <div className="flex items-center justify-between max-w-[640px] w-full px-[12px] pt-[8px] pb-[12px] shrink-0">
+          <Button variant="primary" size="medium" prefix={<Icon name="cloud_upload" size={16} filled />}>
             Sync to EHR
           </Button>
-          <Link label="Assistant" size="medium" prefix={<MagicButton size={18} />} />
+          <Button variant="tertiary" size="medium" prefix={<MagicButton size={16} />}>
+            Assistant
+          </Button>
         </div>
 
       </div>
