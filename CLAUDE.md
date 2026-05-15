@@ -55,7 +55,7 @@ When a design or screenshot includes a component not yet in `packages/ui`, searc
 ## Component Library (`packages/ui`)
 
 ### Available components (import from `@ds/ui`)
-`Button`, `IconButton`, `Icon`, `Checkbox`, `Chip`, `Switch`, `TextField`, `TextArea`, `Tabs`, `Badge`, `VisitStatus`, `Link`, `PrimaryNav`, `SecondaryNavItem`, `Menu`, `MenuItem`, `MenuHeader`, `MenuSearch`, `VersionSwitcher`
+`Button`, `IconButton`, `Icon`, `Checkbox`, `Chip`, `Switch`, `TextField`, `TextArea`, `Tabs`, `Badge`, `VisitStatus`, `Link`, `PrimaryNav`, `SecondaryNavItem`, `Menu`, `MenuItem`, `MenuHeader`, `MenuSearch`, `Overlay`, `VersionSwitcher`
 
 ### `Menu` / `MenuItem` / `MenuHeader` / `MenuSearch` — composable dropdown menus
 
@@ -90,10 +90,21 @@ import { Menu, MenuItem, MenuHeader, MenuSearch } from "@ds/ui";
 import { Switch } from "@ds/ui";
 <Switch checked={true} onChange={(v) => setState(v)} size="XS" />
 ```
-- `size`: `"XS"` (28×16px track) or `"S"` (34×20px track, default)
+- `size`: `"XS"` (28×16px visual track, 28×28px button hitbox) or `"S"` (34×20px track, default)
 - `checked`: controlled boolean
 - `onChange`: `(checked: boolean) => void`
 - `disabled`: optional boolean
+
+### `Overlay` — scrim / backdrop
+```tsx
+import { Overlay } from "@ds/ui";
+<Overlay variant="blur" fixed onClick={() => setOpen(false)} />
+```
+- `variant`: `"blur"` (backdrop-blur + dark tint, default) or `"dim"` (dark tint only)
+- `fixed`: `true` covers the full viewport including navs (`fixed inset-0`). Defaults to `absolute inset-0`.
+- `onClick`: optional dismiss handler
+- Always pair `fixed` overlay with a `fixed`-positioned panel (e.g. a drawer) so both cover the full viewport
+- Use `z-[150]` for the overlay and `z-[160]` for the panel sitting on top
 
 ### DS ownership
 **`packages/ui` is owned by Cyvian only.** Contributors must never modify it.

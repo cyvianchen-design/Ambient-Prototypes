@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   Button, IconButton, Icon, Checkbox, Chip, Switch, TextField, TextArea,
   Tabs, Badge, VisitStatus, Link, AmbientLogo, Spinner, Menu, MenuItem, MenuHeader, MenuSearch,
-  PrimaryNav, SecondaryNavItem,
+  Overlay, PrimaryNav, SecondaryNavItem,
   Dictation, Learn, MagicEdit, MagicButton, MagicDocument, MenuIcon, SmartSuggestion,
 } from "@ds/ui";
 import type { Tab } from "@ds/ui";
@@ -97,6 +97,24 @@ function FormTab() {
         <Switch checked={false} onChange={() => {}} size="XS" />
         <Switch checked={true} onChange={() => {}} size="XS" />
         <Switch checked={switchXS} onChange={setSwitchXS} size="XS" />
+      </Row>
+      <Row label="Overlay — Variants">
+        <div className="relative w-[240px] h-[120px] rounded-[8px] overflow-hidden border border-[var(--surface-3,#eee)]">
+          <div className="absolute inset-0 p-[12px]">
+            <p className="text-[13px] font-bold text-[var(--foreground-primary,#1a1a1a)]">Content behind overlay</p>
+            <p className="text-[12px] text-[var(--foreground-secondary,#666)] mt-[4px]">This text is blurred by the overlay above it.</p>
+          </div>
+          <Overlay variant="blur" />
+          <span className="absolute bottom-[8px] left-[8px] text-[11px] font-bold text-white" style={{ fontFamily: "Lato, sans-serif" }}>Blur</span>
+        </div>
+        <div className="relative w-[240px] h-[120px] rounded-[8px] overflow-hidden border border-[var(--surface-3,#eee)]">
+          <div className="absolute inset-0 p-[12px]">
+            <p className="text-[13px] font-bold text-[var(--foreground-primary,#1a1a1a)]">Content behind overlay</p>
+            <p className="text-[12px] text-[var(--foreground-secondary,#666)] mt-[4px]">This text is dimmed by the overlay above it.</p>
+          </div>
+          <Overlay variant="dim" />
+          <span className="absolute bottom-[8px] left-[8px] text-[11px] font-bold text-white" style={{ fontFamily: "Lato, sans-serif" }}>Dim</span>
+        </div>
       </Row>
     </div>
   );

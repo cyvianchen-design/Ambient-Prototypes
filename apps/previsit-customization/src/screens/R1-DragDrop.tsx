@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Icon, IconButton, Button, Checkbox, Tabs, Menu, MenuItem } from "@ds/ui";
+import { Icon, IconButton, Button, Checkbox, Tabs, Menu, MenuItem, Switch, Chip } from "@ds/ui";
 import { VisitLayout } from "../components/VisitLayout";
 
 // ─── Section components ───────────────────────────────────────────────────────
@@ -9,21 +9,23 @@ type SectionProps = {
   subtitle?: React.ReactNode;
   children: React.ReactNode;
   onDragStart?: (e: React.DragEvent) => void;
+  controls?: React.ReactNode;
 };
 
-function Section({ title, subtitle, children, onDragStart }: SectionProps) {
+function Section({ title, subtitle, children, onDragStart, controls }: SectionProps) {
   return (
     <div className="flex flex-col gap-[4px] w-full">
       <div
-        className="flex items-center gap-[2px] h-[28px] ml-[-20px] pl-[2px] rounded-[4px] group-hover:bg-[var(--surface-1,#f7f7f7)] cursor-grab active:cursor-grabbing select-none transition-colors duration-150"
+        className="flex items-center gap-[2px] h-[28px] ml-[-20px] pl-[2px] pr-[4px] rounded-[4px] group-hover:bg-[var(--surface-1,#f7f7f7)] cursor-grab active:cursor-grabbing select-none transition-colors duration-150"
         draggable={!!onDragStart}
         onDragStart={onDragStart}
       >
-        {/* 16px icon, no gap before title — bg sits 4px from left border */}
+        {/* 16px drag icon */}
         <div className="shrink-0 flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-150 text-[var(--foreground-secondary,#666)]">
           <Icon name="drag_indicator" size={16} />
         </div>
-        <div className="flex items-center gap-[4px]">
+        {/* title + subtitle */}
+        <div className="flex items-center gap-[4px] min-w-0">
           <span
             className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap"
             style={{ fontFeatureSettings: "'ss07' 1" }}
@@ -31,11 +33,22 @@ function Section({ title, subtitle, children, onDragStart }: SectionProps) {
             {title}
           </span>
           {subtitle && (
-            <span className="text-[12px] leading-[1.2] text-[var(--foreground-secondary,#666)]">
+            <span className="text-[12px] leading-[1.2] text-[var(--foreground-secondary,#666)] whitespace-nowrap">
               {subtitle}
             </span>
           )}
         </div>
+        {/* hover-reveal controls */}
+        {controls && (
+          <div
+            className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex items-center gap-[6px] ml-auto pl-[8px]"
+            draggable={false}
+            onDragStart={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            {controls}
+          </div>
+        )}
       </div>
       <div className="text-[15px] leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]">
         {children}
@@ -44,14 +57,17 @@ function Section({ title, subtitle, children, onDragStart }: SectionProps) {
   );
 }
 
-function SubHeader({ children }: { children: React.ReactNode }) {
+function SubHeader({ children, chip }: { children: React.ReactNode; chip?: React.ReactNode }) {
   return (
-    <p
-      className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] mb-[12px]"
-      style={{ fontFeatureSettings: "'ss07' 1" }}
-    >
-      {children}
-    </p>
+    <div className="flex items-center gap-[6px] mb-[12px]">
+      <p
+        className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]"
+        style={{ fontFeatureSettings: "'ss07' 1" }}
+      >
+        {children}
+      </p>
+      {chip}
+    </div>
   );
 }
 
@@ -84,6 +100,25 @@ function Citation({ n, quote, source }: { n: number; quote: string; source: stri
     </span>
   );
 }
+
+// ─── Section metadata (timeframe options per section) ────────────────────────
+
+type SectionMeta = {
+  timeFrameOptions?: string[];
+};
+
+const sectionMeta: Record<string, SectionMeta> = {
+  "at-a-glance":           {},
+  "last-visit":            {},
+  "vitals":                {},
+  "active-problems":       {},
+  "lab-results":           {},  // chips are inline after each sub-header
+  "imaging":               {},  // chips are inline after each sub-header
+  "historical-procedures": { timeFrameOptions: ["Past 6 months", "Past year", "Past 18 months", "All time"] },
+  "active-meds":           {},
+  "allergies":             {},
+  "social-history":        {},
+};
 
 // ─── Section definitions (static content) ────────────────────────────────────
 
@@ -155,7 +190,7 @@ const sectionDefs: SectionDef[] = [
     title: "Lab Results",
     content: (
       <div>
-        <SubHeader>Recent Labs (since last visit, Jan 9, 2026)</SubHeader>
+        <SubHeader>Recent Labs</SubHeader>
         <ul className="list-disc mb-[12px]">
           {([
             <>BNP: 810 pg/mL [H], down from 1,240 at Oct admission peak, but re-elevated vs 740 at last visit; correlates with +8 lb weight gain<Citation n={18} quote="BNP 810 pg/mL (May 11). Prior: 740 (Jan 9), 1,240 (Oct 2025 admission). Trending up, correlates with +8 lb weight gain since Jan visit." source="May 11, 2026 · Lab Results" /></>,
@@ -175,7 +210,7 @@ const sectionDefs: SectionDef[] = [
             </li>
           ))}
         </ul>
-        <SubHeader>Historical trends and prior abnormals (18 months)</SubHeader>
+        <SubHeader>Historical trends and prior abnormals</SubHeader>
         <ul className="list-disc">
           {([
             <>BNP: ↑ 880 (Feb 2025) → 1,240 (Oct 2025) → 740 (Jan 2026) → 810 (today), persistently elevated; re-trending up<Citation n={24} quote="BNP history: 880 (Feb 2025), 1,240 (Oct 2025), 740 (Jan 2026), 810 (today). Persistently elevated, now re-trending upward." source="May 11, 2026 · Lab Results" /></>,
@@ -200,13 +235,13 @@ const sectionDefs: SectionDef[] = [
     title: "Imaging & Diagnostics",
     content: (
       <div>
-        <SubHeader>Recent Imaging Results (since last visit, Jan 9, 2026)</SubHeader>
+        <SubHeader>Recent Imaging Results</SubHeader>
         <ul className="list-disc mb-[12px]">
           <li className="ms-[22.5px]">
             <span className="leading-[1.4] text-[15px]">No new imaging since last visit.</span>
           </li>
         </ul>
-        <SubHeader>Historical findings and prior abnormals (18 months)</SubHeader>
+        <SubHeader>Historical findings and prior abnormals</SubHeader>
         <ul className="list-disc">
           {([
             <>Echocardiogram (Nov 2025): EF 30–35%, down from 40% (2022). Moderate MR, new since prior echo. RVSP 48 mmHg, suggesting pulmonary hypertension. LV dilation present.<Citation n={25} quote="Echo 11/14/25: EF 30-35% (↓ from 40% in 2022). Mod MR — new finding. RVSP 48 mmHg, LV dilation. Cardiology notified of worsening EF." source="Nov 14, 2025 · Echocardiogram Report" /></>,
@@ -315,6 +350,38 @@ export default function R1DragDrop() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  // Per-section state
+  const [timeFrames, setTimeFrames] = useState<Record<string, string>>(() => {
+    const init: Record<string, string> = {};
+    Object.entries(sectionMeta).forEach(([id, meta]) => {
+      if (meta.timeFrameOptions) init[id] = meta.timeFrameOptions[0];
+    });
+    return init;
+  });
+  const [informNote, setInformNote] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(sectionDefs.map(s => [s.id, true]))
+  );
+  const [deleted, setDeleted] = useState<Set<string>>(new Set());
+  const [chipMenuOpen, setChipMenuOpen] = useState<string | null>(null);
+  const chipMenuRef = useRef<HTMLDivElement>(null);
+
+  // Sub-section (inline) timeframe chips for lab-results and imaging
+  const subTimeFrameOpts: Record<string, string[]> = {
+    "lab-recent":      ["Since last visit", "Past 3 months", "Past 6 months", "Past year"],
+    "lab-history":     ["Past 6 months", "Past 12 months", "Past 18 months", "All time"],
+    "imaging-recent":  ["Since last visit", "Past 3 months", "Past 6 months", "Past year"],
+    "imaging-history": ["Past 6 months", "Past 12 months", "Past 18 months", "All time"],
+  };
+  const [subTimeFrames, setSubTimeFrames] = useState<Record<string, string>>({
+    "lab-recent":      "Since last visit",
+    "lab-history":     "Past 18 months",
+    "imaging-recent":  "Since last visit",
+    "imaging-history": "Past 18 months",
+  });
+  const [subChipMenuOpen, setSubChipMenuOpen] = useState<string | null>(null);
+  const subChipMenuRef = useRef<HTMLDivElement>(null);
+
+  // Click-outside for the more menu
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -325,7 +392,31 @@ export default function R1DragDrop() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [menuOpen]);
 
-  const orderedSections = order.map(id => sectionDefs.find(s => s.id === id)!);
+  // Click-outside for chip timeframe menus
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (chipMenuRef.current && !chipMenuRef.current.contains(e.target as Node)) {
+        setChipMenuOpen(null);
+      }
+    }
+    if (chipMenuOpen) document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [chipMenuOpen]);
+
+  // Click-outside for inline sub-section chips
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (subChipMenuRef.current && !subChipMenuRef.current.contains(e.target as Node)) {
+        setSubChipMenuOpen(null);
+      }
+    }
+    if (subChipMenuOpen) document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [subChipMenuOpen]);
+
+  const activeOrder = order.filter(id => !deleted.has(id));
+  const deletedOrder = order.filter(id => deleted.has(id));
+  const orderedSections = activeOrder.map(id => sectionDefs.find(s => s.id === id)!).filter(Boolean);
 
   function handleDragStart(e: React.DragEvent, id: string) {
     setDraggedId(id);
@@ -357,6 +448,113 @@ export default function R1DragDrop() {
     setDraggedId(null);
     setDragOverId(null);
   }
+
+  // ── Inline sub-section timeframe chip factory ─────────────────────────────
+  function makeSubChip(id: string) {
+    return (
+      <div className="relative inline-flex">
+        <Chip
+          size="XS"
+          label={subTimeFrames[id]}
+          onClick={(e) => {
+            e.stopPropagation();
+            setSubChipMenuOpen(prev => prev === id ? null : id);
+          }}
+        />
+        {subChipMenuOpen === id && (
+          <div ref={subChipMenuRef} className="absolute left-0 top-[30px] z-[300]">
+            <Menu className="w-[200px]">
+              {subTimeFrameOpts[id].map(opt => (
+                <MenuItem
+                  key={opt}
+                  label={opt}
+                  selected={subTimeFrames[id] === opt}
+                  onClick={() => {
+                    setSubTimeFrames(prev => ({ ...prev, [id]: opt }));
+                    setSubChipMenuOpen(null);
+                  }}
+                />
+              ))}
+            </Menu>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── Dynamic content for sections with per-sub-section timeframes ──────────
+  const labContent = (
+    <div>
+      <SubHeader chip={makeSubChip("lab-recent")}>Recent Labs</SubHeader>
+      <ul className="list-disc mb-[12px]">
+        {([
+          <>BNP: 810 pg/mL [H], down from 1,240 at Oct admission peak, but re-elevated vs 740 at last visit; correlates with +8 lb weight gain<Citation n={18} quote="BNP 810 pg/mL (May 11). Prior: 740 (Jan 9), 1,240 (Oct 2025 admission). Trending up, correlates with +8 lb weight gain since Jan visit." source="May 11, 2026 · Lab Results" /></>,
+          <>BMP, Potassium: 5.3 mEq/L [H], rising again vs 5.1 at last visit; spironolactone reintroduction on hold<Citation n={19} quote="K+ 5.3 mEq/L (May 11), up from 5.1 (Jan 9). Spironolactone reintroduction deferred. Patiromer continued." source="May 11, 2026 · Lab Results" /></>,
+          <>BMP, Creatinine: 3.5 mg/dL [H], slight uptick from 3.4; consistent with CKD trajectory<Citation n={20} quote="Creatinine 3.5 mg/dL (May 11), up from 3.4 (Jan 9). Consistent with progressive CKD G4." source="May 11, 2026 · Lab Results" /></>,
+          <>BMP, eGFR: 17 mL/min/1.73m² [H], first time below 18; nephrology to be notified<Citation n={21} quote="eGFR 17 mL/min/1.73m² — first documented value below 18. Nephrology notified per CKD care protocol." source="May 11, 2026 · Lab Results" /></>,
+          "BMP, Bicarbonate: 19 mEq/L [L], mild metabolic acidosis, new vs last draw",
+          "CBC, Hemoglobin: 9.4 g/dL [L], stable low; on darbepoetin",
+          "CBC, WBC: 7.2 K/µL [nl]",
+          "CBC, Platelets: 188 K/µL [nl]",
+          <>HbA1c: 9.1% [H], worsening from 8.9% (Oct 2025); insulin dose review needed<Citation n={22} quote="HbA1c 9.1% (May 11), worsened from 8.9% (Oct 2025) and 8.1% (Mar 2025). Insulin glargine 28u hs — dose adjustment needed." source="May 11, 2026 · Lab Results" /></>,
+          <>TSH: 5.9 mIU/L [H], persists elevated from 6.8 (Nov 2025); hypothyroidism workup warranted<Citation n={23} quote="TSH 5.9 mIU/L (May 11), down slightly from 6.8 (Nov 2025). Free T4 not yet ordered. Hypothyroidism workup recommended." source="May 11, 2026 · Lab Results" /></>,
+          "uACR: 680 mg/g [H], worsening from 610 (Oct 2025)",
+        ] as React.ReactNode[]).map((item, i, arr) => (
+          <li key={i} className={`ms-[22.5px] ${i < arr.length - 1 ? "mb-0" : ""}`}>
+            <span className="leading-[1.4] text-[15px]">{item}</span>
+          </li>
+        ))}
+      </ul>
+      <SubHeader chip={makeSubChip("lab-history")}>Historical trends and prior abnormals</SubHeader>
+      <ul className="list-disc">
+        {([
+          <>BNP: ↑ 880 (Feb 2025) → 1,240 (Oct 2025) → 740 (Jan 2026) → 810 (today), persistently elevated; re-trending up<Citation n={24} quote="BNP history: 880 (Feb 2025), 1,240 (Oct 2025), 740 (Jan 2026), 810 (today). Persistently elevated, now re-trending upward." source="May 11, 2026 · Lab Results" /></>,
+          "Potassium: unstable, 5.6 (Feb 2025) → 4.9 (Jun 2025) → 5.4 (Oct 2025) → 5.1 (Jan 2026) → 5.3 (today); patiromer added, spironolactone held",
+          "eGFR: ↓ progressive, 24 (Sep 2024) → 21 (Mar 2025) → 19 (Oct 2025) → 18 (Jan 2026) → 17 (today)",
+          "HbA1c: ↑ 8.1% (Mar 2025) → 8.6% (Jul 2025) → 8.9% (Oct 2025) → 9.1% (today), worsening despite insulin adjustment",
+          "Hemoglobin: fluctuating 9.2–10.1 g/dL over 18 months; iron studies (Oct 2025): ferritin 68, TSAT 16%, suboptimal for ESA therapy; IV iron discussed",
+          "uACR: ↑ 480 → 610 → 680 mg/g over 12 months, progressive albuminuria",
+          "TSH: mildly elevated since Nov 2025 (6.8 → 5.9), not yet treated",
+          "Uric acid: 8.4 mg/dL (Jul 2025), elevated despite allopurinol; dose review warranted",
+        ] as React.ReactNode[]).map((item, i, arr) => (
+          <li key={i} className={`ms-[22.5px] ${i < arr.length - 1 ? "mb-0" : ""}`}>
+            <span className="leading-[1.4] text-[15px]">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  const imagingContent = (
+    <div>
+      <SubHeader chip={makeSubChip("imaging-recent")}>Recent Imaging Results</SubHeader>
+      <ul className="list-disc mb-[12px]">
+        <li className="ms-[22.5px]">
+          <span className="leading-[1.4] text-[15px]">No new imaging since last visit.</span>
+        </li>
+      </ul>
+      <SubHeader chip={makeSubChip("imaging-history")}>Historical findings and prior abnormals</SubHeader>
+      <ul className="list-disc">
+        {([
+          <>Echocardiogram (Nov 2025): EF 30–35%, down from 40% (2022). Moderate MR, new since prior echo. RVSP 48 mmHg, suggesting pulmonary hypertension. LV dilation present.<Citation n={25} quote="Echo 11/14/25: EF 30-35% (↓ from 40% in 2022). Mod MR — new finding. RVSP 48 mmHg, LV dilation. Cardiology notified of worsening EF." source="Nov 14, 2025 · Echocardiogram Report" /></>,
+          <>Chest X-ray (Oct 2025): pulmonary vascular congestion, small bilateral pleural effusions during ADHF admission; resolved on discharge film.<Citation n={26} quote="CXR 10/12/25: pulmonary vascular congestion, bilateral small pleural effusions. Repeat 10/19/25 (discharge): effusions resolved, mild cardiomegaly persists." source="Oct 2025 · Radiology Report" /></>,
+          "Renal ultrasound (Aug 2025): bilateral small echogenic kidneys (R: 9.1 cm, L: 9.4 cm), consistent with chronic parenchymal disease. No obstruction.",
+          "Lower extremity arterial duplex (Jun 2025): severe stenosis R SFA; moderate stenosis L popliteal. Referred to vascular surgery.",
+          "Spirometry (Mar 2025): FEV1 52% predicted, FEV1/FVC 0.64. Stable vs 2023.",
+          "Nuclear stress test (2023): fixed inferior wall defect, prior MI; no new ischemia.",
+        ] as React.ReactNode[]).map((item, i, arr) => (
+          <li key={i} className={`ms-[22.5px] ${i < arr.length - 1 ? "mb-0" : ""}`}>
+            <span className="leading-[1.4] text-[15px]">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  const sectionContent: Record<string, React.ReactNode> = {
+    "lab-results": labContent,
+    "imaging":     imagingContent,
+  };
 
   return (
     <VisitLayout>
@@ -411,29 +609,114 @@ export default function R1DragDrop() {
           {/* Previsit content — scrollable */}
           <div className="flex-1 overflow-y-auto pl-[24px] pr-[20px] pb-[8px] pt-[8px]">
             <div className="flex flex-col gap-[16px] max-w-[800px]">
-              {orderedSections.map(section => (
-                <div
-                  key={section.id}
-                  onDragOver={(e) => handleDragOver(e, section.id)}
-                  onDrop={(e) => handleDrop(e, section.id)}
-                  onDragEnd={handleDragEnd}
-                  className={[
-                    "group transition-opacity",
-                    draggedId === section.id ? "opacity-40" : "opacity-100",
-                    dragOverId === section.id && draggedId !== section.id
-                      ? "border-t-2 border-[var(--accent,#1132ee)]"
-                      : "border-t-2 border-transparent",
-                  ].join(" ")}
-                >
-                  <Section
-                    title={section.title}
-                    subtitle={section.subtitle}
-                    onDragStart={(e) => handleDragStart(e, section.id)}
+              {orderedSections.map(section => {
+                const meta = sectionMeta[section.id] ?? {};
+                const hasChip = !!meta.timeFrameOptions;
+                const controls = (
+                  <>
+                    {/* Timeframe chip */}
+                    {hasChip && (
+                      <div className="relative">
+                        <Chip
+                          size="XS"
+                          label={timeFrames[section.id] ?? meta.timeFrameOptions![0]}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setChipMenuOpen(prev => prev === section.id ? null : section.id);
+                          }}
+                        />
+                        {chipMenuOpen === section.id && (
+                          <div ref={chipMenuRef} className="absolute left-0 top-[30px] z-[300]">
+                            <Menu className="w-[200px]">
+                              {meta.timeFrameOptions!.map(opt => (
+                                <MenuItem
+                                  key={opt}
+                                  label={opt}
+                                  selected={timeFrames[section.id] === opt}
+                                  onClick={() => {
+                                    setTimeFrames(prev => ({ ...prev, [section.id]: opt }));
+                                    setChipMenuOpen(null);
+                                  }}
+                                />
+                              ))}
+                            </Menu>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {/* Inform note switch */}
+                    <span className="text-[11px] leading-[1.2] text-[var(--foreground-secondary,#666)] whitespace-nowrap">
+                      Inform note
+                    </span>
+                    <Switch
+                      size="XS"
+                      checked={informNote[section.id] ?? true}
+                      onChange={(v) => setInformNote(prev => ({ ...prev, [section.id]: v }))}
+                    />
+                    {/* Remove button */}
+                    <IconButton
+                      icon={<Icon name="close" size={14} />}
+                      size="small"
+                      aria-label="Remove section"
+                      onClick={() => setDeleted(prev => new Set([...prev, section.id]))}
+                    />
+                  </>
+                );
+                return (
+                  <div
+                    key={section.id}
+                    onDragOver={(e) => handleDragOver(e, section.id)}
+                    onDrop={(e) => handleDrop(e, section.id)}
+                    onDragEnd={handleDragEnd}
+                    className={[
+                      "group transition-opacity",
+                      draggedId === section.id ? "opacity-40" : "opacity-100",
+                      dragOverId === section.id && draggedId !== section.id
+                        ? "border-t-2 border-[var(--accent,#1132ee)]"
+                        : "border-t-2 border-transparent",
+                    ].join(" ")}
                   >
-                    {section.content}
-                  </Section>
+                    <Section
+                      title={section.title}
+                      subtitle={section.subtitle}
+                      onDragStart={(e) => handleDragStart(e, section.id)}
+                      controls={controls}
+                    >
+                      {sectionContent[section.id] ?? section.content}
+                    </Section>
+                  </div>
+                );
+              })}
+
+              {/* Not included */}
+              {deletedOrder.length > 0 && (
+                <div className="flex flex-col gap-[8px]">
+                  <div className="flex items-center gap-[8px]">
+                    <div className="flex-1 h-px bg-[var(--shape-outline,rgba(0,0,0,0.1))]" />
+                    <span className="text-[11px] leading-[1.2] text-[var(--foreground-tertiary,#808080)] whitespace-nowrap">
+                      Not included
+                    </span>
+                    <div className="flex-1 h-px bg-[var(--shape-outline,rgba(0,0,0,0.1))]" />
+                  </div>
+                  {deletedOrder.map(id => {
+                    const section = sectionDefs.find(s => s.id === id)!;
+                    return (
+                      <div key={id} className="flex items-center justify-between h-[28px] ml-[-20px] pl-[18px] pr-[4px]">
+                        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFeatureSettings: "'ss07' 1" }}>
+                          {section.title}
+                        </span>
+                        <Button
+                          variant="tertiary"
+                          size="small"
+                          onClick={() => setDeleted(prev => { const next = new Set(prev); next.delete(id); return next; })}
+                        >
+                          Add
+                        </Button>
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
+              )}
             </div>
           </div>
 

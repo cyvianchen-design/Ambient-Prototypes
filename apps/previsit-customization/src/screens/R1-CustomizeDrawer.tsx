@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Icon, IconButton, Button, Checkbox, Tabs, Switch, MagicEdit, Menu, MenuItem } from "@ds/ui";
+import { Icon, IconButton, Button, Checkbox, Tabs, Switch, Overlay, MagicEdit, Menu, MenuItem } from "@ds/ui";
 import { VisitLayout } from "../components/VisitLayout";
 
 // ─── Shared helpers ──────────────────────────────────────────────────────────
@@ -135,7 +135,10 @@ const drawerGroups: DrawerRow[] = [
     { id: "lab-recent",  label: "Recent Labs",       timeFrameKey: "lab-recent",  options: ["Since last visit", "Past 3 months", "Past 6 months", "Past year"] },
     { id: "lab-history", label: "Historical trends", timeFrameKey: "lab-history", options: ["Past 6 months", "Past 12 months", "Past 18 months", "All time"] },
   ]},
-  { id: "imaging",               label: "Imaging & Diagnostics", timeFrameKey: "imaging",               options: ["Since last visit", "Past year", "Past 2 years", "All time"] },
+  { id: "imaging", label: "Imaging & Diagnostics", noToggle: true, children: [
+    { id: "imaging-recent",  label: "Recent imaging",      timeFrameKey: "imaging-recent",  options: ["Since last visit", "Past 3 months", "Past 6 months", "Past year"] },
+    { id: "imaging-history", label: "Historical findings", timeFrameKey: "imaging-history", options: ["Past 6 months", "Past 12 months", "Past 18 months", "All time"] },
+  ]},
   { id: "historical-procedures", label: "Historical Procedures", timeFrameKey: "historical-procedures",  options: ["Past year", "Past 3 years", "Past 5 years", "All time"] },
   { id: "active-meds",           label: "Active Meds",           fixedLabel: "Current" },
   { id: "allergies",             label: "Allergies",             fixedLabel: "Current" },
@@ -363,17 +366,19 @@ export default function R1CustomizeDrawer() {
   const [drawerDragId, setDrawerDragId] = useState<string | null>(null);
   const [drawerDragOverId, setDrawerDragOverId] = useState<string | null>(null);
 
+  const [deleted, setDeleted] = useState<Set<string>>(new Set());
   const [menuOpen, setMenuOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [visibility, setVisibility] = useState<Record<string, boolean>>(
-    Object.fromEntries([...sectionDefs.map((s) => [s.id, true]), ["lab-recent", true], ["lab-history", true]])
+    Object.fromEntries([...sectionDefs.map((s) => [s.id, true]), ["lab-recent", true], ["lab-history", true], ["imaging-recent", true], ["imaging-history", true]])
   );
   const [timeFrames, setTimeFrames] = useState<Record<string, string>>({
     "lab-recent":            "Since last visit",
     "lab-history":           "Past 18 months",
-    "imaging":               "Past 18 months",
+    "imaging-recent":        "Since last visit",
+    "imaging-history":       "Past 18 months",
     "historical-procedures": "Past 5 years",
   });
 
@@ -387,7 +392,24 @@ export default function R1CustomizeDrawer() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [menuOpen]);
 
-  const orderedSections = order.map((id) => sectionDefs.find((s) => s.id === id)!).filter((s) => visibility[s.id]);
+  useEffect(() => {
+    if (drawerOpen) {
+      document.body.style.overflow = "hidden";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [drawerOpen]);
+
+  const activeOrder = order.filter((id) => !deleted.has(id));
+  const deletedOrder = order.filter((id) => deleted.has(id));
+
+  function deleteSection(id: string) {
+    setDeleted((prev) => new Set([...prev, id]));
+  }
+  function restoreSection(id: string) {
+    setDeleted((prev) => { const next = new Set(prev); next.delete(id); return next; });
+  }
+
+  const orderedSections = activeOrder.map((id) => sectionDefs.find((s) => s.id === id)!).filter((s) => s && visibility[s.id]);
 
   return (
     <VisitLayout>
@@ -496,13 +518,13 @@ export default function R1CustomizeDrawer() {
         {/* ── Customize drawer ── */}
         {drawerOpen && (
           <>
-            {/* Scrim */}
-            <div className="absolute inset-0 z-[150]" onClick={() => setDrawerOpen(false)} />
+            {/* Scrim — full-viewport blur overlay per DS */}
+            <Overlay variant="blur" fixed className="z-[150] cursor-default" onClick={() => setDrawerOpen(false)} />
 
             {/* Drawer */}
-            <div className="absolute right-0 top-0 h-full w-[320px] z-[160] bg-white shadow-[-4px_0_24px_rgba(0,0,0,0.1)] flex flex-col">
+            <div className="fixed right-0 top-0 h-full w-full md:w-[640px] z-[160] bg-white shadow-[-4px_0_24px_rgba(0,0,0,0.1)] flex flex-col">
               {/* Header */}
-              <div className="flex items-center h-[52px] px-[16px] border-b border-[var(--shape-outline,rgba(0,0,0,0.1))] shrink-0">
+              <div className="flex items-center h-[52px] px-[16px] shrink-0">
                 <p className="flex-1 text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}>
                   Previsit Summary
                 </p>
@@ -511,7 +533,9 @@ export default function R1CustomizeDrawer() {
 
               {/* Section list */}
               <div className="flex-1 overflow-y-auto py-[4px]">
-                {order.map((id) => {
+
+                {/* ── Active sections ── */}
+                {activeOrder.map((id) => {
                   const group = drawerGroups.find((g) => g.id === id);
                   if (!group) return null;
                   const isDragging = drawerDragId === id;
@@ -564,13 +588,24 @@ export default function R1CustomizeDrawer() {
                           <DisabledChip label={group.fixedLabel} />
                         ) : null}
                         {!group.noToggle && (
-                          <Switch
-                            size="XS"
-                            checked={visibility[group.id] ?? true}
-                            onChange={(v) => setVisibility((prev) => ({ ...prev, [group.id]: v }))}
-                          />
+                          <div className="flex items-center gap-[6px] shrink-0">
+                            <span className="text-[11px] leading-[1.2] text-[var(--foreground-secondary,#666)] whitespace-nowrap" style={{ fontFamily: "Lato, sans-serif" }}>
+                              Inform note
+                            </span>
+                            <Switch
+                              size="XS"
+                              checked={visibility[group.id] ?? true}
+                              onChange={(v) => setVisibility((prev) => ({ ...prev, [group.id]: v }))}
+                            />
+                          </div>
                         )}
-                        <IconButton icon={<Icon name="close" size={14} />} variant="tertiary-neutral" size="small" aria-label="Remove section" />
+                        <IconButton
+                          icon={<Icon name="close" size={14} />}
+                          variant="tertiary-neutral"
+                          size="small"
+                          aria-label="Remove section"
+                          onClick={() => deleteSection(id)}
+                        />
                       </div>
 
                       {/* Child rows */}
@@ -592,21 +627,81 @@ export default function R1CustomizeDrawer() {
                             <DisabledChip label={child.fixedLabel} />
                           ) : null}
                           {!child.noToggle && (
-                            <Switch
-                              size="XS"
-                              checked={visibility[child.id] ?? true}
-                              onChange={(v) => setVisibility((prev) => ({ ...prev, [child.id]: v }))}
-                            />
+                            <div className="flex items-center gap-[6px] shrink-0">
+                              <span className="text-[11px] leading-[1.2] text-[var(--foreground-secondary,#666)] whitespace-nowrap" style={{ fontFamily: "Lato, sans-serif" }}>
+                                Inform note
+                              </span>
+                              <Switch
+                                size="XS"
+                                checked={visibility[child.id] ?? true}
+                                onChange={(v) => setVisibility((prev) => ({ ...prev, [child.id]: v }))}
+                              />
+                            </div>
                           )}
                         </div>
                       ))}
                     </div>
                   );
                 })}
+
+                {/* ── Divider + deleted sections ── */}
+                {deletedOrder.length > 0 && (
+                  <>
+                    <div className="flex items-center gap-[8px] px-[12px] py-[8px] mt-[4px]">
+                      <div className="flex-1 h-px bg-[var(--shape-outline,rgba(0,0,0,0.1))]" />
+                      <span className="text-[11px] leading-[1.2] text-[var(--foreground-secondary,#666)] whitespace-nowrap" style={{ fontFamily: "Lato, sans-serif" }}>
+                        Not included
+                      </span>
+                      <div className="flex-1 h-px bg-[var(--shape-outline,rgba(0,0,0,0.1))]" />
+                    </div>
+
+                    {deletedOrder.map((id) => {
+                      const group = drawerGroups.find((g) => g.id === id);
+                      if (!group) return null;
+                      return (
+                        <div key={id}>
+                          {/* Deleted top-level row */}
+                          <div className="flex items-center gap-[8px] h-[44px] pl-[12px] pr-[12px]">
+                            {/* No drag handle */}
+                            <span
+                              className="flex-1 text-[13px] font-bold tracking-[0.13px] leading-[1.2] text-[var(--foreground-secondary,#666)] truncate"
+                              style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
+                            >
+                              {group.label}
+                            </span>
+                            {group.timeFrameKey && group.options ? (
+                              <DisabledChip label={timeFrames[group.timeFrameKey] ?? group.options[0]} />
+                            ) : group.fixedLabel ? (
+                              <DisabledChip label={group.fixedLabel} />
+                            ) : null}
+                            <Button variant="tertiary" size="small" onClick={() => restoreSection(id)}>Add</Button>
+                          </div>
+
+                          {/* Deleted child rows */}
+                          {group.children?.map((child) => (
+                            <div key={child.id} className="flex items-center gap-[8px] h-[40px] pl-[36px] pr-[12px]">
+                              <span
+                                className="flex-1 text-[12px] leading-[1.2] text-[var(--foreground-secondary,#666)] opacity-50 truncate"
+                                style={{ fontFamily: "Lato, sans-serif" }}
+                              >
+                                {child.label}
+                              </span>
+                              {child.timeFrameKey && child.options ? (
+                                <DisabledChip label={timeFrames[child.timeFrameKey] ?? child.options[0]} />
+                              ) : child.fixedLabel ? (
+                                <DisabledChip label={child.fixedLabel} />
+                              ) : null}
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })}
+                  </>
+                )}
               </div>
 
               {/* Footer */}
-              <div className="shrink-0 px-[16px] py-[12px] border-t border-[var(--shape-outline,rgba(0,0,0,0.1))]">
+              <div className="shrink-0 px-[16px] py-[12px]">
                 <Button variant="primary" size="medium" className="w-full">Save Template</Button>
               </div>
             </div>
