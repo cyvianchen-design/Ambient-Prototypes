@@ -1,0 +1,5 @@
+{
+  "buildCommand": "pnpm --filter test-proto build",
+  "outputDirectory": "apps/test-proto/dist",
+  "installCommand": "pnpm install"
+}
