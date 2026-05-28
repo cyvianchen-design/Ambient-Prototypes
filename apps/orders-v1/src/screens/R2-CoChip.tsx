@@ -475,7 +475,7 @@ export default function R2CoChip() {
                       <Chip label={imagingChipLabel} color="neutral" size="XS" onClick={(e) => openPopover(e, "set-imaging-company", set.id)} />
                     )}
                     {set.relatedIcd && (
-                      <Chip label={set.relatedIcd} color="accent" size="XS" />
+                      <Chip label={set.relatedIcd} color="accent" size="XS" onClick={(e) => openPopover(e, "icd10", set.relatedIcd)} />
                     )}
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                       <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />}
