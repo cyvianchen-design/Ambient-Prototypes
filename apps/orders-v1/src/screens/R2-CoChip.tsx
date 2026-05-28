@@ -366,35 +366,6 @@ export default function R2CoChip() {
             <Button variant="tertiary" size="small" prefix={<Icon name="add" size={16} />}
               onClick={(e) => openPopover(e, "icd10")} className="self-start">Add ICD-10 code</Button>
           </div>
-
-          {/* CPT */}
-          <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">CPT Codes</span>
-            <Button variant="tertiary" size="small" prefix={<Icon name="content_copy" size={16} />}>Copy Codes</Button>
-          </div>
-          <div className="flex flex-col gap-[2px]">
-            {cpt.map((c) => (
-              <div key={c.code} className="group flex items-center gap-[4px]">
-                <div
-                  className="flex items-center h-[28px] px-[8px] gap-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer"
-                  onClick={(e) => openPopover(e, "cpt", c.code)}
-                >
-                  <span className="w-[80px] shrink-0 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
-                    {c.code}
-                  </span>
-                  <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
-                    {c.description}
-                  </span>
-                </div>
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-                  <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />}
-                    onClick={(e) => { e.stopPropagation(); setCpt((prev) => prev.filter((x) => x.code !== c.code)); }} aria-label="Remove" />
-                </div>
-              </div>
-            ))}
-            <Button variant="tertiary" size="small" prefix={<Icon name="add" size={16} />}
-              onClick={(e) => openPopover(e, "cpt")} className="self-start">Add CPT code</Button>
-          </div>
         </section>
 
         {/* ── Orders ───────────────────────────────────────────────── */}
