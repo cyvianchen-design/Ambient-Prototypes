@@ -77,7 +77,7 @@ export function CodeSearch({
       </div>
 
       {/* Results */}
-      <div className="overflow-y-auto max-h-[220px] py-[4px]">
+      <div className="overflow-y-auto max-h-[220px] py-[4px]" onMouseDown={(e) => e.stopPropagation()}>
         {filteredAdjacent.length > 0 && (
           <>
             <GroupLabel label="Suggested" />
@@ -185,7 +185,7 @@ export function OrderSearch({
           </button>
         )}
       </div>
-      <div className="overflow-y-auto max-h-[220px] py-[4px]">
+      <div className="overflow-y-auto max-h-[220px] py-[4px]" onMouseDown={(e) => e.stopPropagation()}>
         {filteredAdjacent.length > 0 && (
           <>
             <GroupLabel label="Suggested" />
@@ -279,7 +279,7 @@ export function SetOrOrderSearch({
           </button>
         )}
       </div>
-      <div className="overflow-y-auto max-h-[280px] py-[4px]">
+      <div className="overflow-y-auto max-h-[280px] py-[4px]" onMouseDown={(e) => e.stopPropagation()}>
         {adjacentSets.length > 0 && (
           <>
             <GroupLabel label="Suggested" />

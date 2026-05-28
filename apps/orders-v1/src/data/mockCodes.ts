@@ -95,6 +95,12 @@ export const cptAdjacent: Record<string, string[]> = {
   "99214": ["99213", "99215"],
   "99213": ["99214", "99215"],
   "93000": ["93010", "71046", "93306"],
+  "93010": ["93000", "93306", "71046"],
+  "71046": ["93000", "71048", "93306"],
+  "73610": ["73600", "73620", "73630"],
+  "73600": ["73610", "73620", "73630"],
+  "73620": ["73630", "73600", "73610"],
+  "73630": ["73620", "73600", "73610"],
 };
 
 // ─── Orders pool ──────────────────────────────────────────────────────────────
@@ -270,6 +276,39 @@ export const orderSetsPool: OrderSetPoolItem[] = [
       { id: "p2l", label: "Basic Metabolic Panel",        type: "lab",     company: "Labcorp", relatedIcd: "I10",   checked: true },
       { id: "p3l", label: "CBC with Differential",        type: "lab",     company: "Labcorp",                      checked: true },
       { id: "p4l", label: "Chest X-ray, PA & Lateral",   type: "imaging", company: "RadNet",  relatedIcd: "R07.9", checked: true },
+    ],
+  },
+  {
+    id: "set-htn-workup-quest",
+    baseLabel: "Hypertension Workup",
+    defaultLabCompany: "Quest",
+    relatedIcd: "I10",
+    children: [
+      { id: "h1", label: "Basic Metabolic Panel",  type: "lab", company: "Quest", relatedIcd: "I10",   checked: true },
+      { id: "h2", label: "CBC with Differential",  type: "lab", company: "Quest",                      checked: true },
+      { id: "h3", label: "Lipid Panel",            type: "lab", company: "Quest", relatedIcd: "E78.5", checked: true },
+      { id: "h4", label: "Hemoglobin A1c",         type: "lab", company: "Quest", relatedIcd: "E11.9", checked: true },
+    ],
+  },
+  {
+    id: "set-cardiac-imaging-inhouse",
+    baseLabel: "Cardiac Imaging Panel",
+    defaultImagingCompany: "In-house",
+    relatedIcd: "I25.10",
+    children: [
+      { id: "ci1", label: "ECG 12-lead",    type: "imaging", company: "In-house",  relatedIcd: "R07.9",  checked: true },
+      { id: "ci2", label: "Echocardiogram", type: "imaging", company: "In-house",  relatedIcd: "I25.10", checked: true },
+      { id: "ci3", label: "Stress Test",    type: "imaging", company: "In-house",  relatedIcd: "I20.9",  checked: true },
+    ],
+  },
+  {
+    id: "set-ankle-workup-radnet",
+    baseLabel: "Ankle Injury Workup",
+    defaultImagingCompany: "RadNet",
+    relatedIcd: "S93.401",
+    children: [
+      { id: "a1", label: "Ankle X-ray, 3 views", type: "imaging", company: "RadNet", relatedIcd: "S93.401", checked: true },
+      { id: "a2", label: "Foot X-ray, 2 views",  type: "imaging", company: "RadNet", relatedIcd: "S93.601", checked: true },
     ],
   },
 ];
