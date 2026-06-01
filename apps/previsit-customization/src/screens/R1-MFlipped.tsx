@@ -15,7 +15,7 @@ function Section({ title, subtitle, children }: SectionProps) {
     <div className="flex flex-col gap-[8px] w-full">
       <div className="flex items-center gap-[8px]">
         <span
-          className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap"
+          className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-secondary,#666)] whitespace-nowrap"
           style={{ fontFeatureSettings: "'ss07' 1" }}
         >
           {title}
@@ -36,7 +36,7 @@ function Section({ title, subtitle, children }: SectionProps) {
 function SubHeader({ children }: { children: React.ReactNode }) {
   return (
     <p
-      className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] mb-[4px]"
+      className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] mb-[4px]"
       style={{ fontFeatureSettings: "'ss07' 1" }}
     >
       {children}
@@ -70,7 +70,7 @@ const suggestions = [
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
-export default function R1Baseline() {
+export default function R1MFlipped() {
   const [consentChecked, setConsentChecked] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

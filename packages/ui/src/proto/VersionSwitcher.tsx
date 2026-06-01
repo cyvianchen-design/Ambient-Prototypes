@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 export type ScreenDef = {
   round: string;
@@ -8,17 +8,51 @@ export type ScreenDef = {
 
 type Props = {
   screens: ScreenDef[];
-  /** Default to this round on first load. Defaults to the last round. */
+  /** Default to this round on first load. Defaults to the last round. URL param ?round= takes precedence. */
   initialRound?: string;
+  /** Default to this direction on first load. Defaults to first direction in the round. URL param ?direction= takes precedence. */
+  initialDirection?: string;
 };
 
-export function VersionSwitcher({ screens, initialRound }: Props) {
+function getInitialState(
+  screens: ScreenDef[],
+  initialRound?: string,
+  initialDirection?: string,
+): { round: string; direction: string } {
+  const params = new URLSearchParams(window.location.search);
+  const urlRound = params.get("round");
+  const urlDirection = params.get("direction");
+
   const rounds = [...new Set(screens.map((s) => s.round))];
-  const defaultRound = initialRound ?? rounds[rounds.length - 1];
-  const [activeRound, setActiveRound] = useState(defaultRound);
+  const round =
+    (urlRound && rounds.includes(urlRound) ? urlRound : null) ??
+    initialRound ??
+    rounds[rounds.length - 1];
+
+  const directionsForRound = screens.filter((s) => s.round === round).map((s) => s.direction);
+  const direction =
+    (urlDirection && directionsForRound.includes(urlDirection) ? urlDirection : null) ??
+    (initialDirection && directionsForRound.includes(initialDirection) ? initialDirection : null) ??
+    directionsForRound[0];
+
+  return { round, direction };
+}
+
+export function VersionSwitcher({ screens, initialRound, initialDirection }: Props) {
+  const rounds = [...new Set(screens.map((s) => s.round))];
+  const init = getInitialState(screens, initialRound, initialDirection);
+  const [activeRound, setActiveRound] = useState(init.round);
+  const [activeDirection, setActiveDirection] = useState(init.direction);
+
+  // Keep URL in sync so any view is shareable
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("round", activeRound);
+    params.set("direction", activeDirection);
+    window.history.replaceState(null, "", "?" + params.toString());
+  }, [activeRound, activeDirection]);
 
   const directionsForRound = screens.filter((s) => s.round === activeRound);
-  const [activeDirection, setActiveDirection] = useState(directionsForRound[0]?.direction);
 
   const handleRoundClick = (round: string) => {
     setActiveRound(round);

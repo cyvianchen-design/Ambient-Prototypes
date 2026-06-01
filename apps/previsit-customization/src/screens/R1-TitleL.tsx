@@ -15,7 +15,7 @@ function Section({ title, subtitle, children }: SectionProps) {
     <div className="flex flex-col gap-[8px] w-full">
       <div className="flex items-center gap-[8px]">
         <span
-          className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap"
+          className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap"
           style={{ fontFeatureSettings: "'ss07' 1" }}
         >
           {title}
@@ -70,7 +70,7 @@ const suggestions = [
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
-export default function R1Baseline() {
+export default function R1TitleL() {
   const [consentChecked, setConsentChecked] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
