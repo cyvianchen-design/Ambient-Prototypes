@@ -18,6 +18,7 @@ function CodeMenuItem({ item, onSelect }: { item: CodeItemType; onSelect: (item:
     </button>
   );
 }
+
 import {
   icd10Pool, cptPool, ordersPool, ordersAdjacent,
   orderSetsPool, orderSetsAdjacent,
@@ -26,18 +27,23 @@ import {
   type CodeItem, type OrderItem, type OrderSetItem, type OrderSetPoolItem,
 } from "../data/mockCodes";
 
+// In this direction, orders track multiple linked ICD codes
+type MultiOrder = Omit<OrderItem, "relatedIcd"> & { relatedIcds: string[] };
+
 type PopoverTarget = {
   rect: DOMRect;
-  list: "icd10" | "cpt" | "order" | "order-icd" | "order-company" | "set-title" | "set-lab-company" | "set-imaging-company" | "set-child-company" | "set-child-icd";
+  list: "icd10" | "cpt" | "order" | "order-icd" | "order-company" | "set-title" | "set-lab-company" | "set-imaging-company" | "set-child-company" | "set-icd";
   code?: string;
   setId?: string;
 };
 
-export default function R2CoChip() {
+export default function R2CheckCodes() {
   const [activeTab, setActiveTab] = useState("diagnostics");
   const [icd10, setIcd10] = useState<CodeItem[]>(initialIcd10);
   const [cpt, setCpt] = useState<CodeItem[]>(initialCpt);
-  const [orders, setOrders] = useState<OrderItem[]>(initialOrders);
+  const [orders, setOrders] = useState<MultiOrder[]>(() =>
+    initialOrders.map((o) => ({ ...o, relatedIcds: o.relatedIcd ? [o.relatedIcd] : [] }))
+  );
   const [orderSets, setOrderSets] = useState<OrderSetItem[]>(initialOrderSets);
   const [popover, setPopover] = useState<PopoverTarget | null>(null);
   const [popoverQuery, setPopoverQuery] = useState("");
@@ -72,7 +78,10 @@ export default function R2CoChip() {
     if (popover?.code) {
       const old = popover.code;
       setIcd10((prev) => prev.map((c) => (c.code === old ? item : c)));
-      setOrders((prev) => prev.map((o) => o.relatedIcd === old ? { ...o, relatedIcd: item.code } : o));
+      setOrders((prev) => prev.map((o) => ({
+        ...o,
+        relatedIcds: o.relatedIcds.map((c) => (c === old ? item.code : c)),
+      })));
       setOrderSets((prev) => prev.map((s) => ({
         ...s,
         relatedIcd: s.relatedIcd === old ? item.code : s.relatedIcd,
@@ -96,9 +105,14 @@ export default function R2CoChip() {
   function handleOrderSelect(opt: { id: string; label: string; baseLabel?: string; company?: string; detail: string; relatedIcd?: string }) {
     if (popover?.code) {
       const prevChecked = orders.find((o) => o.id === popover.code)?.checked ?? true;
-      setOrders((prev) => prev.map((o) => o.id === popover.code ? { ...opt, checked: prevChecked } : o));
+      const prevIcds = orders.find((o) => o.id === popover.code)?.relatedIcds ?? [];
+      setOrders((prev) => prev.map((o) => o.id === popover.code
+        ? { ...opt, checked: prevChecked, relatedIcds: prevIcds }
+        : o
+      ));
     } else {
-      setOrders((prev) => [...prev, { ...opt, checked: true }]);
+      const icds = opt.relatedIcd ? [opt.relatedIcd] : [];
+      setOrders((prev) => [...prev, { ...opt, checked: true, relatedIcds: icds }]);
     }
     if (opt.relatedIcd && !icd10.find((c) => c.code === opt.relatedIcd)) {
       const match = icd10Pool.find((c) => c.code === opt.relatedIcd);
@@ -107,21 +121,23 @@ export default function R2CoChip() {
     setPopover(null);
   }
 
-  function handleOrderIcdSelect(item: CodeItem) {
-    if (!popover?.code) return;
-    setOrders((prev) => prev.map((o) => o.id === popover.code ? { ...o, relatedIcd: item.code } : o));
-    if (!icd10.find((c) => c.code === item.code)) setIcd10((prev) => [...prev, item]);
-    setPopover(null);
+  // Toggle a single ICD code on/off for an order — popover stays open
+  function toggleOrderIcd(orderId: string, code: string) {
+    setOrders((prev) => prev.map((o) => {
+      if (o.id !== orderId) return o;
+      const has = o.relatedIcds.includes(code);
+      return { ...o, relatedIcds: has ? o.relatedIcds.filter((c) => c !== code) : [...o.relatedIcds, code] };
+    }));
   }
 
   function handleCompanySelect(opt: { id: string; label: string; baseLabel?: string; company?: string; detail: string; relatedIcd?: string }) {
     if (!popover?.code) return;
     const prevChecked = orders.find((o) => o.id === popover.code)?.checked ?? true;
-    setOrders((prev) => prev.map((o) => o.id === popover.code ? { ...opt, checked: prevChecked } : o));
-    if (opt.relatedIcd && !icd10.find((c) => c.code === opt.relatedIcd)) {
-      const match = icd10Pool.find((c) => c.code === opt.relatedIcd);
-      if (match) setIcd10((prev) => [...prev, match]);
-    }
+    const prevIcds = orders.find((o) => o.id === popover.code)?.relatedIcds ?? [];
+    setOrders((prev) => prev.map((o) => o.id === popover.code
+      ? { ...opt, checked: prevChecked, relatedIcds: prevIcds }
+      : o
+    ));
     setPopover(null);
   }
 
@@ -148,7 +164,7 @@ export default function R2CoChip() {
   function handleSetReplaceWithOrder(opt: typeof ordersPool[0]) {
     if (!popover?.code) return;
     setOrderSets((prev) => prev.filter((s) => s.id !== popover.code));
-    setOrders((prev) => [...prev, { ...opt, checked: true }]);
+    setOrders((prev) => [...prev, { ...opt, checked: true, relatedIcds: opt.relatedIcd ? [opt.relatedIcd] : [] }]);
     if (opt.relatedIcd && !icd10.find((c) => c.code === opt.relatedIcd)) {
       const match = icd10Pool.find((c) => c.code === opt.relatedIcd);
       if (match) setIcd10((prev) => [...prev, match]);
@@ -207,13 +223,10 @@ export default function R2CoChip() {
     setPopover(null);
   }
 
-  function handleSetChildIcdSelect(item: CodeItem) {
-    if (!popover?.setId || !popover.code) return;
-    setOrderSets((prev) => prev.map((s) => s.id !== popover.setId ? s : {
-      ...s,
-      children: s.children.map((c) => c.id !== popover.code ? c : { ...c, relatedIcd: item.code }),
-    }));
-    if (!icd10.find((c) => c.code === item.code)) setIcd10((prev) => [...prev, item]);
+  // Single-select ICD for order sets (from note codes only)
+  function handleSetIcdSelect(code: string) {
+    if (!popover?.code) return;
+    setOrderSets((prev) => prev.map((s) => s.id !== popover.code ? s : { ...s, relatedIcd: code }));
     setPopover(null);
   }
 
@@ -320,7 +333,7 @@ export default function R2CoChip() {
             ? { bottom: window.innerHeight - popover.rect.top + 4 }
             : { top: popover.rect.bottom + 4 }),
           left: popover.rect.left,
-          width: Math.max(popover.rect.width, 360),
+          width: Math.max(popover.rect.width, 320),
           zIndex: 200,
         };
       })()
@@ -370,13 +383,34 @@ export default function R2CoChip() {
 
         {/* ── Orders ───────────────────────────────────────────────── */}
         <section>
-          <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)] mb-[16px]">
-            Orders
-          </h2>
+          <div className="flex items-center justify-between mb-[16px]">
+            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+              Orders
+            </h2>
+            {(() => {
+              const allItems = [
+                ...orders.map((o) => o.checked),
+                ...orderSets.flatMap((s) => s.children.map((c) => c.checked)),
+              ];
+              const allChecked = allItems.length > 0 && allItems.every(Boolean);
+              const someChecked = allItems.some(Boolean);
+              const state = allChecked ? "selected" : someChecked ? "indeterminate" : "unselected";
+              function selectAll() {
+                const next = !allChecked;
+                setOrders((prev) => prev.map((o) => ({ ...o, checked: next })));
+                setOrderSets((prev) => prev.map((s) => ({ ...s, children: s.children.map((c) => ({ ...c, checked: next })) })));
+              }
+              return (
+                <Button variant="tertiary" size="small" prefix={<Checkbox state={state} onChange={selectAll} />} onClick={selectAll}>
+                  Select all
+                </Button>
+              );
+            })()}
+          </div>
           <div className="flex flex-col gap-[8px]">
             {/* Individual orders */}
             {orders.map((o) => (
-              <div key={o.id} className="group flex items-center gap-[4px] min-h-[28px]">
+              <div key={o.id} className="group flex items-center gap-[4px] min-h-[28px] flex-wrap">
                 <Checkbox
                   state={o.checked ? "selected" : "unselected"}
                   onChange={() => toggleOrder(o.id)}
@@ -392,16 +426,24 @@ export default function R2CoChip() {
                 {o.company && (
                   <Chip label={o.company} color="neutral" size="XS" onClick={(e) => openPopover(e, "order-company", o.id)} />
                 )}
-                {o.relatedIcd ? (
-                  <Chip label={o.relatedIcd} color="accent" size="XS" onClick={(e) => openPopover(e, "order-icd", o.id)} />
-                ) : (
-                  <button
-                    onClick={(e) => openPopover(e, "order-icd", o.id)}
-                    className="text-[12px] text-[var(--foreground-tertiary,#808080)] hover:text-[var(--foreground-brand,#1132ee)] leading-[1.2] shrink-0 px-[2px]"
-                  >
-                    + link code
-                  </button>
-                )}
+                {o.relatedIcds.length > 0
+                  ? (
+                      <Chip
+                        label={o.relatedIcds.length > 2
+                          ? `${o.relatedIcds[0]}, +${o.relatedIcds.length - 1}`
+                          : o.relatedIcds.join(", ")}
+                        color="accent" size="XS" onClick={(e) => openPopover(e, "order-icd", o.id)}
+                      />
+                    )
+                  : (
+                    <button
+                      onClick={(e) => openPopover(e, "order-icd", o.id)}
+                      className="text-[12px] text-[var(--foreground-tertiary,#808080)] hover:text-[var(--foreground-brand,#1132ee)] leading-[1.2] shrink-0 px-[2px]"
+                    >
+                      + link code
+                    </button>
+                  )
+                }
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                   <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />}
                     onClick={() => setOrders((prev) => prev.filter((x) => x.id !== o.id))} aria-label="Remove" />
@@ -425,12 +467,8 @@ export default function R2CoChip() {
 
               return (
                 <div key={set.id} className="flex flex-col gap-[4px]">
-                  {/* Set header */}
                   <div className="group flex items-center gap-[4px] min-h-[28px]">
-                    <Checkbox
-                      state={checkboxState}
-                      onChange={() => toggleSet(set.id)}
-                    />
+                    <Checkbox state={checkboxState} onChange={() => toggleSet(set.id)} />
                     <button
                       onClick={(e) => openPopover(e, "set-title", set.id)}
                       className="flex items-center h-[28px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
@@ -445,16 +483,23 @@ export default function R2CoChip() {
                     {imagingChipLabel && (
                       <Chip label={imagingChipLabel} color="neutral" size="XS" onClick={(e) => openPopover(e, "set-imaging-company", set.id)} />
                     )}
-                    {set.relatedIcd && (
-                      <Chip label={set.relatedIcd} color="accent" size="XS" onClick={(e) => openPopover(e, "icd10", set.relatedIcd)} />
-                    )}
+                    {set.relatedIcd
+                      ? <Chip label={set.relatedIcd} color="accent" size="XS" onClick={(e) => openPopover(e, "set-icd", set.id)} />
+                      : (
+                        <button
+                          onClick={(e) => openPopover(e, "set-icd", set.id)}
+                          className="text-[12px] text-[var(--foreground-tertiary,#808080)] hover:text-[var(--foreground-brand,#1132ee)] leading-[1.2] shrink-0 px-[2px]"
+                        >
+                          + link code
+                        </button>
+                      )
+                    }
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                       <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />}
                         onClick={() => setOrderSets((prev) => prev.filter((s) => s.id !== set.id))} aria-label="Remove" />
                     </div>
                   </div>
 
-                  {/* Children with vertical line */}
                   <div className="ml-[12px] pl-[12px] border-l-2 border-[#ebebeb] flex flex-col gap-[4px]">
                     {set.children.map((child) => (
                       <div key={child.id} className="flex items-center gap-[8px] min-h-[28px]">
@@ -493,7 +538,62 @@ export default function R2CoChip() {
           onMouseDown={(e) => e.stopPropagation()}
           className=""
         >
-          {popover.list === "set-title" ? (() => {
+          {/* Order ICD checklist — scoped to note codes only */}
+          {popover.list === "order-icd" ? (
+            <Menu>
+              <MenuHeader>Link diagnostic codes</MenuHeader>
+              {icd10.length === 0
+                ? (
+                  <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>
+                    No codes in this note — add codes in the Diagnostic Codes section.
+                  </p>
+                )
+                : icd10.map((c) => {
+                    const checked = orders.find((o) => o.id === popover.code)?.relatedIcds.includes(c.code) ?? false;
+                    return (
+                      <button
+                        key={c.code}
+                        onMouseDown={(e) => { e.preventDefault(); if (popover.code) toggleOrderIcd(popover.code, c.code); }}
+                        className="flex items-center gap-[8px] w-full h-[36px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
+                        style={{ fontFamily: "Lato, sans-serif" }}
+                      >
+                        <Checkbox state={checked ? "selected" : "unselected"} onChange={() => {}} />
+                        <span className="shrink-0 w-[56px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                          {c.code}
+                        </span>
+                        <span className="text-[13px] font-normal leading-none text-[var(--foreground-primary,#1a1a1a)] flex-1 min-w-0 truncate">
+                          {c.description}
+                        </span>
+                      </button>
+                    );
+                  })
+              }
+            </Menu>
+          ) : popover.list === "set-icd" ? (
+            /* Set ICD single-select — scoped to note codes only */
+            <Menu>
+              <MenuHeader>Link diagnostic code</MenuHeader>
+              {icd10.length === 0
+                ? (
+                  <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>
+                    No codes in this note — add codes in the Diagnostic Codes section.
+                  </p>
+                )
+                : icd10.map((c) => {
+                    const current = orderSets.find((s) => s.id === popover.code)?.relatedIcd;
+                    return (
+                      <MenuItem
+                        key={c.code}
+                        label={c.code}
+                        description={c.description}
+                        selected={c.code === current}
+                        onClick={() => handleSetIcdSelect(c.code)}
+                      />
+                    );
+                  })
+              }
+            </Menu>
+          ) : popover.list === "set-title" ? (() => {
             const q = popoverQuery.toLowerCase();
             const matchesSet = (s: typeof orderSetsPool[0]) => {
               const co = [s.defaultLabCompany, s.defaultImagingCompany].filter(Boolean).join(" ").toLowerCase();
@@ -503,7 +603,6 @@ export default function R2CoChip() {
               (o.baseLabel ?? o.label).toLowerCase().includes(q) || o.detail.toLowerCase().includes(q);
             const adjIdSet = new Set(popover.code ? (orderSetsAdjacent[popover.code] ?? []) : []);
             const adjSets = orderSetsPool.filter((s) => s.id !== popover.code && adjIdSet.has(s.id) && (q === "" || matchesSet(s)));
-            // Children of current set as individual order alternatives
             const currentSet = orderSets.find((s) => s.id === popover.code);
             const seenChildLabels = new Set<string>();
             const childOrders = (currentSet?.children ?? [])
@@ -516,10 +615,7 @@ export default function R2CoChip() {
                 return q === "" || matchesOrder(o);
               });
             const yourSets = orderSetsPool.filter((s) =>
-              s.id !== popover.code &&
-              !adjIdSet.has(s.id) &&
-              !orderSets.some((os) => os.id === s.id) &&
-              (q === "" || matchesSet(s))
+              s.id !== popover.code && !adjIdSet.has(s.id) && !orderSets.some((os) => os.id === s.id) && (q === "" || matchesSet(s))
             );
             const seenOrderLabels = new Set<string>();
             const filteredOrders = ordersPool.filter((o) => {
@@ -535,25 +631,9 @@ export default function R2CoChip() {
               <Menu>
                 <MenuSearch value={popoverQuery} onChange={setPopoverQuery} onClose={() => setPopover(null)} placeholder="Search order sets & orders…" />
                 <div className="overflow-y-auto max-h-[280px]">
-                  {hasSuggested && (
-                    <>
-                      <MenuHeader>Suggested</MenuHeader>
-                      {adjSets.map((s) => <MenuItem key={s.id} label={s.baseLabel} onClick={() => handleSetTitleSelect(s)} />)}
-                      {childOrders.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleSetReplaceWithOrder(o)} />)}
-                    </>
-                  )}
-                  {yourSets.length > 0 && (
-                    <>
-                      <MenuHeader>Your Order Sets</MenuHeader>
-                      {yourSets.map((s) => <MenuItem key={s.id} label={s.baseLabel} onClick={() => handleSetTitleSelect(s)} />)}
-                    </>
-                  )}
-                  {filteredOrders.length > 0 && (
-                    <>
-                      <MenuHeader>All Orders</MenuHeader>
-                      {filteredOrders.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleSetReplaceWithOrder(o)} />)}
-                    </>
-                  )}
+                  {hasSuggested && (<><MenuHeader>Suggested</MenuHeader>{adjSets.map((s) => <MenuItem key={s.id} label={s.baseLabel} onClick={() => handleSetTitleSelect(s)} />)}{childOrders.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleSetReplaceWithOrder(o)} />)}</>)}
+                  {yourSets.length > 0 && (<><MenuHeader>Your Order Sets</MenuHeader>{yourSets.map((s) => <MenuItem key={s.id} label={s.baseLabel} onClick={() => handleSetTitleSelect(s)} />)}</>)}
+                  {filteredOrders.length > 0 && (<><MenuHeader>All Orders</MenuHeader>{filteredOrders.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleSetReplaceWithOrder(o)} />)}</>)}
                   {!hasResults && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No results found</p>}
                 </div>
               </Menu>
@@ -594,54 +674,10 @@ export default function R2CoChip() {
               <Menu>
                 <MenuSearch value={popoverQuery} onChange={setPopoverQuery} onClose={() => setPopover(null)} placeholder="Search orders…" />
                 <div className="overflow-y-auto max-h-[280px]">
-                  {filteredAdj.length > 0 && (
-                    <>
-                      <MenuHeader>Suggested</MenuHeader>
-                      {filteredAdj.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}
-                    </>
-                  )}
-                  {addableSets.length > 0 && (
-                    <>
-                      <MenuHeader>Your Order Sets</MenuHeader>
-                      {addableSets.map((s) => {
-                        const co = [s.defaultLabCompany, s.defaultImagingCompany].filter(Boolean).join(" · ");
-                        return (
-                          <MenuItem
-                            key={s.id}
-                            label={s.baseLabel + (co ? ` (${co})` : "")}
-                            description={`${s.children.length} orders${s.relatedIcd ? ` · ${s.relatedIcd}` : ""}`}
-                            onClick={() => handleAddOrderSet(s)}
-                          />
-                        );
-                      })}
-                    </>
-                  )}
-                  {filteredRest.length > 0 && (
-                    <>
-                      {(filteredAdj.length > 0 || addableSets.length > 0) && <MenuHeader>All Orders</MenuHeader>}
-                      {filteredRest.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}
-                    </>
-                  )}
+                  {filteredAdj.length > 0 && (<><MenuHeader>Suggested</MenuHeader>{filteredAdj.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
+                  {addableSets.length > 0 && (<><MenuHeader>Your Order Sets</MenuHeader>{addableSets.map((s) => { const co = [s.defaultLabCompany, s.defaultImagingCompany].filter(Boolean).join(" · "); return <MenuItem key={s.id} label={s.baseLabel + (co ? ` (${co})` : "")} description={`${s.children.length} orders${s.relatedIcd ? ` · ${s.relatedIcd}` : ""}`} onClick={() => handleAddOrderSet(s)} />; })}</>)}
+                  {filteredRest.length > 0 && (<>{(filteredAdj.length > 0 || addableSets.length > 0) && <MenuHeader>All Orders</MenuHeader>}{filteredRest.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
                   {isEmpty && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No orders found</p>}
-                </div>
-              </Menu>
-            );
-          })() : popover.list === "order-icd" ? (() => {
-            const cur = orders.find((o) => o.id === popover.code)?.relatedIcd;
-            const ph = cur ? `Replace ${cur}…` : "Link ICD-10 code…";
-            const q = popoverQuery.toLowerCase();
-            const mc = (c: CodeItemType) => c.code.toLowerCase().includes(q) || c.description.toLowerCase().includes(q);
-            const visitCodes = icd10.filter((c) => c.code !== cur);
-            const visitCodeSet = new Set(icd10.map((c) => c.code));
-            const fVisit = visitCodes.filter((c) => q === "" || mc(c));
-            const fRest = icd10Pool.filter((c) => !visitCodeSet.has(c.code) && c.code !== cur && (q === "" || mc(c)));
-            return (
-              <Menu>
-                <MenuSearch value={popoverQuery} onChange={setPopoverQuery} onClose={() => setPopover(null)} placeholder={ph} />
-                <div className="overflow-y-auto max-h-[220px]">
-                  {fVisit.length > 0 && (<><MenuHeader>Your current codes</MenuHeader>{fVisit.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleOrderIcdSelect} />)}{fRest.length > 0 && <MenuHeader>Add more codes</MenuHeader>}</>)}
-                  {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleOrderIcdSelect} />)}
-                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
                 </div>
               </Menu>
             );
@@ -673,27 +709,7 @@ export default function R2CoChip() {
                 <MenuItem key={variant.id} label={variant.company ?? ""} onClick={() => handleSetChildCompanySelect(variant)} />
               ))}
             </Menu>
-          ) : popover.list === "set-child-icd" ? (() => {
-            const set = orderSets.find((s) => s.id === popover.setId);
-            const cur = set?.children.find((c) => c.id === popover.code)?.relatedIcd;
-            const ph = cur ? `Replace ${cur}…` : "Link ICD-10 code…";
-            const q = popoverQuery.toLowerCase();
-            const mc = (c: CodeItemType) => c.code.toLowerCase().includes(q) || c.description.toLowerCase().includes(q);
-            const visitCodes = icd10.filter((c) => c.code !== cur);
-            const visitCodeSet = new Set(icd10.map((c) => c.code));
-            const fVisit = visitCodes.filter((c) => q === "" || mc(c));
-            const fRest = icd10Pool.filter((c) => !visitCodeSet.has(c.code) && c.code !== cur && (q === "" || mc(c)));
-            return (
-              <Menu>
-                <MenuSearch value={popoverQuery} onChange={setPopoverQuery} onClose={() => setPopover(null)} placeholder={ph} />
-                <div className="overflow-y-auto max-h-[220px]">
-                  {fVisit.length > 0 && (<><MenuHeader>Your current codes</MenuHeader>{fVisit.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleSetChildIcdSelect} />)}{fRest.length > 0 && <MenuHeader>Add more codes</MenuHeader>}</>)}
-                  {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleSetChildIcdSelect} />)}
-                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
-                </div>
-              </Menu>
-            );
-          })() : (() => {
+          ) : (() => {
             const pool = popover.list === "icd10" ? icd10Pool : cptPool;
             const exclude = popover.list === "icd10"
               ? icd10.map((c) => c.code).filter((c) => c !== popover.code)

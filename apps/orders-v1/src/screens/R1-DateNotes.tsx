@@ -296,7 +296,7 @@ function SetCard({
 
 // ─── Main screen ──────────────────────────────────────────────────────────────
 
-export default function R2Cards() {
+export default function R1DateNotes() {
   const [activeTab, setActiveTab] = useState("diagnostics");
   const [icd10, setIcd10] = useState<CodeItem[]>(initialIcd10);
   const [cpt, setCpt] = useState<CodeItem[]>(initialCpt);

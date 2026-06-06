@@ -232,6 +232,10 @@ Round labels (R1, R2…) and direction labels are arbitrary strings — use what
 
 **Never modify an existing screen to add a new design idea.** Any time the user asks for a new direction, option, iteration, or variation — create a new screen file and register it as a new entry in `App.tsx`. Existing screens must stay untouched so all directions remain comparable side-by-side.
 
+**Keep code and UI in sync.** When a direction or round is renamed, update everything together: the `direction`/`round` string in `App.tsx`, the screen filename, and the component's `export default function` name. The VersionSwitcher label is just display copy — the filename and export name must always reflect the same name so the codebase stays readable and unambiguous.
+
+**New directions go at the end by default.** When adding a new screen, append it after the last existing entry for that round in `App.tsx`. Only insert it at a specific position if the user explicitly asks.
+
 ---
 
 ## Browser Verification
