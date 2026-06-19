@@ -1,0 +1,2263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SpeechAutoTexts xmlns="http://nuance.com/NAS/AutoTextImport">
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Exam - Ankle</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Ankle Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>ANKLE - []LEFT []RIGHT
+
+Visual Inspection: No evidence of surgical scarring, contusion, or erythema. 
+
+Swelling: Not present. 
+
+Palpation: [] 
+
+Achilles Tendon: Intact without fusiform thickening. 
+
+Range of Motion: [] 
+
+Provocative Orthopedic Tests: 
+
+Achilles Tendon 
+Thompson's Test: []Negative for disruption of the Achilles' tendon. 
+- Procedure: The patient lies face down with their feet hanging over the edge of the examination table. The examiner stands behind the patient and squeezes the calf muscles. A normal result is when the foot plantar flexes. A positive result is when there is no plantar flexion, indicating a possible Achilles tendon rupture. (Wang et al 2024) 
+
+Lateral Ligament Complex 
+Anterior Drawer: []Negative for laxity of the anterior talofibular ligament (ATFL). 
+- Procedure: Use one hand to pull the calcaneus forward and use the other hand to push the tibia backward. Evaluate the relative motion between the hands to assess ankle instability. (Wenning et al 2021) 
+
+Inversion Stress/Talar Tilt Test: []Negative for laxity of the calcaneo-fibular ligament.
+- Procedure: The ankle is passively inverted while the patient is seated or laying supine. (Larkins et al 2020) 
+
+Medial Ligament Complex
+Eversion Stress: []Negative for laxity of the deltoid ligament. 
+- Procedure: Patient is supine, side lying, or seated with knee flexed to 90 degrees and the foot relaxed. The distal tibia is stabilized with one hand and the other grasps the calcaneus and applies an abduction force to tilt the talus. Increased talar tilt or pain over the deltoid ligament, when compared bilaterally, indicates a positive test. (Larkins et al 2020) 
+
+High Ankle Sprain
+External Rotation: []Negative for syndesmotic sprain / instability (High Ankle Sprain).  
+- Procedure: With the patient in a seated position, knee at 90 degrees and ankle in a neutral position, external rotation stress is applied to the involved foot and ankle. Positive test produces pain over the anterior and posterior tibiofibular ligaments and interosseous membrane. (Larkins et al 2020) 
+
+Squeeze Test: []Negative for syndesmotic sprain / instability (High Ankle Sprain). 
+- Procedure: The fibula is compressed into the tibia above the midpoint of the calf. Pain in the area of the interosseous ligament and/or supporting structures indicates a positive test. (Larkins et al 2020)
+
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Exam - Cervical</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Cervical Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>CERVICOTHORACIC SPINE
+
+Observation: Unremarkable for erythema or surgical scarring. 
+
+Rust Sign: Not present. 
+
+Palpation: []
+
+Range of Motion: []
+
+Provocative Orthopedic Testing:  
+
+O’Donoghue’s: Passive and resisted movements of the head and neck elicit local neck pain consistent with musculoligamentous injury in the cervical spine. 
+- Procedure: The cervical spine of a seated patient is passively flexed, extended, laterally flexed to both sides, and rotated in both directions with/without patient resistance.
+
+Facet Loading: []Unremarkable. Did not elicit local neck pain or pain referral. 
+- Procedure: Passively rotate and extend the patient’s head/neck. Then apply an axial compressive force.
+
+Disc Loading: []Unremarkable. Did not elicit local neck pain or radicular complaints into the upper extremities. 
+- Procedure: Passively flex the patient’s head/neck. Then apply an axial compressive force. If provocative, repeat with flexion and lateral flexion.
+
+Bakody’s Sign: Not present. Patient experiences relief of symptoms with their hand placed on top of their head.
+
+Dejerine’s Triad: Coughing, sneezing, and straining at stool do not elicit a significant increase in local neck pain or produce pain/paresthesia radiating into the upper extremities.  
+
+Bikele’s Sign: Not present. Abduction and retraction of the upper extremity at the shoulder did not elicit paresthesia consistent with brachial plexopathy. 
+
+ULNTT: Upper limb nerve tensioning test []did not elicit any significant pain or paresthesia extending into the upper extremities. No reflexive guarding was present. 
+- Procedure: Place the patient’s upper extremity in 90 degrees shoulder abduction and 90 degrees of elbow flexion. Passively extend the patient’s elbow and wrist.
+
+Distraction: Negative for nerve root compression, IVF encroachment. 
+- Procedure: Place hands at the base of the occiput and apply an axial decompressive force.
+
+Swallowing Test: Negative for dysphagia. 
+
+Lhermitte’s Sign: Negative for cervical myelopathy. 
+- Description: Brief, electric shock-like sensation that runs down the back and into the limbs when the neck is flexed forward.
+
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Exam - Elbow</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Elbow Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>ELBOW - []LEFT []RIGHT
+
+Visual Inspection: No evidence of surgical scarring, contusion, or erythema. 
+
+Swelling: Not present. 
+
+Contusion: Not present. 
+
+Palpation: []
+
+Range of Motion: []
+
+Provocative Orthopedic Testing: 
+
+ Valgus Stress: []Unremarkable for medial ligament complex laxity.
+- Procedure: Tested with the elbow in slight flexion and full supination the maneuver was negative for laxity of the medial ligament complex. 
+
+Varus Stress: []Unremarkable for lateral ligament complex laxity.
+- Procedure: Tested with the elbow in slight flexion and full pronation the maneuver was negative for laxity of the lateral ligament complex. 
+
+Cozen's: Testing was []negative for lateral epicondylalgia or “Tennis Elbow”. 
+- Procedure: The patient should be seated, with the elbow extended, the forearm maximally pronated, the wrist radially deviated, and hand in a fist. The clinician should stabilize the elbow while palpating the lateral epicondyle and their other hand placed on the dorsum of the patient’s hand. The patient is asked to extend the wrist while the clinician provides resistance. (Karanasios et al 2021) 
+
+Reverse Cozen’s: []Negative for medial epicondylalgia or “Golfer’s Elbow”. 
+- Procedure: The clinician palpates the medial epicondyle and supports the elbow with one hand, while the other hand passively supinates the patient’s forearm and fully extends the elbow, wrist, and fingers. (Dutton 2020) 
+
+Tinel’s Tap: []Negative for ulnar neuropathy. 
+- Procedure: The clinician taps over the ulnar nerve as it passes through the cubital tunnel. (Novak et al 1994) 
+
+Elbow Flexion Test + Pressure Provocation Test: []Negative for ulnar neuropathy. 
+- Procedure: The elbows are maximally flexed with the forearms supinated and the wrists extended. Digital pressure is placed over the ulnar nerve at the cubital tunnel for 10 seconds. (Novak et al 1994)
+
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Exam - Hip</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Hip Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>HIP - []LEFT []RIGHT
+
+Visual Inspection: No evidence of surgical scarring, contusion or erythema. 
+
+Swelling: Not present. 
+
+Contusion: Not present. 
+
+Gait: Normal 
+
+Palpation: []
+
+Range of Motion: []
+
+Provocative Orthopedic Testing: 
+Anvil Test: []Negative for pain consistent with fracture in the lower extremity. 
+- Procedure: Clinician percusses the patient’s calcaneus. 
+
+Faber Test: []Negative for intracapsular/extracapsular hip pain. 
+- Procedure: The leg is placed in a figure-4 position (hip flexed and abducted with the lateral ankle resting on the contralateral thigh proximal to the knee, knee flexed to 90 degrees). While stabilizing the opposite side of the pelvis at the anterior superior iliac spine, an external rotation, abduction, and posterior force is applied to the ipsilateral knee until the end range of motion is achieved. Small-amplitude oscillations can be applied to check for pain provocation at the end range of motion. (Bagwell et al, 2016) 
+
+FADIR Test: []Negative for femoroacetabular impingement and labral lesion. 
+- Procedure: The patient should be lying supine. The affected hip is fully flexed (at least 90 degrees of flexion), adducted, and internally rotated. (Shanmugaraj et al, 2020) (Leibold et al, 2008) 
+
+Ober's Test: []Negative for iliotibial band contracture. 
+- Procedure: The patient should be side lying with the affected side up. Extend and abduct the hip joint. Slowly lower the leg toward the table until motion is restricted. Ensure that the hip does not internally rotate and flex during the test. (Reese et al, 2003) 
+
+Beatty’s Maneuver: []Negative for deep buttock pain due to non-discogenic entrapment of the sciatic nerve in the subgluteal space (deep gluteal syndrome). 
+- Procedure: The patient should be side lying with the affected side up, with the hips and knees flexed. The patient should abduct the hip on the affected side against a downward resistive force. (Beatty, 1994) (Hopayian et al, 2019) 
+
+Trendelenburg: Negative for hip abductor muscle insufficiency (gluteus medius and gluteus minimus) or hip joint dysfunction. 
+- Procedure: The Trendelenburg test is performed by having the patient cross their arms over their chest and lift one leg at a time, while the clinician observes for pelvic drop or knee valgus. (Hardcastle et al, 1985)
+
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Exam - Knee</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Knee Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>KNEE - []LEFT []RIGHT
+
+VISUAL INSPECTION: No evidence of surgical scarring, contusion, or erythema. 
+
+SWELLING: Not present. 
+
+CONTUSION: Not present. 
+
+PALPATION: []
+
+RANGE OF MOTION: []
+
+Provocative Orthopedic Testing: 
+
+Patellar Grind: []Negative for retropatellar pain / chondromalacia. 
+- Procedure: The patient is supine with the involved knee extended. Place the web space of a hand just superior to the patella while applying pressure. The patient is then instructed to contract the quadriceps muscle gently and gradually. (Magee, 2008) 
+
+Valgus Stress: []Negative for MCL laxity. 
+- Procedure: Place one hand at the outside of the knee, acting as a pivot point, while the other hand is placed at the foot. The medial joint line is palpated while an abduction force at the foot and valgus force through the knee are applied. The test may be performed at 0° and 15-20°. (Aronson et al, 2010) 
+
+Varus Stress: []Negative for LCL laxity. 
+- Procedure: A varus stress test is performed by stabilizing the femur and palpating the lateral joint line. The other hand provides a varus stress to the ankle. The test may be performed at 0° and 20-30°. (Petty, 2006) 
+
+Lachman: []Negative for ACL laxity. 
+- Procedure: The patient is in the supine position with their knee in 20-30° flexion. Place one hand behind the tibia and the other on the patient's thigh, then apply an anterior force to the tibia. (Decary et al, 2016) 
+
+Posterior Drawer: []Negative for PCL laxity. 
+- Procedure: The patient is supine with their affected knee flexed to 90°. Kneel on the toes of the extremity being tested to stabilize it. Grasp the proximal lower leg at the tibial plateau/joint line, then apply a posterior force to the lower leg. (Flynn et al, 2008) 
+
+McMurray's: []Negative for meniscal involvement. 
+- Procedure: The patient is supine with the affected knee fully flexed. Place one hand on the knee with thumb on one joint line and fingers on the other joint line. Place the other hand on the foot. From a position of maximal flexion, extend the knee with internal rotation of the tibia and a varus stress at the knee (lateral meniscus). Return to maximal flexion and repeat with external rotation of the tibia and valgus stress at the knee (medial meniscus). (Hegedus et al, 2007) 
+
+Thessaly: []Negative for medial or lateral joint line pain. No sensation of catching or locking. 
+- Procedure: The patient stands flat footed on one leg while the examiner supports the patient by holding their outstretched hands. The patient then flexes the knee to 5° and rotates the femur on the tibia medially and laterally three times. The test is then repeated at 20° flexion. (Decary et al, 2016)
+
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Exam - Lumbar</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Lumbar Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>LUMBOPELVIC SPINE
+
+Observation: Unremarkable for erythema or surgical scarring.
+
+Antalgia Sign: Not present in the seated or standing positions. 
+
+Tripod Sign: Not present. 
+
+Minor's Sign: Not present. 
+
+Palpation: []
+
+Range of Motion: []
+
+Provocative Orthopedic Testing:
+
+Facet Loading: Extension rotation maneuvers []did not elicit significant ipsilateral lower back pain. 
+- Procedure: The patient rotates and extends at the lumbar spine. Ipsilateral pain (facet mediated pain), contralateral pain (sprain/strain), SI joint region pain (SI mediated pain).
+
+Disc Loading: Modified slump test []did not produce any significant lower back pain and did not elicit any significant pain or paresthesia extending into the lower extremities. 
+- Procedure: The patient flexes at the hips, extends at the knees, dorsiflexes the feet, flexes the neck / back. Then the patient performs a Valsalva maneuver.
+
+Dejerine's Triad: Coughing, sneezing, and straining at stool do not elicit a significant increase in local lower back pain or produce pain/paresthesia radiating into the lower extremities.  
+
+Sacroiliac and/or Hip Joint Tests:
+Fortin Finger Test: The patient []did not point directly to their SI joint as the epicenter of their lower back pain.
+- Procedure: The patient is asked to localize the area of their lower back pain using one finger. A positive test is when the patient identifies the painful region as the posterior superior iliac spine (PSIS), or within 2 cm, using one finger. (Murakami et al, 2008)
+
+PA Sacroiliac Compression: []Did not produce significant pain in the SI joint region. 
+- Procedure: With the patient prone, apply a compressive force over the sacral base.
+
+Hibb’s: []Negative for SI involvement or hip joint proper complaints. 
+- Procedure: With the patient prone, flex their knee to 90 degrees and internally rotate their hip.
+
+Lateral Sacroiliac Compression: []Did not produce significant pain in the SI joint region. 
+- Procedure: With the patient side-lying, apply a compressive force over the ilium.
+
+Fabere’s: []Negative for SI involvement or hip joint proper complaints. 
+- Procedure: The leg is placed in a figure-4 position (hip flexed and abducted with the lateral ankle resting on the contralateral thigh proximal to the knee, knee flexed to 90 degrees). While stabilizing the opposite side of the pelvis at the anterior superior iliac spine, an external rotation, abduction, and posterior force is applied to the ipsilateral knee until the end range of motion is achieved. Small-amplitude oscillations can be applied to check for pain provocation at the end range of motion. (Bagwell et al, 2016)
+
+AP Thigh Thrust: []Negative for SI involvement or hip joint proper complaints. 
+- Procedure: With the patient supine, flex the patient's hip and knee. With one hand on the patients knee and the other below the ipsilateral SI joint, apply a posterior force at the knee.
+
+Nerve Tension Tests:  
+Seated SLR: []Negative for pain radiation into the posterior lower extremities. 
+- Procedure: Flex the patient’s hip, extend the knee, and dorsiflex the ankle.
+
+Supine SLR: []Negative for pain radiation into the posterior lower extremities. 
+- Procedure: Place one hand on the patient's knee. With the other hand, grasp the patient's ankle/heel. Lift the patient's leg, maintaining knee extension.
+
+Femoral Nerve Stretch: Negative for pain radiating along the anterior thigh in a femoral nerve distribution. 
+- Procedure: The patient should be prone. Flex the knee and externally rotate the hip.
+
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Exam - Shoulder</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Shoulder Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>SHOULDER- []LEFT []RIGHT 
+
+Visual Inspection: No evidence of surgical scarring or erythema. No evidence of atrophy in the supraspinatus or infraspinatus regions. 
+
+Scapular Winging: Not present. 
+
+Swelling: Not present. 
+
+Contusion: Not present. 
+
+Palpation: []
+
+Range of Motion: []
+
+Provocative Orthopedic Testing: 
+
+Glenohumeral Joint Capsule
+Posterior Load Shift Test []was negative for posterior laxity. 
+- Procedure: The patient should be seated. The therapist stabilizes the scapula to the thorax with one hand, while the other hand is placed across the posterior GH joint line and humeral head, and the web space across the patient's acromion. The index finger should be over the anterior GH joint line. The clinician should now apply a "load and shift" of the humeral head across the stabilized scapula in an anteromedial direction to assess anterior stability, and in a posterolateral direction to assess posterior instability. Normal motion anteriorly is half of the distance of the humeral head, more movement is considered to be a sign of GH joint laxity. (Dutton 2008) 
+
+Anterior Apprehension Test []was negative for anterior instability. 
+- Procedure: The patient should be in the supine position. The therapist will flex the patient's elbow to 90 degrees and abducts the patient's shoulder to 90 degrees in sagittal plane and 180 degrees in frontal plane (horizontal abduction), maintaining neutral rotation. The examiner then slowly applies an external rotation force to the arm to 90 degrees while carefully monitoring the patient. Patient apprehension from this maneuver, not pain, is considered a positive test. Pain with the maneuver, but not apprehension may indicate a pathology other than instability, such as posterior impingement of the rotator cuff. (Flynn et al 2008) 
+
+Jobe Anterior Relocation Test []was negative for anterior instability. 
+- Procedure: The patient lies supine on an examination table. The shoulder is abducted to 90 degrees, and the elbow is flexed to 90 degrees. The therapist applies an external rotation force to the shoulder. If the patient reports apprehension, the Apprehension Test is considered positive. The therapist then applies a posteriorly directed force to the shoulder. If the patient's apprehension or pain decreases, the Jobe Relocation Test is considered positive. It's crucial to return the arm to a neutral position before releasing the posterior force to prevent shoulder dislocation. (Speer et al 1994) 
+
+Caudal Glide []was negative for production of a "Sulcus Sign" (multidirectional laxity). 
+
+AC Joint
+AC Shear []was negative. 
+- Procedure: The patient is in the sitting position. Then examiner cups the hands over the shoulder with one hand on the clavicle and one hand on the scapular spine. Then squeeze the heels of the hands together. A positive test will result in abnormal movement at the acromioclavicular joint. (Davies et al 1981) 
+
+Labrum 
+O'Brien's []was negative for deep pain (labral involvement). Testing []was negative for superficial pain (AC involvement). 
+- Procedure: The upper extremity to be tested is placed in 90° of shoulder flexion and 10-15° of horizontal adduction. The patient then fully internally rotates the shoulder and pronates the elbow. The examiner provides a distal stabilizing force as the patient is instructed to apply an upward force. The procedure is then repeated in a neutral shoulder and forearm position. A positive test occurs with pain reproduction or clicking in the shoulder with the first position and reduced/absent with the second position. (O'Brien et al, 1998)
+
+Crank Test []was negative for deep intracapsular pain and/or crepitus. 
+- Procedure: The patient is sitting upright with the arm abducted to 90° and in the scapular plane. The examiner stands adjacent to the affected shoulder holding the flexed elbow or forearm. Joint load is applied along the axis of the humerus with one hand while the other hand performs humeral rotation. (Hattem et al, 2010)  
+
+Rotator Cuff
+External rotation lag sign []was not present. 
+- Procedure: The patient is seated, and the elbow is passively flexed to 90 degrees while the shoulder is held at 20 degrees elevation in the scapular plane in a position of near maximum external rotation (i.e., maximum external rotation minus five degrees to avoid an elastic recoil effect). If the patient is able to hold this position, this indicates a negative test. For a positive test however, the patient would not be able to hold this position and their arm may spring back anteriorly, indicating possible tearing or weakness of the teres minor, and infraspinatus, and possibly the supraspinatus. (Hertel et al, 1996) 
+
+Dynamic Isokinetic Manipulation Evaluation (DIME Test) []did not demonstrate significant pain and/or weakness. 
+- Procedure: The patient is asked to straighten and internally rotate their arm, then elevate it into full horizontal abduction in the coronal plane (straight out to the side then up). The clinician grasps the patient’s wrist then forcefully adducts the patients arm back to their thigh in a smooth 5-second arc as the patient maximally resists. The same maneuvers are repeated in the scapular plane (45 degrees forward). Pain or weakness during DIME testing in the coronal or scapular plane demonstrates very high sensitivity for full thickness rotator cuff tear. (Abraham et al, 2020). 
+
+Subscapularis Isolation (Bear Hug Test) []was negative. 
+- Procedure: The patient places the hand on the opposite shoulder while the examiner attempts to lift it off. The test is positive if the patient cannot keep the hand on the opposite shoulder (J. Barth et al, 2006). 
+
+Infraspinatus Isolation (Patte's Test) []was negative. 
+- Procedure: The examiner supports the arm in 90 degrees of abduction along the scapular plane with the elbow bent 90 degrees. The examiner opposes external rotation and compares to contralateral side (Patte et al, 1988). 
+
+Biceps Tendon 
+Speed's Test []was negative for bicipital tendon involvement. 
+- Procedure: The examiner places the patient's arm in shoulder flexion, external rotation, full elbow extension, and forearm supination; manual resistance is then applied by the examiner in a downward direction. The test is considered to be positive if pain in the bicipital tendon or bicipital groove is reproduced. (Dutton, M., 2008) 
+
+Yergason's Test []was negative for bicipital tendon involvement. 
+- Procedure: The patient should be seated or standing in the anatomical position, with the humerus in a neutral position and the elbow in 90 degrees of flexion in a pronated position. The patient is asked to externally rotate and supinate their arm against the manual resistance of the therapist produced by wrapping the hand around the distal forearm (just above the wrist joint). (Dutton, M., 2008)
+
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Exam - Thoracic</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Thoracic Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>THORACIC SPINE
+
+Observation: Unremarkable. No evidence of spinal deformity / scoliosis.
+
+Palpation: []
+
+Range of Motion: []
+
+Provocative Orthopedic Testing
+
+Adam's Sign: Unremarkable for structural scoliosis. 
+- Procedure: In a standing position, the patient actively flexes forward (i.e. to touch toes). Clinician observes the thoracolumbar spine for evidence of scoliosis.
+
+Chest Expansion: Normal. No evidence of Ankylosing Spondylitis. 
+- Procedure: The examiner ‘s hands are placed spanning the posterolateral segment of both lung bases, with the thumbs touching in the midline posteriorly (at full expiration), both the sides should move equally with 3 - 5cm being the normal displacement.
+
+Schepelmann's: []No evidence of intercostal neuritis or intercostal myofasciitis. 
+- Procedure: Active thoracic lateral flexion. Ipsilateral pain is consistent with intercostal neuritis. Contralateral pain is consistent with myofasciitis.
+
+Sternal Compress: Negative for sternal, costosternal, or rib cage injury. 
+- Procedure: The patient should be seated with their hands placed over their sternum. The clinician then places one hand over the patient's hands and their other hand on the patient’s back, then applies a compressive force.
+
+AP/Lat Ribcage: Negative for occult rib cage fracture. 
+- Procedure: The patient should be seated with their hands placed over their ribs laterally. The clinician places a hand over each of the patient's hands and applies a compressive force.
+
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Exam - Wrist</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Wrist Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>WRIST - []LEFT []RIGHT
+
+Visual Inspection: No evidence of surgical scarring, contusion or erythema. No visible atrophy of the thenar or hypothenar eminences. 
+
+Swelling: Not present. 
+
+Contusion: Not present. 
+
+Palpation: []
+
+Range of Motion: []
+
+Provocative Orthopedic Testing: 
+
+Tinel's Tap: []Negative at the carpal and cubital tunnels. 
+- Procedure: The clinician taps over the ulnar nerve as it passes through the cubital tunnel and tunnel of Guyon. The clinician also taps over the median nerve as it passes through the carpal tunnel. (Valdes et al, 2013) 
+
+Finkelstein Test: []Negative for deQuervain's. 
+- Procedure: The patient actively flexes thumb maximally and wraps fingers over thumb, making a fist. The patient ulnar deviates the wrist to stretch the muscles of the 1st extensor compartment. If testing is negative, the clinician may passively further flex the thumb. The test is positive if the patient reports pain over the radial styloid process. (Dawson et al, 2010)
+
+Pisiform Boost Test: []Negative for medial/ulnar sided wrist pain.
+-Procedure: The clinician passively moves the patient’s wrist into ulnar deviation and back to neutral. Next, the clinician applies manual thumb pressure over the pisiform and repeats ulnar deviation. Minimal pain with passive deviation but increased, localized ulna fovea pain with digital pressure suggests a triangular fibrocartilage complex (TFCC) lesion with 0.91 sensitivity. (Robb and Rust, 2023)
+
+Phalen's: []Negative for carpal tunnel syndrome. 
+- Procedure: The patient is asked to push the dorsal surface of their hands together and hold this position for up to 30-60 seconds. (Magee, 2002) 
+
+Reverse Phalen's: []Negative for carpal tunnel syndrome. 
+- Procedure: The patient maintains a position of full wrist and finger extension for up to two minutes. (Magee, 2002) 
+
+Froment's Sign: []Negative for ulnar nerve palsy. 
+- Procedure: A patient is asked to hold an object, usually a flat object such as a piece of paper, between their thumb and index finger (pinch grip). The examiner then attempts to pull the object out of the subject's hands. (Konin et al, 2006) 
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Discussion - Final Resolved</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Final Resolved</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient underwent final evaluation and was released from formal care today. The patient appears to have returned, or is rapidly approaching, their preinjury status.
+ 
+The patient's mechanism of injury, subjective complaints, objective findings, and overall course of treatment was consistent and causally related to the motor vehicle collision in question. All treatment rendered was medically necessary and the charges for treatment were within the usual and customary range for the Southern Nevada region.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Discussion - Final Residuals</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Final Residuals</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient underwent final evaluation and was released from formal care today. Unfortunately, they are still experiencing residual pain and/or deficits. []
+ 
+The patient's mechanism of injury, subjective complaints, objective findings, and overall course of treatment was consistent and causally related to the motor vehicle collision in question. All treatment rendered was medically necessary and the charges for treatment were within the usual and customary range for the Southern Nevada region.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Discussion - Time</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Time</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>We spent [] minutes performing pre-evaluation planning (review of diagnostic tests/reports, demographics, collecting/grading outcome measures, gathering vital signs, and/or case information). We spent [] minutes face to face with the patient (Reviewing their history, performing an examination, performing clinical special tests, counseling the patient on their injury, mutually developing a treatment plan, and/or ordering diagnostic tests). We spent [] minutes performing post-evaluation activities (Documenting the visit, plan of care development, treatment program design/development, and/or care coordination with patient and/or other HC providers).
+
+Total time spent for this visit was [] minutes.
+
+
+Caveat: Please note that my documentation in this electronic health record may have been produced using speech recognition software and, therefore, may contain errors or omissions related to that software. These could include grammar, punctuation and spelling errors or the inclusion/exclusion of words or phrases that were not intended. Please contact me directly for any clarifications, questions or concerns.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Discussion - Central Sensitization</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Central Sensitization</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>During the course of my history and examination, the patient exhibited a clinical presentation consistent with central sensitization. We had the patient fill out The Central Sensitization Inventory (CSI) questionnaire. 
+ 
+Central Sensitization is a condition of the nervous system that is associated with the development and maintenance of chronic pain. When central sensitization occurs, the nervous system gets regulated in a persistent state of high reactivity. This persistent, or regulated, state of reactivity subsequently comes to maintain pain even after the initial injury might have healed. Central Sensitization is frequently present in various chronic musculoskeletal pain disorders, including chronic whiplash associated disorders (Curatolo et al., 2001). The presence of central sensitization in patients with musculoskeletal pain implies an increased complexity of the clinical picture (Nijs et al., 2009), as well as decreased odds for a favorable rehabilitative outcome (Jull et al., 2007). Central sensitization has two main characteristics, both involve a heightened sensitivity to pain and the sensation of touch. They are called "allodynia" and "hyperalgesia". 
+ 
+It must be noted that Central Sensitization is not a conscious pain behavior on the part of the patient. As noted by the National Institute of Health manuscript (J Pain 2009):
+ 
+"Because CS results from changes in the properties of neurons in the CNS, the pain is no longer coupled, as acute nociceptive pain is, to the presence, intensity, or duration of noxious peripheral stimuli. Instead, CS produces pain hypersensitivity by changing the sensory response elicited by normal inputs, including those that usually evoke innocuous sensations."</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Outcome Measure - Neck Disability Index</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert NDI</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The Neck Disability Index Questionnaire (NDI): 
+The NDI (Vernon &amp; Mior, 1991) is a 10-question survey that can be quickly administered and scored. Questions relate to various aspects of function and behavior (pain intensity, sleeping, personal care, travel, work, recreation, frequency of pain, lifting, walking, and standing), in regard to the neck. This self-report questionnaire is considered a valid measure of an individual’s perceived disability. Each of the 10 questions has 6 answer choices -- the patient chooses one. The answer choices are on a scale with values from 0-5. All answers added, then multiplied by 2 to give a percentage disability (final index). The final index score is then compared to the following categories: 0-9% no disability, 10-28% mild disability, 30-48% moderate disability, 50-68% severe disability, and 70-100% complete disability.
+
+The patient scored:
+- []: []%
+</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Outcome Measure - Revised Oswestry Lower Back Pain Questionnaire</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Oswestry Low Back</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Revised Oswestry Lower Back Pain Questionnaire: 
+The Revised Oswestry Lower Back Pain Questionnaire (N. Hudson, K. Tome, A. Breem, 1989) is a 10-question survey that can be quickly administered and scored. Questions relate to various aspects of function and behavior (pain intensity, personal care, lifting, walking, sitting, standing, sleeping, social life, traveling, changing degree of pain), regarding the low back. This self-report questionnaire is considered a valid measure of an individual’s perceived disability. Each of the 10 questions has 6 answer choices -- the patient chooses one. The answer choices are on a scale with values from 0-5. All answers added, then multiplied by 2 to give a percentage disability (final index). The final index score is then compared to the following categories: 0-9% no disability, 10-28% mild disability, 30-48% moderate disability, 50-68% severe disability, and 70-100% complete disability.
+
+The patient scored:
+- []: []%</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Outcome Measure - QuickDASH</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert QuickDASH</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>QuickDASH: 
+The QuickDASH is a self-report questionnaire (11 items) that measures physical function and symptoms in people with musculoskeletal disorders of the upper limb. The questionnaire also records symptoms as well as activity performance. It can be used to assess any or all joints in the upper limb. The maximum disability score for the QuickDASH is 100. Therefore, higher scores indicate greater severity of disability. 
+ 
+The patient scored:
+- []: []%</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Outcome Measure - Lower Extremity Functional Scale</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Lower Extremity Functional Scale</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Lower Extremity Functional Scale (LEFS):
+The LEFS (Binkley et al 1999, Salaffi et al 2004, Gabel et al, 2014) is scored on a scale of 0 to 80, with higher scores indicating better lower limb function. The interpretation of the scores can be based on the following categories:
+     • 0-20: Severe functional limitation
+     • 21-40: Moderate functional limitation
+     • 41-60: Mild to moderate functional limitation
+     • 61-80: Minimal functional limitation or normal function
+ 
+Normal scores for the LEFS may vary depending on the patient population and the specific lower limb condition being assessed. However, scores in the range of 61-80 are generally considered normal or indicative of minimal functional limitation. Scores in the range of 41-60 may indicate mild to moderate functional limitation, while scores in the range of 20-40 may indicate moderate to severe functional limitation. Scores of 0-20 indicate severe functional limitation. 
+
+The patient scored:
+- []: []/80</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Outcome Measure - Post Concussion Symptom Scale</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert PCSS</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Post Concussion Symptom Scale (PCSS): 
+This patient is exhibiting signs and symptoms consistent with a concussion/TBI. A PCSS was administered to more closely evaluate their current status. A concussion is a mild traumatic brain injury (TBI) that may cause a range of physical and cognitive symptoms. The PCSS is essentially a "current state" measure of the patient's concussive symptoms. The patient is asked to report the "current" experience of symptoms on a scale of 0-6. There are 22 symptoms overall with a possible total score of 132. The scoring allows tracking of symptoms during treatment intervals. The PCSS can be utilized as an outcome measure to demonstrate improvement or lack of improvement. 
+ 
+The patient scored:
+- []: []/132, []/22
+</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Outcome Measure - Central Sensitization Inventory</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert CSI</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Central Sensitization Inventory (CSI): 
+Part A of the CSI assesses 25 health-related symptoms that are common to central sensitization syndrome, with total scores ranging from 0-100. Part B (which is not scored) asks if the patient has previously been diagnosed with one or more specific disorders, including 7 separate Central Sensitivity Syndromes (Neblett et al. The central sensitization inventory (CSI): establishing clinically significant values for identifying sensitivity syndromes in an outpatient chronic pain sample. J Pain. 2013 May;14(5):438-445). 
+  
+For Part A, a CSI score equal or greater than 40 is consistent with central sensitization.
+ 
+The patient scored:
+- []: []/100</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Concussion - CC</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Concussion Chief Complaints</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient presents for evaluation of TBI/Concussion. They reported the following concussion related symptoms on their Post-Concussion Symptom Scale:
+
+• Mild: []
+
+• Moderate: []
+
+• Severe: []</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Concussion - Clinical Impressions</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Concussion Clinical Impressions</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Related to [] MVC ([]):
+1. Traumatic Brain Injury (TBI) / Concussion
+• Physiologic Concussion
+- Schedule BCTT
+
+• Vestibulo-Ocular Concussion
+- Schedule Vestibulo-Ocular Exam
+ 
+
+Complicating Factors / Comorbidities:
+1. []
+2. []</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Concussion - Cranial Nerves</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Concussion Cranial Nerves</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>OLFACTORY:
+Patient has not noticed any changes in smell or taste.
+    • Notation: Unilateral anosmia indicates cortical lesion on ipsilateral side).
+ 
+
+OPTIC:
+Visual acuity has not reportedly changed since the incident. Confrontation (peripheral vision) is intact.
+ 
+
+OCULOMOTOR:
+PERRL. Photosensitivity present.
+
+Convergence: [] cm
+    • Notation: Convergence Insufficiency has been shown to identify patients at risk of prolonged recovery from concussion (Duprey et al. 2017).
+
+    • Notation: It is a common sign for one pupil to be dilated compared to the other (Anisocoria) and to not react well to light with the dilated pupil typically on the side of impact (related to sympathetic response following concussion; if this has not resolved after 2 hours refer to ER to rule out increased intracranial pressure).
+ 
+
+III, IV, and VI
+Cardinal planes of gaze (H-Pattern) was performed []well with smooth pursuit. There was no report of diplopia and no evidence of nystagmus.
+ 
+
+TRIGEMINAL:
+Normal facial expressions and facial sensation. Muscles of mastication were +5/5. 
+ 
+
+FACIAL:
+Patient was able to smile and raise eyebrows symmetrically.
+
+
+VESTIBULOCOCHLEAR:
+Hearing was grossly intact to finger rub.
+    • Notation: If hearing loss is suspected, Rinne's and Weber's are performed with a 512 Hz tuning fork to differentiate between conductive vs. sensorineural hearing loss.
+ 
+
+IX and X
+There was symmetrical elevation of the palatine arch. Patient able to say “AH” and then swallow. 
+ 
+
+SPINAL ACCESSORY:
+Shoulder elevation was performed well.
+ 
+
+HYPOGLOSSAL:
+Tongue protruded in the midline without evidence of atrophy or fasciculations.
+ 
+
+PYRAMIDAL TRACT:
+Pronator Drift: Patient's eyes were closed, shoulders flexed to 90° with the palms up. This was performed for 20-30 seconds. There was no pronation or drop.
+    • Notation: If hand/arm pronates or drops there is a contralateral pyramidal lesion (UMNL).
+
+Hoffman's: Hoffman's pathologic reflex was not present.
+ 
+
+CEREBELLAR:
+Finger-Nose: Unremarkable for dysmetria, overshooting, or intention tremor.
+
+Finger-Finger: Unremarkable for dysmetria, overshooting, or intention tremor.
+
+Romberg's: Romberg’s was performed well. 
+    • Notation: Romberg’s is positive if the patient falls or steps when the eyes are closed. Swaying indicates proprioception correction.
+
+    • Romberg’s assesses:
+          - Cerebellar Function: Frequently poor balance with eyes open and closed.
+          - Proprioception: Frequently do worse with eyes closed.
+          - Vestibular System: Frequently do worse with eyes closed.
+
+Tandem Gait: Negative for ataxia
+
+Coordination: Overall coordination appeared within normal limits.
+
+Rapid Alternating: Rapid Alternating Movements were performed well indicating no evidence of dysdiadochokinesia.
+</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Concussion - History</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Concussion History</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>MECHANISM OF INJURY: []
+ 
+DIRECT HEAD TRAUMA: []
+
+LOSS OF CONSCIOUSNESS: []
+ 
+
+AMNESIA:
+• Retrograde: Patient had adequate memory just prior to the incident.
+• Anterograde: Patient has adequate memory following the incident.
+
+
+EXERTION:
+• Physical Activity: []Symptoms worsen
+• Cognitive Activity: []Symptoms worsen
+
+
+RED FLAGS:
+• Slurred Speech: []No
+• Severe / Worsening HA: []No
+• Can't Recognize People: []No
+• Decreasing Consciousness: []No
+• Seizures: []No
+• Increasing Confusion: []No
+• Increasing Drowsiness: []No
+• Signs of Skull Fracture: []No
+• Vomiting x 2: []No
+• Unusual Behavior Change: []No
+• GCS &lt; 15: []No
+  
+
+CONCUSSION HISTORY: []None
+
+
+MEDICATIONS:
+• Anticoagulants: No
+• Antiplatelets: No
+    - Notation: There is increased risk of bleeding even with full GCS and no red flags (Uccella et al. 2017).
+  
+
+COMPLICATING FACTORS:
+• Behavioral Disorder: No prior diagnosis of ADHD
+• History of Headaches: []No prior history of significant headaches.
+• History of Anxiety: []None
+• History of Depression: []None
+• History of Sleep Disorder: []None
+• History of Mental DX: []None</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>PPD No Show - Missed Appointment</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert PPD No Show</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>[] was scheduled for a PPD exam on []. All records and diagnostic results provided were reviewed. Due to not showing up, rescheduling, or canceling without the required 24 hour notice, the fee for Failure of an Injured Employee to Appear for Appointment has been assessed.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Concussion - Observation</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Concussion Observation</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>OBSERVATION
+[]Unremarkable for laceration, contusion, or erythema. No obvious hypotonia.
+  
+New Orleans Criteria (Steill et al. 2005):
+• CT/MRI may be indicated for patients with minor head injury with any one of the following:
+     - Headache
+     - Vomiting
+     - Older than 60 years
+     - Drug or alcohol intoxication
+     - Persistent anterograde amnesia
+     - Visible trauma above the clavicle
+     - Seizure
+
+Notation: MRI looks at structure of the brain, which is normal in the majority of concussions (McCrory et al. 2017). 
+  
+A prospective large-scale study demonstrated “less than 1% of sport-related concussions are associated with acute injury findings on qualitative structural MRI, providing empirical support for clinical guidelines that do not recommend use of MRI following sport-related concussion.” (Klein et al, 2018)
+  
+
+SKULL FRACTURE: 
+There was no Battle Sign (visible ecchymosis around the mastoid), Racoon eyes, hemotympanum, or CSF (otorrhea or rhinorrhea).
+  
+
+PALPATION: 
+Palpation of the head revealed []no evidence of focal tenderness.
+  
+
+SPEECH:
+No evidence of dysphasia (difficulty with speech), dysphonia (unable to sustain normal speech tone or volume), or dysarthria (words not formed properly)
+  
+
+MENTAL STATUS: Alert and oriented x 4.
+Short Term: Short term memory appears intact.
+Long Term: Long term memory appears intact.
+  
+
+GAIT:
+No evidence of a Parkinsonism Gait (shuffling, stooped with no arm swing), Marche a petite pas (upright shuffling gait with normal arm swing), wide based gait (spinal stenosis or cerebellar ataxia) or asymmetrical gait (e.g., orthopedic gait, Trendelenburg, hemiplegia).</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Concussion - Orthostatic Vitals</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Concussion Orthostatic Vitals</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Supine BP: []
+Supine HR: []
+  
+Standing BP: []
+Standing HR: []
+ 
+Dizziness: []No
+Lightheadedness: []No
+ 
+Notation: Autonomic dysregulation is common after a head injury and may present with symptoms of orthostatic hypotension (OH), dizziness or vestibular dysfunction, Postural Orthostatic Tachycardia Syndrome (POTS), or altered HR and BP responses at rest and during exercises (Halder et al. 2018).
+ 
+Orthostatic Hypotension:
+• &gt; 20 mmHg reduction in systolic BP or;
+• &gt; 10 mmHG reduction in diastolic BP after 1-3 minutes of standing from supine position.
+• Prevalence of OH 5%-30% in non-concussed patients; BP change only clinically significant when accompanied by dizziness or lightheadedness.
+ 
+POTS:
+• Form of dysautonomia characterized by sustained tachycardia (HR &gt; 100 bpm) that occurs upon standing.
+• Age related Diagnostic Criteria for POTS:
+     - Age 12-19: HR increase &gt; 40 bpm, or; sustained orthostatic HR &gt; 120 bpm; &lt; 20/10 mmHg change in BP.
+     - Age &gt;19: HR increase &gt; 30 bpm, or; sustained orthostatic HR &gt; 120 bpm; &lt; 20/10 mmHg change in BP.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Concussion - Recommendations</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Concussion Recommendations</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient underwent initial evaluation for a concussion / TBI which occurred on []. The mechanism of injury was described as a []. Based on my evaluation today I am making the following recommendations:
+ 
+1. Patient given Concussion Recovery Diet.
+
+2. Patient will be scheduled for BCTT. In the meantime, I have instructed the patient to increase resting heart rate 10 bpm for 20 minutes each day (then 15-20 bpm if tolerated). Patient instructed to discontinue the exercise if symptoms significantly worsen. 
+
+3. Patient will be scheduled for Vestibulo-Ocular Exam in the near future.
+
+4. Patient will be scheduled for neurologic comanagement.
+
+[]
+ 
+
+Traumatic Brain Injury (TBI) / Concussion
+The patient has been diagnosed with a Traumatic Brain Injury (TBI) / Concussion. TBI can be caused by either a direct blow to the head, face, neck or elsewhere on the body with an impulsive force transmitted to the head. TBI typically results in the rapid onset of short-lived impairment of neurological function that may resolve spontaneously. In some cases, signs and symptoms evolve over a number of minutes to hours. Acute clinical signs and symptoms largely reflect a functional disturbance rather than a structural injury. As such, no abnormalities may be seen on standard structural neuroimaging (McCrory et al. 2017). 
+ 
+TBI can result in a range of clinical signs and symptoms that may or may not involve loss of consciousness (LOC). In fact, only about 10% of concussions (TBI) involve LOC. Resolution of the clinical and cognitive features typically follows a sequential course. In some cases symptoms may be prolonged (McCrory et al. 2017). When symptoms are prolonged greater than 30 days, the diagnosis should evolve to Persistent Concussive Symptoms (PCS).
+ 
+The following represents the Diagnostic Criteria for evaluation of TBI:
+ 
+• Mechanism of Injury
+ 
+• Any one of the following symptoms (Acute Concussion Evaluation [ACE], Geioia et al, 2006):
+ 
+     - Physical: Headache, nausea, vomiting, balance problems, dizziness, visual problems, fatigue, sensitivity to light (photophobia), sensitivity to noise (phonophobia), and numbness/tingling.
+ 
+     - Cognitive: Feeling mentally foggy, feeling slowed down, difficulty concentrating, and difficulty remembering.
+ 
+     - Emotional: Irritability, sadness, more emotional, nervousness.
+ 
+     - Sleep: Drowsiness, sleeping less than usual, sleeping more than usual, trouble falling asleep.
+
+• We utilize the Post-Concussion Symptom Scale (PCSS), which is an outcome measure that assesses physical, cognitive, sleep, and emotional symptoms. We have included the patient's current PCSS scores above. We will utilize the PCSS to track the patient's TBI recovery.
+ 
+A neurologic evaluation was also performed in order to assess the need for neuroimaging to exclude a more severe brain injury (e.g., structural abnormality). 
+ 
+It should be noted that the following factors are predictors for prolonged recovery (McCrea et al. 2013; Rabanowitz et al. 2015):
+     - Pre-existing Anxiety
+     - Depression
+     - High Symptoms Scores
+     - Older Age
+     - Female
+     - Lack of Patient Education Following Injury
+     - Missed Diagnosis by HCP
+  
+Therefore, in this case the patient was appropriately diagnosed and educated on TBI's (McCrea et al. 2013).</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Initial - Clinical Impression</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Initial Clinical Impression</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Related to [] MVC ([]):
+ 
+1. Headache
+•
+•
+
+2. Cervicothoracic musculoligamentous injury
+•
+•
+
+3. Lumbar musculoligamentous injury
+•
+•
+
+4. []
+
+5. []
+ 
+
+Complicating Factors / Comorbidities:
+1. []
+2. []</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Initial - Discussion</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Initial Discussion</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Discussion:
+The patient was involved in a motor vehicle collision dated []. Clinical examination revealed the above clinical impressions.
+
+At this juncture, I am concerned with the patient’s []
+
+Treatment Plan: 
+Treatment at our facility may consist of instrument assisted or manual joint manipulation, appropriate physiotherapy modalities, deep tissue myofascial release, and rehabilitation exercises. Treatment frequency will initially be 3x/wk. As the patient demonstrates subjective and objective improvement the treatment frequency will taper and transition to become more active and less passive. This will be addressed with appropriate rehabilitative stretching and strengthening protocols. Outcome measures will be utilized to help assess patient progress, as well as functional improvement in reference to activities of daily living. Update examination will be performed within the next 3-4 weeks. With injuries of this nature, there is an inherent weakness in the injured regions.  
+
+[]The patient was instructed to utilize moist heat and/or cryotherapy at home, with specific details described in the Whiplash: Patient Information Sheet handout.
+
+Treatment Rendered: 
+Today, the patient underwent application of moist heat with interferential current which decreases pain, swelling and spasm. Joint manipulation may be implemented once appropriate imaging has been reviewed to rule out contraindications and with the patients stated consent. 
+
+Causation: 
+Prior to this collision the patient was in a []normal state of good health without any pain, pain related issues or functional loss associated with the above clinical impressions. The patient indicated the etiology of the pain and injuries were from the MVC in question[] and there was no lapse in care to address. The reported injury mechanism and trauma biomechanics are consistent with the reported symptoms and exam findings. The patient has no suspected contributory co-morbidity issues and gave good consistent effort, was a good historian, and there were no signs of symptom magnification or pain fixation in the history, observation or exam. 
+
+Handout: 
+The patient was given information on whiplash type injuries (see attached Whiplash: Patient Information Sheet) with emphasis on stages of healing and treatment, as well as instructions for home based self-care measures.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Initial - Examination</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Initial Examination</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>GENERAL EXAMINATION
+
+Psychiatric: Mood and affect were appropriate. Alert and oriented x 4. No short-term memory deficits.
+Skin: No cyanosis. Normal turgor. 
+Neck: No thyroid enlargement. 
+Lymphatics: No lymphadenopathy in the anterior or posterior cervical chains.
+Respiratory: Normal respiratory effort. Normal chest expansion with deep inspiration.
+ENT &amp; Mouth: Exterior inspection of ears and nose was unremarkable. Hearing grossly intact. Normal lips, teeth and gums.
+Cardiovascular: No jugular distention. No peripheral edema.
+
+
+NEUROLOGIC
+
+Reflexes: Deep tendon reflexes were graded 2+ for the upper and lower extremities. []Hoffman’s and Babinski’s pathologic reflexes were not present.
+
+Sensation: Perception of []pin prick and light touch was normal throughout the upper and lower extremities.
+
+Motor: Voluntary motor function was normal in all extremities. There was []no evidence of atrophy or fasciculations. Strength was graded []5/5 throughout.
+
+
+[]</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Initial - History</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert initial history</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient was the restrained [] of a [] involved in a collision on []. []Description of Collision. The patient’s vehicle was pushed []forward but []did not impact any other object or vehicle. The patient was []unaware of the impending collision and []did not brace prior to impact. There was []no airbag deployment at the patient's position in the vehicle. The patient's head and neck []were in a neutral position at the moment of impact. Immediately following the collision, the patient was experiencing [].
+ 
+[]EMS arrived at the scene of the collision and [].
+ 
+The patient has []not been evaluated by any other providers prior to presenting to our office today. They have been treating their symptoms at home with [] in an attempt to alleviate their symptoms. Unfortunately, their symptoms have persisted, and they present to our office today for further evaluation and treatment recommendations.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Initial - Plan</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Initial Plan</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>1. Instigate conservative treatment.
+
+2. Schedule the following radiographs: []
+
+3. Prior treatment/emergency room records will be requested from [].
+
+4. []Referral for medical co-management.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Initial - CC</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Initial Chief Complaints</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient presents for initial evaluation and treatment recommendations following a []motor vehicle collision that occurred on []. The patient completed a Pain Drawing to describe the location, frequency, and intensity of their current symptoms. In addition, we reviewed this information with the patient to confirm an accurate reporting of their complaints. Upon reviewing the patient's complaints we found []that they were consistent with the information recorded in the Pain Drawing. 
+
+1. []
+
+2. []
+
+3. []
+
+4. []</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Update - History</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Update History</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient is currently [] weeks status post MVC. The mechanism of injury was reviewed in this case which was consistent with the initial reporting:</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Update - Plan</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert update plan</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient is []progressing as anticipated with conservative treatment. The patient's functional assessment / outcome measures are []demonstrating acceptable improvement. At this juncture, we will implement the following recommendations in the patient's treatment plan:
+
+1. []</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>VOMS - History</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert VOMS History</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient presents for evaluation of potential Vestibulo-Ocular neurologic sub-system involvement in the patient’s residual PCS. The Concussion occurred on []. Mechanism of injury was the result of [].</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>VOMS - Vestibulo_Oculomotor Examination</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert vestibulo oculomotor exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The VOMS testing was developed to assess vestibular and ocular motor impairments via patient reported symptom provocation after each assessment. The VOMS consists of 5 domains: Smooth Pursuits (0-10), Horizontal and Vertical Saccades (0-10), Convergence (0-10), Horizontal and Vertical Vestibular Reflex (VOR)(0-10),   and Visual Motion Sensitivity (0-10),. Baseline symptoms are taken in reference to Headaches, Dizziness, Nausea, and Fogginess. The symptoms are reassessed after each test. The testing is looking for provocation of symptoms (2 point increase in any symptom from baseline (Mucha et al. 2015; Elbin et al. 2018). The VOMS test is designed to help establish vestibular / oculomotor dysfunction and help guide rehabilitation and potentially academic accommodations.
+ 
+Pre-Test Symptoms
+- Headache: []
+- Dizziness: []
+- Nausea: []
+- Fogginess: []
+ 
+Smooth Pursuits
+- Headache: []
+- Dizziness: []
+- Nausea: []
+- Fogginess: []
+- Comments: []
+ 
+Saccades - Horizontal
+- Headache: []
+- Dizziness: []
+- Nausea: []
+- Fogginess: []
+- Comments: []
+ 
+Saccades - Vertical
+- Headache: []
+- Dizziness: []
+- Nausea: []
+- Fogginess: []
+- Comments: []
+ 
+Convergence
+- Headache: []
+- Dizziness: []
+- Nausea: []
+- Fogginess: []
+- Comments: []
+- Distance: [] cm
+*If Convergence is &gt;5 cm this equates to Convergence Insufficiency and is a prognostic indicator for delayed concussion recovery (DePrey et al. 2017).
+ 
+VOR - Horizontal
+- Headache: []
+- Dizziness: []
+- Nausea: []
+- Fogginess: []
+- Comments: []
+ 
+VOR - Vertical
+- Headache: []
+- Dizziness: []
+- Nausea: []
+- Fogginess: []
+- Comments: []
+ 
+Visual Motion Sensitivity
+- Headache: []
+- Dizziness: []
+- Nausea: []
+- Fogginess: []
+- Comments: []
+ 
+
+VOR
+- Horizontal VOR (Vestibulo-Ocular Reflex) was performed with the patient focusing on a checkerboard with a dot in the middle 3' in front. The patient moves their head back and forth 20 degrees to each side while fixating their eyes on the target. Ten repetitions at 180 Hz pace were performed. The patient was []able to maintain eye fixation.
+ 
+- Vertical VOR (Vestibulo-Ocular Reflex) was performed with the patient focusing on a checkerboard with a dot in the middle 3' in front of the patient. The patient moves their head up and down 20 degrees while fixating their eyes on the target. Ten repetitions at 180 Hz pace were performed. The patient was []able to maintain eye fixation.
+ 
+- The VOR Cancellation Test (Cerebellar Test) evaluates the cerebellar inhibition on the Vestibulo-Occular Reflex (VOR). The test is performed by having the patient lock both arms in front of them with the fingers laced and the thumbs up (Visual Motion Sensitivity Test). The patient rotates back and forth with the head and arms moving together. 
+ 
+The patient's eyes were []able to remain fixed on the thumbs without slippage which indicates the cerebellum is functioning properly.
+ 
+
+Dynamic Visual Acuity
+- The patient stands 10' from a wall with the Snellen Eye Chart. Patient reads the chart with their head stationary; the last line read correctly is the "reference line". The examiner manually oscillates the patient's head 20 degrees in each direction at a rhythmic frequency of 2 Hz. The patient reads the chart while the head is being moved and the last line read correctly is the "Test Line". 
+- Calculating Score: Each step up from the reference line represents an increase of 1.
+- DVA = 0; visual acuity is the same with and without head movements. 
+- DVA =&gt; 2; dynamic visual acuity is abnormal. If abnormal, management is Gaze Stabilization / Vestibulo-ocular Rehab.
+ 
+- Reference Line: []
+- Test Line: []
+- DVA: []</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>VOMS - Cervicogenic_Vestibular Examination</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert cervicogenic and vestibular exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Rotatory Chair Test
+• Following Dynamic Visual Acuity Test, the patient's head is held steady while the patient twists in a swivel chair as the Snellen Chart is read. If there is impairment with the Rotatory Chair Test but not with the Dynamic Visual Acuity Test, the patient's condition is likely Cervicogenic.
+ 
+• There was []no report of increased dizziness.
+ 
+
+BPPV Testing
+• Benign Positional Paroxysmal Vertigo (BPPV) is one of the most common causes of vertigo -- the sudden sensation that a patient is spinning or the inside of the head is spinning. BPPV causes brief episodes of mild to intense vertigo which is usually triggered by specific changes in head position.
+ 
+• Dix-Hallpike
+     - Dix-Hallpike tests for otoliths affecting the posterior canals (85%-90% of BPPV cases). The test is performed by the patient performing 30° of neck extension and 45° of neck rotation.  The patient is quickly laid down on their back (unaffected side first).  The examiner observes for nystagmus/vertigo (upbeating nystagmus). There may be a latency so the patient is held in the position for up to 30 seconds.
+
+     - Dix-Hallpike was []negative.
+
+     - Notation: Dix-Hallpike is primarily a test for BPPV involving the posterior canal (peripheral). If rotational nystagmus is present, fatiguability indicates a peripheral vestibular condition (BPPV) which should respond to the Epley Maneuver. If the rotational nystagmus does not fatigue then most likely a central vestibular syndrome.
+ 
+• Supine Roll Test
+     - If Dix-Hallpike is normal but still suspecting BPPV, the Supine Roll Test is performed for Horizontal Canal BPPV. The Supine Roll Test is performed with the patient supine and the head in slight flexion. The head is rotated quickly to the left 90° looking for lateral nystagmus and/or vertigo sensation. The head is brought back to neutral and then quickly rotated to the right 90° and observed for nystagmus and/or vertigo.  When present, we will likely be positive bilaterally; however, the effected side will be the side that presents the greatest symptoms.
+
+     - The Supine Roll Test was []negative.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>VOMS - Recommendations</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert VOMS Recommendations</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient underwent evaluation for Vestibulo-Ocular PCS. Based on the results of today's testing, at this juncture we will implement the following recommendations in the patient's treatment plan:
+ 
+1. Patient []failed Vestibulo-Ocular PCS testing today
+
+2. Patient was started on Vestibulo-Ocular Rehab Level 1 exercises. I reviewed each exercise with the patient in detail. The patient was given a detailed instruction handout. It is important the patient performs the exercises 3-4x/day. The patient indicated an understanding.
+
+3. Schedule []
+ 
+
+Vestibulo-Ocular PCS
+Vestibulo-Ocular PCS is characterized by persistent concussion symptoms and impairments caused by dysfunction of the vestibulo-ocular system. 
+ 
+The integration of the vestibular, oculomotor and somatosensory systems is necessary to allow human beings to optimally navigate and function within a complex visuospatial environment. This complex system is comprised of highly specialized neural networks that interact at multiple levels of the craniospinal axis to regulate gait, maintain balance and postural control, as well as co-ordinate eye movements. Specifically, this system consists of special sense organs (the retina, semi-circular canals and otolithic organs and joint mechanoreceptors) with primary processing units that share rich direct, indirect and reciprocal projections to the spinal cord, ANS, brainstem nuclei, cerebellum, thalamus, basal ganglia and cerebral cortex. Components of these systems include the vestibulo-ocular reflex (VOR) which regulates gaze stabilization during head acceleration and the vestibulo-spinal reflex (VSR) which co-ordinates head, neck and trunk positioning during dynamic body movements. Dysfunction within components of these neurological sub-systems can have adverse effects on related sub-systems, thereby generating complex symptoms and impairments that are difficult to localize to one specific neural substrate (Ellis 2015).
+ 
+Symptoms of dizziness, gait instability, fogginess, blurred vision and difficulty focusing can arise from dysfunction at multiple levels of the vestibulo-ocular system.
+ 
+Vestibular
+• Vestibular symptoms such as vertigo and dizziness have been found to arise from post-traumatic Benign Positional Paroxysmal Vertigo (BPPV), labyrinthine concussion, peri-lymphatic fistula, endolymphatic hydrops, otolith disorders and central vestibular disorders. 
+ 
+Visual
+• Common visual complaints such as blurred vision, diplopia, difficulty reading or motion sensitivity have been found to arise from subtle deficits in accommodation, version (pursuits, saccades and fixation), convergence insufficiency as well as photosensitivity and, rarely, visual field defects and cranial nerve palsies.
+ 
+Assessment
+• Without an informed, organized, neuroanatomical approach to PCS, these symptoms and impairments can be easily attributed to metabolic (Physiologic) PCS with the expectation that clinical improvement will only occur once the global cerebral energy crisis has resolved. Alternatively, if these features are recognized as dysfunction of the vestibulo-ocular sub-system, then tailored rehabilitation programs can be initiated to treat specific symptoms and restore sub-system function (Ellis 2015).
+ 
+Treadmill Testing
+• Patients with isolated vestibulo-ocular PCS are able to exercise to exhaustion during graded treadmill tests, suggesting that their persistent symptoms are cause by localized dysfunction of the vestibulo-ocular sub-system and not as a consequence of a persistent global cerebral metabolic deficit (Physiologic PCS).</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Update - Chief Complaint</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Update Chief Complaint</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient presents for update/outcome evaluation and treatment recommendations following a []motor vehicle collision that occurred on []. The patient completed a Pain Drawing to describe the location, frequency, and intensity of their current symptoms. In addition, we reviewed this information with the patient to confirm an accurate reporting of their complaints. Upon reviewing the patient's complaints we found []that they were consistent with the information recorded in the Pain Drawing. 
+</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>BCTT - Subjective</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert BCTT Subjective</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient presents for further evaluation of concussion / TBI. Specifically, the patient underwent the Buffalo Concussion Treadmill Test (BCTT) which assesses Physiologic Concussion following a neurometabolic cascade that may result in blood flow abnormalities, ATP deficits, and/or other disorders. Please see Discussion below.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>BCTT - Test Procedure</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert BCTT Test Procedure</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Purpose:
+• To investigate exercise tolerance in patients with concussion.
+• To identify the Heart Rate (HR) at which concussion-specific symptom exacerbation occurs (i.e., the Heart Rate Threshold [HRT]) in concussed patients and assist in treatment protocols.
+• To aid in differentiating between possible diagnoses for concussive symptoms (Physiologic, Cervicogenic, Vestibulo-ocular, Psychological) and etiology of the concussion.
+• To identify physiological variables associated with exacerbation of symptoms and the patient's level of recovery.
+ 
+Eligibility:
+• Before beginning the BCTT, the patient has undergone appropriate evaluation. The BCTT should not be performed if the patient is experiencing is experiencing vestibular / balance issues that would impair the ability to safely walk on a treadmill or has a lower extremity or spinal orthopedic injury that compromises safe walking.
+ 
+Absolute Contraindications to BCTT Testing:
+• Acute myocardial infarction (within 2 days)
+• High-risk unstable angina
+• Uncontrolled cardiac arrhythmias causing symptoms or hemodynamic compromise
+• Symptomatic severe aortic stenosis
+• Uncontrolled symptomatic heart failure
+• Acute pulmonary embolism or pulmonary infarction
+• Acute myocarditis or pericarditis
+• Acute aortic dissection
+ 
+Relative Contraindications:
+• Left main coronary stenosis
+• Moderate stenotic valvular heart disease
+• Electrolyte abnormalities
+• Severe arterial hypertension (&gt;200 mmHg systolic or &gt; 110 mmHg diastolic)
+• Tachyarrhythmias or bradyarrhythmias
+• Hypertrophic cardiomyopathy and other forms of outflow tract obstruction
+• Mental or physical impairment leading to inability to exercise adequately
+• High-degree atrioventricular block
+ 
+Test Protocol:
+• Patient informed about test procedures and what to expect during the BCTT.
+• Explanation and demonstration of RPE and Likert Scales. Resting scores obtained. Patient reminded that he/she will be asked to rate exertion (RPE scale) and symptom severity (Likert scale) at each minute during exercise.  
+• Testing intensity is increased gradually and the scales are obtained at one-minute intervals for BCTT (Treadmill).
+• At the conclusion of the test there is a 2-minute cool down, during which time the scales are continued to be taken at one minute intervals.
+ 
+Terminating the Test
+• Test continues until:
+     - Maximum exertion (RPE score of &gt; 17.5) is reported, or
+     - Test is terminated by experimenter due to a symptom exacerbation that causes significant increase in pain or symptoms severity (an increase of 3 or more points on the Likert Scale from resting score, addition of several new symptoms [each new symptom counts as a point], or marked increase in severity of symptoms resulting in difficulty continuing test), or
+     - Rapid progression of complaints (e.g., headache, searing focal pain) between symptom reports, patient appears faint or unsteady, or determines that continuing the test constitutes significant health risk for the participant, or
+     - Patient reports an inability to continue the test safely.
+ 
+Outcomes
+• Patients who have symptoms, but do not have a physiologic threshold (can exercise to max) should be evaluated for dysfunction of the cervical spine or vestibulo-ocular system.
+  
+Treatment
+• On completion of the BCTT, concussion patients may be given an exercise prescription based on 80% of maximum heart rate without symptom exacerbation. Patient instructed to exercise at this level for 20 minutes daily without exceeding the time or heart rate constraints (e.g., swimming, walking or stationary bike; should not attempt resistance training).
+• If any concussive symptoms return along the progression, the patient must return to the previous asymptomatic stage / maximum heart rate.
+</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>BCTT - Results</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert BCTT Results</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The results of the Buffalo Concussion Treadmill Test (BCTT) were as follows:
+
+Date: []
+Minutes: []
+Heart Rate: []
+Borg (RPE): []
+Beg Likert: []
+Final Likert: []
+</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>BCTT - Plan</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert BCTT Plan</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Physiologic Concussion
+1. The patient failed the BCTT with a HR of []. This represents Physiologic Concussion. The patient was instructed to begin sub-symptom threshold exercise with target HR of []80% []90% of the BCTT symptom threshold HR.
+  
+2. Sub-symptom threshold exercise prescribed = [] BPM 
+
+3. Patient instructed to continue with sub-symptom threshold exercise for 20-30 minutes daily for 1-2 weeks. Patient was instructed that if the exercise induces symptoms, they are to stop the exercise that day. Continue exercise the following day at HR 10% lower.
+
+4. Today we reviewed the patient's current status, performed the BCTT, reviewed the findings and discussed our recommendations. The patient was given a prescription for sub-symptom threshold exercise with instructions, as well as information regarding Rest vs Exercise.
+
+5. The patient was instructed to return to the clinic for [] evaluation in one week.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>BCTT - Discussion</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert BCTT Discussion</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Recent research has helped evaluate the utilization of Rest vs. Exercise in the treatment of Concussion / TBI.
+ 
+REST
+Rest is one of the most widely implemented interventions for TBI / Concussion. The rationale for rest over the years involves three parts (DiFazio et al. 2015):
+• Brain is in a state of neurometabolic crisis.
+• A second injury during recovery can result in magnified pathophysiological and behavioral deficits.
+• Animals exercising too soon show down-regulation of neuroplasticity biomarkers (BDNF, etc.).
+
+There is limited evidence to support the effectiveness of rest (critical appraisal; Johnson et al. 2016). In fact, we are finding that prolonged rest is detrimental to the recovery process of TBI / Concussion:
+• Pediatric patients randomized to have 5 days rest following injury had worse outcome (higher symptoms scores and prolonged recovery) than those having 1-2 days rest (Thomas et al. 2015).
+• Adolescents who did not adhere to physician recommendations for "rest" recovered faster than patients who were adherent (Moor et al. 2015).
+• "Advice to rest for more than 2 days after TBI was associated with delayed return to productivity" (Work / School). This study supports growing evidence that prolonged rest after TBI is generally not helpful (Silverberg et al. 2019).
+
+There are other probable harmful effects of rest (DiFazio et al. 2015):
+• Anxiety, Expectations, and the Nocebo Effect:  
+     - Being told to stay at home and that a "text message" can damage your brain is quite alarming to patients.
+     - The Nocebo Effect is typically iatrogenically induced, meaning that with negative expectations of the patient regarding a treatment cause the treatment to have a more negative effect than it otherwise would have.
+
+• Depression and Other Psychological Complications: 
+     - Removal from normal life after injury can have significant psychological effects (depression).
+
+• Physical Conditioning:
+     - Bed rest results in physiologic alterations in as little as 2-3 days.
+
+In accordance with the Berlin Study (McCrory et al. 2017):
+
+• "There is currently insufficient evidence that prescribing complete rest achieves these objectives. After a brief period of rest during the acute phase (24-48 hours) after injury, patients can be encouraged to become gradually and progressively more active while staying below their cognitive and physical symptom-exacerbation thresholds (e.g., activity level should not bring on or worsen their symptoms)."
+
+
+EXERCISE
+In contrast to rest, early participation in controlled exercises appears to have a very positive affect:
+• Grool et al (2016) found that early participation in physical activity (within 7 days of injury) was associated with lower risk of persistent concussion symptoms (&gt; 28 days), compared to those that engaged in no physical activity (n= 3063; ages 5-18).
+• Lawrence et al. (2018) reported, "For each successive day in the delay to the initiation of aerobic exercise, individuals had a less favorable recovery trajectory".  For example, compared to initiating exercise on day 1, exercise initiated on day 3 had a 36.4% reduced probability of faster return to sport; starting on day 5 at a 59.5% reduced probability; starting day 7 resulted in a 73.2% reduced probability; and starting at day 14 was associated with an 88.9% reduced probability of faster recovery.
+• In a study by Leddy et al (2018), early subthreshold aerobic exercise was compared with prescribed rest in reference to the number of days to recovery from a concussion. 
+     - Rest Group (n=24): Instructed to rest (no participation in physical activities, sports or gym class) but instructed to advance daily cognitive activities according to symptom tolerance.
+     - Exercise Group (n=30): Provided an individualized subthreshold exercise prescription based on Buffalo Concussion Treadmill Test performance (i.e., 80% of heart rate achieved and symptom exacerbation on the BCTT).
+     - All athletes presented to a University Concussion Management Clinic less than 10 days from injury and were diagnosed with a concussion by a sports medicine physician based on international guidelines.
+     - The conclusions of this study were, "These preliminary data suggests that early subthreshold aerobic exercise prescribed to symptomatic adolescent males within 1 week of SRC hastens recovery and has the potential to prevent delayed recovery" 
+
+• The first RCT study performed on acute concussion compared early subthreshold aerobic exercise to a placebo on recovery time (Leddy et al. 2019). 
+     - Athletes (13-18 yoa) presented within 10 days of sustained SRC. Initial assessment consisted of history, cognitive evaluation, symptom questionnaire, physical assessment, and exercise tolerance on the Buffalo Concussion Treadmill Test (BCTT). Participants who failed the BCTT were randomly divided into two treatment interventions:
+     - Group 1 Aerobic Exercise Group (n=52): Told to aerobically exercise for 20 minutes/day on bike, treadmill, or walk/job at 80% of HR achieved at symptom exacerbation on the BCTT at the first visit.  They were provided with heart rate monitors.  They were instructed to stop exercise if symptoms increased by 2 or more points (on a 10 point VAS) or at 20 minutes.  A new target heart rate was determined by a weekly BCTT retesting for as long as they were exercise intolerant or until 30 days post injury.
+     - Group 2 Stretching Group (n=51):  Instructed to follow a prescribed stretching program which was advanced each week for 20 minutes/day that would not considerably elevate HR. They were provided with heart rate monitors to ensure HR was low while performing the stretches. The stretching group performed repeat BCTT at each weekly clinic visit.
+     - Both groups were given instructions to rest when not doing exercises, which included limiting activities that exacerbate symptoms.
+
+• The primary outcome measure was days to recovery since date of injury.  Recovery was defined as symptom resolution to normal (i.e., normal physical exam including VOMS) and ability to exercise without exacerbation of symptoms on BCTT.  Symptom resolution was defined as 7 points or fewer on the PCSS (list of 22 symptoms scored 1-6; normal score = 7) for three consecutive days (first of 3 days was taken as date of recovery). Treating physicians were blinded to group allocation.
+
+• Results:
+
+     - 103 participants sustained a sports related concussion and were included for the study.  
+     - Exercise group (n= 52) were seen a mean of 4.9 days following injury. 
+Stretching group (n= 51) were seen a mean of 4.8 days following injury.
+     - The 2 groups did not differ significantly and age, sex, previous concussion history, time since injury, initial symptom severity score, or initial BCTT results.
+     - Group 1 Aerobic Exercise group recovered in a median of 13 days from injury, whereas the Group 2 Stretching group recovered in 17 days from injury, which was statistically significant.
+     - Those with delayed recovery (&gt; 30 days) were higher in the stretching then exercise group, but was not statistically significant.  The total symptom score decreased more rapidly in the exercises group but was not statistically significant.  There were no adverse effects on the early sub-symptom threshold exercise.
+     - Wort et al (2018) also found subthreshold aerobic exercise to have tremendous safety and no repercussion in the first 3-7 days.
+
+• A systemic review was performed on five studies comparing early physical activity to early physical rest on concussion symptoms (Lempke et al. 2017). Summary of Best Evidence:
+     - During the first 10 days following a concussion, engaging in early physical activity was beneficial in reducing postconcussion symptoms and those with strict rest resulted in significantly longer symptom duration.
+     - Strict physical rest demonstrated higher neurocognitive and balance assessments within 24 hours of injury but were nonsignificant at 1 week post injury.  Normalization of neurocognitive and balance test occurred at 1-2 weeks post injury regardless of cognitive or physical rest.
+
+CLINICAL BOTTOM LINE
+"The current literature suggests that early physical activity in the acute phase (0-7 days) following a concussion may decrease the time needed for symptom resolution compared to strict rest".</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>CS Concussion - Exam</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Cervicogenic Concussion Exam</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>CERVICOGENIC SOMATOSENSORY:
+
+In the context of PCS, cervicogenic components need to be addressed. The goal is to recreate headaches, dizziness, and/or dysfunctional patterns that may be causing symptoms. The key to differential diagnosis of cervicogenic PCS is testing if cervical afferents cause symptoms or disruptions in balance and/or oculomotor control.
+ 
+
+PALPATION
+
+Cervical Referral Patterns for Headaches:
+• Splenius Capitus: []Negative for pain referral to the top of the head.
+
+• Suboccipitals: []Negative for pain referral to the temporal region.
+
+• SCM: []Negative for pain referral to the supraorbital, vertex, and auricular regions.
+
+• Superior Trapezius: []Negative for pain referral to the suboccipital or temporal regions.
+
+• Semispinalis Capitis: []Negative for pain referral to the temporal/hatband region.
+
+• Occipitalis: []Negative for pain referral to the posterior head and retro-orbital region.
+
+• Longus Colli: []Negative for pain referral to the occipital or auricular regions.
+ 
+
+Provocative Orthopedic Testing:
+• Tinel's tap over the greater occipital nerves []was unremarkable.
+
+• Tinel's tap over the Lesser Occipital Nerves []was unremarkable.
+
+• Facet Loading / Deep Palpation Facet Columns []was unremarkable.
+ 
+
+Cervicogenic Dizziness:
+• Cervical Extension: []Does not elicit dizziness.
+
+•Rotatory Chair Test: There was []no report of increased dizziness.
+
+•Cervical Flexion Rotation Test: []Does not elicit dizziness.
+
+ 
+SENSORIMOTOR:
+Three pillars of Sensorimotor Impairment (Proprioception, Oculomotor Control, and Postural Stability)
+ 
+To assess proprioception the Joint Position Error Test (JPET) was utilized. The JPET tests the ability to relocate the head to a starting (neutral) position with eyes closed. Patient wears a laser hat/helmet and is seated 1 meter (3.3’) away from target. Laser is pointed at the target. The patient closes their eyes and turns the head all the way to the left and comes back to
+neutral. Once they feel they are in position a measurement is taken. Repeat with right rotation, extension and flexion.
+ 
+The patient scored:
+• Right Rotation = []
+• Left Rotation = []
+• Flexion = []
+• Extension = []
+ 
+Grading:
+• No Impairment = &lt; 5 cm error
+• Impaired = &gt; 6.5 cm error
+• Borderline = 5 cm - 6.5 cm error</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Neurocognitive Testing Outcomes</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Neurocognitive Testing Outcomes</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Cognivue (*)
+Overall Score = []
+Memory = []
+Executive Fxn/Attn = []
+Discrimination = []
+Visuospatial = []
+
+Right Eye (*)
+Overall Accuracy = []
+Smooth Pursuit = []
+Saccades = []
+Fixations = []</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Initial - PMH</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert initial past medical history</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>The patient []denies prior motor vehicle collisions and/or work injuries. Prior to this recent collision they were in a normal state of health and were not experiencing any significant pain and/or impairment in the currently injured areas.
+ 
+The remaining patient's past medical history was assessed but considered noncontributory (available in patient's chart).</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Caveat</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Caveat</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Caveat: Please note that my documentation in this electronic health record may have been produced using speech recognition software and, therefore, may contain errors or omissions related to that software. These could include grammar, punctuation and spelling errors or the inclusion/exclusion of words or phrases that were not intended. Please contact me directly for any clarifications, questions or concerns.</Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Discussion - Daily Treatment Plan</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Daily Treatment Plan</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Treatment Plan
+• The patient should continue with prescribed therapy in office. Their current treatment plan includes a recommendation for treatment 3 days/week. Re-evaluation will occur at 12 visits or 4-5 weeks.
+
+
+Caveat: Please note that my documentation in this electronic health record may have been produced using speech recognition software and, therefore, may contain errors or omissions related to that software. These could include grammar, punctuation and spelling errors or the inclusion/exclusion of words or phrases that were not intended. Please contact me directly for any clarifications, questions or concerns. </Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Discussion - Rehab Treatment Plan</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Insert Rehab Treatment Plan</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Treatment Plan
+• The patient should continue with prescribed therapy in office. Their current treatment plan includes a recommendation for treatment 2 days/week. Re-evaluation will occur at 8-10 visits or 4-5 weeks.
+
+
+Caveat: Please note that my documentation in this electronic health record may have been produced using speech recognition software and, therefore, may contain errors or omissions related to that software. These could include grammar, punctuation and spelling errors or the inclusion/exclusion of words or phrases that were not intended. Please contact me directly for any clarifications, questions or concerns. </Body>
+  </SpeechAutoText>
+  <SpeechAutoText>
+    <Format>1</Format>
+    <Name>Invoice PPD No Show</Name>
+    <Description>
+    </Description>
+    <OwningObjectType>User</OwningObjectType>
+    <OwningObjectName>drfisk@firstcaremeds.com</OwningObjectName>
+    <ProductGuid>5766e812-0b77-4595-9a53-552142261862</ProductGuid>
+    <Locale>en-US</Locale>
+    <MetaDataDictionary>
+      <MetaData>
+        <Name>DNS_PlainText</Name>
+        <Value>1</Value>
+      </MetaData>
+    </MetaDataDictionary>
+    <SpokenPhrases>
+      <SpokenPhrase>
+        <Phrase>Invoice PPD No Show</Phrase>
+        <DisplayString />
+      </SpokenPhrase>
+    </SpokenPhrases>
+    <Body>Invoice
+
+[]
+[]
+[]
+
+
+Regarding:    []
+Invoice Date:    []
+Physician:    [] DC
+DOI:        []
+Claim #:    []
+
+
+NV01001: Failure to Show for Appt - $336.99
+
+Thank you for your patronage. Please make checks payable to:
+
+Advanced Spine &amp; Rehabilitation / Excelsia Injury Care
+715 Mall Ring Circle, Suite 100
+Henderson, NV 89014
+
+Total due in 30 days. Overdue accounts may be subject to a service charge of 1%
+per month. Should you have any questions please contact our office at (702)
+990-2225, or by email at billingnv@excelsiainjurycare.com.</Body>
+  </SpeechAutoText>
+</SpeechAutoTexts>

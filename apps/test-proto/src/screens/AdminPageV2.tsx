@@ -14,27 +14,33 @@ type User = {
   facility: string;
   lastScribe: string;
   role: "Provider" | "Admin" | "Staff";
+  providerType?: "MD" | "NP" | "PA" | "DO";
+  specialty?: string;
 };
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
 
 const mockUsers: User[] = [
-  { id: "1",  name: "Vinay Kapadia",        email: "v.kapadia@mountainview.com",        facility: "Mountain View", lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider" },
-  { id: "2",  name: "Harrison Rolins",      email: "h.rolins@mountainview.com",         facility: "Mountain View", lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider" },
-  { id: "3",  name: "Marvin Depas",         email: "m.depas@mountainview.com",          facility: "Mountain View", lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider" },
-  { id: "4",  name: "Samyukth Sreenivasan", email: "s.sreenivasan@mountainview.com",    facility: "Mountain View", lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider" },
-  { id: "5",  name: "Arcot Premkumar",      email: "a.premkumar@mountainview.com",      facility: "Mountain View", lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider" },
-  { id: "6",  name: "Sasi Ghanta",          email: "s.ghanta@mountainview.com",         facility: "Mountain View", lastScribe: "Mar 20th, 2025, 3:14pm",  role: "Provider" },
-  { id: "7",  name: "Logan Henry",          email: "l.henry@mountainview.com",          facility: "Mountain View", lastScribe: "Mar 20th, 2025, 11:42am", role: "Provider" },
-  { id: "8",  name: "Deanna Kraemer",       email: "d.kraemer@mountainview.com",        facility: "Mountain View", lastScribe: "Mar 19th, 2025, 9:05am",  role: "Provider" },
-  { id: "9",  name: "Danisia Ellin",        email: "d.ellin@mountainview.com",          facility: "Mountain View", lastScribe: "Mar 19th, 2025, 2:30pm",  role: "Admin"    },
-  { id: "10", name: "Terry Philips",        email: "t.philips@mountainview.com",        facility: "Mountain View", lastScribe: "Mar 18th, 2025, 10:00am", role: "Provider" },
-  { id: "11", name: "Ashley Garcia",        email: "a.garcia@mountainview.com",         facility: "Mountain View", lastScribe: "Mar 18th, 2025, 4:45pm",  role: "Provider" },
-  { id: "12", name: "Richard Seymore",      email: "r.seymore@mountainview.com",        facility: "Mountain View", lastScribe: "Mar 17th, 2025, 1:20pm",  role: "Provider" },
-  { id: "13", name: "James Vetrovs",        email: "j.vetrovs@mountainview.com",        facility: "Mountain View", lastScribe: "Mar 17th, 2025, 8:55am",  role: "Provider" },
-  { id: "14", name: "Danny Rivers",         email: "d.rivers@mountainview.com",         facility: "Mountain View", lastScribe: "Mar 16th, 2025, 3:00pm",  role: "Staff"    },
-  { id: "15", name: "John Doe",             email: "j.doe@mountainview.com",            facility: "Mountain View", lastScribe: "Mar 16th, 2025, 12:30pm", role: "Provider" },
+  { id: "1",  name: "Vinay Kapadia",        email: "v.kapadia@mountainview.com",        facility: "Mountain View",       lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider", providerType: "MD", specialty: "Cardiology" },
+  { id: "2",  name: "Harrison Rolins",      email: "h.rolins@mountainview.com",         facility: "Mountain View",       lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider", providerType: "NP", specialty: "Internal Medicine" },
+  { id: "3",  name: "Marvin Depas",         email: "m.depas@valleyhospital.com",        facility: "Valley Hospital",     lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider", providerType: "MD", specialty: "Neurology" },
+  { id: "4",  name: "Samyukth Sreenivasan", email: "s.sreenivasan@valleyhospital.com",  facility: "Valley Hospital",     lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider", providerType: "PA", specialty: "Family Medicine" },
+  { id: "5",  name: "Arcot Premkumar",      email: "a.premkumar@citymedical.com",       facility: "City Medical Center", lastScribe: "Mar 21st, 2025, 12:00pm", role: "Provider", providerType: "DO", specialty: "Pediatrics" },
+  { id: "6",  name: "Sasi Ghanta",          email: "s.ghanta@citymedical.com",          facility: "City Medical Center", lastScribe: "Mar 20th, 2025, 3:14pm",  role: "Provider", providerType: "MD", specialty: "Internal Medicine" },
+  { id: "7",  name: "Logan Henry",          email: "l.henry@mountainview.com",          facility: "Mountain View",       lastScribe: "Mar 20th, 2025, 11:42am", role: "Provider", providerType: "NP", specialty: "Family Medicine" },
+  { id: "8",  name: "Deanna Kraemer",       email: "d.kraemer@valleyhospital.com",      facility: "Valley Hospital",     lastScribe: "Mar 19th, 2025, 9:05am",  role: "Provider", providerType: "MD", specialty: "Cardiology" },
+  { id: "9",  name: "Danisia Ellin",        email: "d.ellin@mountainview.com",          facility: "Mountain View",       lastScribe: "Mar 19th, 2025, 2:30pm",  role: "Admin" },
+  { id: "10", name: "Terry Philips",        email: "t.philips@citymedical.com",         facility: "City Medical Center", lastScribe: "Mar 18th, 2025, 10:00am", role: "Provider", providerType: "PA", specialty: "Neurology" },
+  { id: "11", name: "Ashley Garcia",        email: "a.garcia@valleyhospital.com",       facility: "Valley Hospital",     lastScribe: "Mar 18th, 2025, 4:45pm",  role: "Provider", providerType: "MD", specialty: "Pediatrics" },
+  { id: "12", name: "Richard Seymore",      email: "r.seymore@citymedical.com",         facility: "City Medical Center", lastScribe: "Mar 17th, 2025, 1:20pm",  role: "Provider", providerType: "DO", specialty: "Family Medicine" },
+  { id: "13", name: "James Vetrovs",        email: "j.vetrovs@mountainview.com",        facility: "Mountain View",       lastScribe: "Mar 17th, 2025, 8:55am",  role: "Provider", providerType: "MD", specialty: "Internal Medicine" },
+  { id: "14", name: "Danny Rivers",         email: "d.rivers@valleyhospital.com",       facility: "Valley Hospital",     lastScribe: "Mar 16th, 2025, 3:00pm",  role: "Staff" },
+  { id: "15", name: "John Doe",             email: "j.doe@citymedical.com",             facility: "City Medical Center", lastScribe: "Mar 16th, 2025, 12:30pm", role: "Provider", providerType: "NP", specialty: "Cardiology" },
 ];
+
+const PROVIDER_FACILITIES = [...new Set(mockUsers.map(u => u.facility))].sort();
+const PROVIDER_TYPES = [...new Set(mockUsers.map(u => u.providerType).filter(Boolean) as string[])].sort();
+const PROVIDER_SPECIALTIES = [...new Set(mockUsers.map(u => u.specialty).filter(Boolean) as string[])].sort();
 
 const PAGE_SIZE_OPTIONS = [15, 25, 50];
 const DEFAULT_PAGE_SIZE = 15;
@@ -61,6 +67,15 @@ type Macro = {
 function formatDate(iso: string) {
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(y, m - 1, d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+/** Middle-truncates a filename keeping more of the end so suffixes/extensions stay visible. */
+function truncateMiddle(name: string, maxLen = 38): string {
+  if (name.length <= maxLen) return name;
+  const keep = maxLen - 1; // 1 char for the ellipsis
+  const headLen = Math.floor(keep / 4);  // ~1/4 from the start
+  const tailLen = keep - headLen;        // ~3/4 from the end
+  return name.slice(0, headLen) + "…" + name.slice(name.length - tailLen);
 }
 
 const ALL_USER_IDS = mockUsers.map((u) => u.id);
@@ -459,7 +474,7 @@ type MacroEditDrawerProps = {
   onClose: () => void;
   onCreate?: (macro: Macro) => void;
   onSave?: (updatedMacro: Macro) => void;
-  panelVariant?: "v1" | "v2";
+  panelVariant?: "v1" | "v2" | "v3";
 };
 
 function MacroEditDrawer({ macro, onClose, onCreate, onSave, panelVariant = "v1" }: MacroEditDrawerProps) {
@@ -469,6 +484,7 @@ function MacroEditDrawer({ macro, onClose, onCreate, onSave, panelVariant = "v1"
   );
   const showTriggerName = macroType === "dictation" || macroType === "blended";
   const showSelectionCriteria = macroType === "ambient" || macroType === "blended";
+  const showTemplateSection = macroType !== "dictation";
   type AssignEntry = { id: string; template: string; section: string; providerIds: string[]; providerCount: number; };
   const { template: initTemplate, section: initSection } = macro
     ? parseAssignedTo(macro.assignedTo)
@@ -483,6 +499,8 @@ function MacroEditDrawer({ macro, onClose, onCreate, onSave, panelVariant = "v1"
   ]);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [providerSearches, setProviderSearches] = useState<Record<string, string>>({});
+  const [providerFilters, setProviderFilters] = useState<Record<string, { facility: string; provType: string; specialty: string }>>({});
+  const [openFilterMenu, setOpenFilterMenu] = useState<string | null>(null);
   const [isLocked, setIsLocked] = useState<boolean>(macro ? macro.providerAccess === "locked" : false);
   const [macroContent, setMacroContent]         = useState(macro ? (MACRO_CONTENT_MAP[macro.name] ?? "") : "");
   const [selectionCriteria, setSelectionCriteria] = useState(macro ? (SELECTION_CRITERIA_MAP[macro.name] ?? "") : "");
@@ -499,6 +517,16 @@ function MacroEditDrawer({ macro, onClose, onCreate, onSave, panelVariant = "v1"
 
   function addAssignment() {
     setAssignments(prev => [...prev, { id: Date.now().toString(), template: "", section: "", providerIds: [], providerCount: 0 }]);
+  }
+  function setProviderFilter(assignId: string, key: 'facility' | 'provType' | 'specialty', value: string) {
+    setProviderFilters(prev => ({ ...prev, [assignId]: { ...(prev[assignId] ?? { facility: '', provType: '', specialty: '' }), [key]: value } }));
+  }
+  function clearProviderFilter(assignId: string, key: 'facility' | 'provType' | 'specialty') {
+    setProviderFilters(prev => ({ ...prev, [assignId]: { ...(prev[assignId] ?? { facility: '', provType: '', specialty: '' }), [key]: '' } }));
+  }
+  function clearAllProviderFilters(assignId: string) {
+    setProviderFilters(prev => ({ ...prev, [assignId]: { facility: '', provType: '', specialty: '' } }));
+    setOpenFilterMenu(null);
   }
   function removeAssignment(id: string) {
     setAssignments(prev => {
@@ -666,11 +694,17 @@ function MacroEditDrawer({ macro, onClose, onCreate, onSave, panelVariant = "v1"
           {assignments.map((assign, idx) => {
             const assignSections = TEMPLATE_SECTIONS[assign.template] ?? [];
             const provSearch = providerSearches[assign.id] ?? "";
-            const filteredProv = mockUsers.filter(u => u.name.toLowerCase().includes(provSearch.toLowerCase()));
+            const filters = providerFilters[assign.id] ?? { facility: '', provType: '', specialty: '' };
+            const filteredProv = mockUsers
+              .filter(u => u.name.toLowerCase().includes(provSearch.toLowerCase()))
+              .filter(u => !filters.facility || u.facility === filters.facility)
+              .filter(u => !filters.provType || u.providerType === filters.provType)
+              .filter(u => !filters.specialty || u.specialty === filters.specialty)
+              .sort((a, b) => a.name.localeCompare(b.name));
             return (
               <div key={assign.id}>
-                {/* Template */}
-                <div className="mb-[12px]">
+                {/* Template — hidden for dictation-only macros */}
+                {showTemplateSection && <div className="mb-[12px]">
                   <div className="flex items-center justify-between mb-[2px]">
                     <p className={fieldLabel} style={{ fontFeatureSettings: "'ss07' 1" }}>Template <span className="font-normal text-[var(--foreground-secondary,#666)]">*</span></p>
                     <button onClick={() => removeAssignment(assign.id)} className="flex items-center justify-center w-[20px] h-[20px] text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-semantic-danger,#bb1411)] transition-colors outline-none">
@@ -733,7 +767,7 @@ function MacroEditDrawer({ macro, onClose, onCreate, onSave, panelVariant = "v1"
                       At least one template section assignment is required
                     </p>
                   )}
-                </div>
+                </div>}
 
                 {/* Provider */}
                 <div className={idx < assignments.length - 1 ? "mb-[20px]" : "mb-[16px]"}>
@@ -762,6 +796,46 @@ function MacroEditDrawer({ macro, onClose, onCreate, onSave, panelVariant = "v1"
                                 className="w-full h-[28px] pl-[28px] pr-[8px] rounded-[4px] border border-[var(--shape-outline,rgba(0,0,0,0.1))] text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] placeholder:text-[var(--foreground-tertiary,#808080)] outline-none focus:border-[var(--accent,#1132ee)] bg-white"
                                 style={{ fontFamily: "Lato, sans-serif" }} />
                             </div>
+                          </div>
+                          {/* Filter row */}
+                          <div className="px-[8px] pb-[6px]" onClick={e => e.stopPropagation()}>
+                            <div className="grid grid-cols-2 gap-[4px]">
+                              {(['facility', 'specialty', 'provType'] as const).map((key) => {
+                                const label = key === 'facility' ? 'Facility' : key === 'specialty' ? 'Specialty' : 'Type';
+                                const options = key === 'facility' ? PROVIDER_FACILITIES : key === 'specialty' ? PROVIDER_SPECIALTIES : PROVIDER_TYPES;
+                                const active = filters[key];
+                                const menuKey = `${assign.id}-${key}`;
+                                return (
+                                  <div key={key} className="relative">
+                                    <button
+                                      onClick={e => { e.stopPropagation(); setOpenFilterMenu(openFilterMenu === menuKey ? null : menuKey); }}
+                                      className={`flex items-center justify-between gap-[3px] w-full h-[22px] px-[7px] rounded-[4px] text-[11px] font-normal border transition-colors ${active ? "border-[var(--accent,#1132ee)] text-[var(--accent,#1132ee)] bg-[var(--litmus-25,#f1f3fe)]" : "border-[var(--shape-outline,rgba(0,0,0,0.1))] text-[var(--foreground-secondary,#666)] hover:border-[var(--foreground-secondary,#666)]"}`}
+                                      style={{ fontFamily: "Lato, sans-serif" }}
+                                    >
+                                      <span className={active ? "truncate" : ""}>{active || label}</span>
+                                      {active
+                                        ? <span onClick={e => { e.stopPropagation(); clearProviderFilter(assign.id, key); setOpenFilterMenu(null); }} className="ml-[2px] leading-none shrink-0">×</span>
+                                        : <Icon name="arrow_drop_down" size={14} className="shrink-0" />
+                                      }
+                                    </button>
+                                    {openFilterMenu === menuKey && (
+                                      <div className="absolute top-full left-0 mt-[2px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] shadow-[0_4px_12px_rgba(0,0,0,0.12)] z-[100] py-[4px] min-w-[140px]" onClick={e => e.stopPropagation()}>
+                                        {options.map(opt => (
+                                          <button key={opt} onClick={e => { e.stopPropagation(); setProviderFilter(assign.id, key, opt); setOpenFilterMenu(null); }}
+                                            className={`flex items-center w-full px-[10px] py-[6px] text-[12px] text-left transition-colors ${filters[key] === opt ? "bg-[var(--litmus-25,#f1f3fe)] font-bold text-[var(--accent,#1132ee)]" : "hover:bg-[var(--surface-1,#f7f7f7)] text-[var(--foreground-primary,#1a1a1a)]"}`}
+                                            style={{ fontFamily: "Lato, sans-serif" }}>
+                                            {opt}
+                                          </button>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            {Object.values(filters).some(Boolean) && (
+                              <button onClick={e => { e.stopPropagation(); clearAllProviderFilters(assign.id); }} className="mt-[4px] text-[11px] font-normal text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-primary,#1a1a1a)] transition-colors" style={{ fontFamily: "Lato, sans-serif" }}>Clear all</button>
+                            )}
                           </div>
                           <div className="max-h-[200px] overflow-y-auto">
                             {filteredProv.length === 0 ? (
@@ -794,27 +868,209 @@ function MacroEditDrawer({ macro, onClose, onCreate, onSave, panelVariant = "v1"
             );
           })}
 
-          {/* Add */}
-          <button onClick={addAssignment} className="flex items-center gap-[4px] text-[13px] font-bold text-[var(--accent,#1132ee)] hover:opacity-80 transition-opacity mb-[4px] outline-none" style={{ fontFamily: "Lato, sans-serif" }}>
+          {/* Add — hidden for dictation-only macros */}
+          {showTemplateSection && <button onClick={addAssignment} className="flex items-center gap-[4px] text-[13px] font-bold text-[var(--accent,#1132ee)] hover:opacity-80 transition-opacity mb-[4px] outline-none" style={{ fontFamily: "Lato, sans-serif" }}>
             <Icon name="add" size={16} />
             Add
-          </button>
+          </button>}
           </>)}
           {panelVariant === "v2" && (<>
           {assignments.map((assign, idx) => {
             const assignSections = TEMPLATE_SECTIONS[assign.template] ?? [];
             const provSearch = providerSearches[assign.id] ?? "";
-            const filteredProv = mockUsers.filter(u => u.name.toLowerCase().includes(provSearch.toLowerCase()));
+            const filters = providerFilters[assign.id] ?? { facility: '', provType: '', specialty: '' };
+            const filteredProv = mockUsers
+              .filter(u => u.name.toLowerCase().includes(provSearch.toLowerCase()))
+              .filter(u => !filters.facility || u.facility === filters.facility)
+              .filter(u => !filters.provType || u.providerType === filters.provType)
+              .filter(u => !filters.specialty || u.specialty === filters.specialty)
+              .sort((a, b) => a.name.localeCompare(b.name));
             return (
               <div key={assign.id}>
                 <div className="flex items-center justify-between mb-[2px]">
-                  <p className={fieldLabel} style={{ fontFeatureSettings: "'ss07' 1" }}>Template & Provider <span className="font-normal text-[var(--foreground-secondary,#666)]">*</span></p>
+                  <p className={fieldLabel} style={{ fontFeatureSettings: "'ss07' 1" }}>{showTemplateSection ? "Template & Provider" : "Provider"} <span className="font-normal text-[var(--foreground-secondary,#666)]">*</span></p>
                   <button onClick={() => removeAssignment(assign.id)} className="flex items-center justify-center w-[20px] h-[20px] text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-semantic-danger,#bb1411)] transition-colors outline-none">
                     <Icon name="close" size={15} />
                   </button>
                 </div>
-                <p className={fieldHint}>Select the template, section, and providers this macro is assigned to.</p>
+                <p className={fieldHint}>{showTemplateSection ? "Select the template, section, and providers this macro is assigned to." : "Choose which providers can use this macro."}</p>
                 <div className="flex flex-row gap-[8px] mb-[4px]">
+                  {/* Template — hidden for dictation-only macros */}
+                  {showTemplateSection && <div className="relative flex-1">
+                    <button
+                      onClick={() => { setOpenDropdown(openDropdown === `${assign.id}-template` ? null : `${assign.id}-template`); if (errors.template) setErrors(e => ({ ...e, template: false })); }}
+                      className={`flex items-center justify-between w-full h-[36px] px-[12px] rounded-[6px] border bg-white text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] hover:border-[var(--foreground-secondary,#666)] outline-none transition-colors ${errors.template && idx === 0 ? "border-[var(--foreground-semantic-danger,#bb1411)]" : "border-[var(--shape-outline,rgba(0,0,0,0.1))]"}`}
+                      style={{ fontFamily: "Lato, sans-serif" }}
+                    >
+                      <span className={assign.template ? "" : "text-[var(--foreground-tertiary,#808080)]"}>{assign.template || "Select Template"}</span>
+                      <Icon name={openDropdown === `${assign.id}-template` ? "arrow_drop_up" : "arrow_drop_down"} size={20} className="text-[var(--foreground-secondary,#666)] shrink-0" />
+                    </button>
+                    {openDropdown === `${assign.id}-template` && (
+                      <>
+                        <div className="fixed inset-0 z-[60]" onClick={() => setOpenDropdown(null)} />
+                        <div className="absolute top-full left-0 right-0 mt-[4px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.12)] z-[70] py-[4px]">
+                          {TEMPLATES.map((t) => (
+                            <button key={t} onClick={() => { updateAssignTemplate(assign.id, t); setOpenDropdown(null); }}
+                              className={`flex items-center w-full px-[12px] py-[9px] text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] transition-colors ${assign.template === t ? "bg-[var(--litmus-25,#f1f3fe)] font-bold" : "hover:bg-[var(--surface-1,#f7f7f7)]"}`}
+                              style={{ fontFamily: "Lato, sans-serif" }}>
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>}
+                  {/* Section — hidden for dictation-only macros */}
+                  {showTemplateSection && <div className="relative flex-1">
+                    <button
+                      onClick={() => { setOpenDropdown(openDropdown === `${assign.id}-section` ? null : `${assign.id}-section`); if (errors.template) setErrors(e => ({ ...e, template: false })); }}
+                      className={`flex items-center justify-between w-full h-[36px] px-[12px] rounded-[6px] border bg-white text-[13px] font-normal hover:border-[var(--foreground-secondary,#666)] outline-none transition-colors ${errors.template && idx === 0 ? "border-[var(--foreground-semantic-danger,#bb1411)]" : "border-[var(--shape-outline,rgba(0,0,0,0.1))]"}`}
+                      style={{ fontFamily: "Lato, sans-serif" }}
+                    >
+                      <span className={assign.section ? "text-[var(--foreground-primary,#1a1a1a)]" : "text-[var(--foreground-tertiary,#808080)]"}>{assign.section || "Select Section"}</span>
+                      <Icon name={openDropdown === `${assign.id}-section` ? "arrow_drop_up" : "arrow_drop_down"} size={20} className="text-[var(--foreground-secondary,#666)] shrink-0" />
+                    </button>
+                    {openDropdown === `${assign.id}-section` && (
+                      <>
+                        <div className="fixed inset-0 z-[60]" onClick={() => setOpenDropdown(null)} />
+                        <div className="absolute top-full left-0 right-0 mt-[4px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.12)] z-[70] py-[4px]">
+                          {assignSections.map((s) => (
+                            <button key={s} onClick={() => { updateAssignSection(assign.id, s); setOpenDropdown(null); }}
+                              className={`flex items-center w-full px-[12px] py-[9px] text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] transition-colors ${assign.section === s ? "bg-[var(--litmus-25,#f1f3fe)] font-bold" : "hover:bg-[var(--surface-1,#f7f7f7)]"}`}
+                              style={{ fontFamily: "Lato, sans-serif" }}>
+                              {s}
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>}
+                  {/* Provider */}
+                  <div className="relative flex-1">
+                    <button
+                      onClick={() => { setOpenDropdown(openDropdown === `${assign.id}-provider` ? null : `${assign.id}-provider`); setProviderSearches(ps => ({ ...ps, [assign.id]: "" })); }}
+                      className="flex items-center justify-between w-full h-[36px] px-[12px] rounded-[6px] border border-[var(--shape-outline,rgba(0,0,0,0.1))] bg-white text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] hover:border-[var(--foreground-secondary,#666)] outline-none transition-colors"
+                      style={{ fontFamily: "Lato, sans-serif" }}
+                    >
+                      <span className={assign.providerCount === 0 ? "text-[var(--foreground-tertiary,#808080)]" : ""}>
+                        {assign.providerCount === 0 ? "Select providers" : `Providers (${assign.providerCount})`}
+                      </span>
+                      <Icon name={openDropdown === `${assign.id}-provider` ? "arrow_drop_up" : "arrow_drop_down"} size={20} className="text-[var(--foreground-secondary,#666)] shrink-0" />
+                    </button>
+                    {openDropdown === `${assign.id}-provider` && (
+                      <>
+                        <div className="fixed inset-0 z-[80]" onClick={() => { setOpenDropdown(null); setProviderSearches(ps => ({ ...ps, [assign.id]: "" })); }} />
+                        <div className="absolute top-full left-0 right-0 mt-[4px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.12)] z-[90] py-[4px]">
+                          <div className="px-[8px] pt-[4px] pb-[4px]">
+                            <div className="relative flex items-center">
+                              <span className="absolute left-[8px] text-[var(--foreground-secondary,#666)] pointer-events-none flex items-center"><Icon name="search" size={14} /></span>
+                              <input autoFocus type="text" placeholder="Search providers" value={provSearch}
+                                onChange={(e) => setProviderSearches(ps => ({ ...ps, [assign.id]: e.target.value }))}
+                                className="w-full h-[28px] pl-[28px] pr-[8px] rounded-[4px] border border-[var(--shape-outline,rgba(0,0,0,0.1))] text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] placeholder:text-[var(--foreground-tertiary,#808080)] outline-none focus:border-[var(--accent,#1132ee)] bg-white"
+                                style={{ fontFamily: "Lato, sans-serif" }} />
+                            </div>
+                          </div>
+                          {/* Filter row */}
+                          <div className="px-[8px] pb-[6px]" onClick={e => e.stopPropagation()}>
+                            <div className="grid grid-cols-2 gap-[4px]">
+                              {(['facility', 'specialty', 'provType'] as const).map((key) => {
+                                const label = key === 'facility' ? 'Facility' : key === 'specialty' ? 'Specialty' : 'Type';
+                                const options = key === 'facility' ? PROVIDER_FACILITIES : key === 'specialty' ? PROVIDER_SPECIALTIES : PROVIDER_TYPES;
+                                const active = filters[key];
+                                const menuKey = `${assign.id}-${key}`;
+                                return (
+                                  <div key={key} className="relative">
+                                    <button
+                                      onClick={e => { e.stopPropagation(); setOpenFilterMenu(openFilterMenu === menuKey ? null : menuKey); }}
+                                      className={`flex items-center justify-between gap-[3px] w-full h-[22px] px-[7px] rounded-[4px] text-[11px] font-normal border transition-colors ${active ? "border-[var(--accent,#1132ee)] text-[var(--accent,#1132ee)] bg-[var(--litmus-25,#f1f3fe)]" : "border-[var(--shape-outline,rgba(0,0,0,0.1))] text-[var(--foreground-secondary,#666)] hover:border-[var(--foreground-secondary,#666)]"}`}
+                                      style={{ fontFamily: "Lato, sans-serif" }}
+                                    >
+                                      <span className={active ? "truncate" : ""}>{active || label}</span>
+                                      {active
+                                        ? <span onClick={e => { e.stopPropagation(); clearProviderFilter(assign.id, key); setOpenFilterMenu(null); }} className="ml-[2px] leading-none shrink-0">×</span>
+                                        : <Icon name="arrow_drop_down" size={14} className="shrink-0" />
+                                      }
+                                    </button>
+                                    {openFilterMenu === menuKey && (
+                                      <div className="absolute top-full left-0 mt-[2px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] shadow-[0_4px_12px_rgba(0,0,0,0.12)] z-[100] py-[4px] min-w-[140px]" onClick={e => e.stopPropagation()}>
+                                        {options.map(opt => (
+                                          <button key={opt} onClick={e => { e.stopPropagation(); setProviderFilter(assign.id, key, opt); setOpenFilterMenu(null); }}
+                                            className={`flex items-center w-full px-[10px] py-[6px] text-[12px] text-left transition-colors ${filters[key] === opt ? "bg-[var(--litmus-25,#f1f3fe)] font-bold text-[var(--accent,#1132ee)]" : "hover:bg-[var(--surface-1,#f7f7f7)] text-[var(--foreground-primary,#1a1a1a)]"}`}
+                                            style={{ fontFamily: "Lato, sans-serif" }}>
+                                            {opt}
+                                          </button>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            {Object.values(filters).some(Boolean) && (
+                              <button onClick={e => { e.stopPropagation(); clearAllProviderFilters(assign.id); }} className="mt-[4px] text-[11px] font-normal text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-primary,#1a1a1a)] transition-colors" style={{ fontFamily: "Lato, sans-serif" }}>Clear all</button>
+                            )}
+                          </div>
+                          <div className="max-h-[200px] overflow-y-auto">
+                            {filteredProv.length === 0 ? (
+                              <p className="px-[12px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>No providers found</p>
+                            ) : (<>
+                              <button onClick={() => toggleAllProviders(assign.id, filteredProv.map(u => u.id))}
+                                className="flex items-center gap-[10px] w-full px-[12px] py-[7px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
+                                <Checkbox state={filteredProv.every(u => assign.providerIds.includes(u.id)) ? "selected" : filteredProv.some(u => assign.providerIds.includes(u.id)) ? "indeterminate" : "unselected"} />
+                                <span className="text-[13px] font-bold leading-[1.4] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>Select all</span>
+                              </button>
+                              {filteredProv.map((u) => (
+                                <button key={u.id} onClick={() => toggleProvider(assign.id, u.id)}
+                                  className="flex items-center gap-[10px] w-full px-[12px] py-[7px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left">
+                                  <Checkbox state={assign.providerIds.includes(u.id) ? "selected" : "unselected"} />
+                                  <span className="text-[13px] font-normal leading-[1.4] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{u.name}</span>
+                                </button>
+                              ))}
+                            </>)}
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+                {errors.template && idx === 0 && (
+                  <p className="text-[12px] font-normal text-[var(--foreground-semantic-danger,#bb1411)] mt-[4px] mb-[4px]" style={{ fontFamily: "Lato, sans-serif" }}>
+                    At least one template section assignment is required
+                  </p>
+                )}
+                {idx < assignments.length - 1 && (
+                  <div className="h-px w-full bg-[var(--shape-outline,rgba(0,0,0,0.1))] mt-[16px] mb-[20px]" />
+                )}
+              </div>
+            );
+          })}
+          <button onClick={addAssignment} className="flex items-center gap-[4px] text-[13px] font-bold text-[var(--accent,#1132ee)] hover:opacity-80 transition-opacity mb-[4px] outline-none" style={{ fontFamily: "Lato, sans-serif" }}>
+            <Icon name="add" size={16} />
+            Add
+          </button>
+          </>)}
+          {panelVariant === "v3" && (<>
+          {assignments.map((assign, idx) => {
+            const assignSections = TEMPLATE_SECTIONS[assign.template] ?? [];
+            const provSearch = providerSearches[assign.id] ?? "";
+            const filters = providerFilters[assign.id] ?? { facility: '', provType: '', specialty: '' };
+            const filteredProv = mockUsers
+              .filter(u => u.name.toLowerCase().includes(provSearch.toLowerCase()))
+              .filter(u => !filters.facility || u.facility === filters.facility)
+              .filter(u => !filters.provType || u.providerType === filters.provType)
+              .filter(u => !filters.specialty || u.specialty === filters.specialty)
+              .sort((a, b) => a.name.localeCompare(b.name));
+            return (
+              <div key={assign.id}>
+                <div className="flex items-center justify-between mb-[2px]">
+                  <p className={fieldLabel} style={{ fontFeatureSettings: "'ss07' 1" }}>{showTemplateSection ? "Template & Provider" : "Provider"} <span className="font-normal text-[var(--foreground-secondary,#666)]">*</span></p>
+                  <button onClick={() => removeAssignment(assign.id)} className="flex items-center justify-center w-[20px] h-[20px] text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-semantic-danger,#bb1411)] transition-colors outline-none">
+                    <Icon name="close" size={15} />
+                  </button>
+                </div>
+                <p className={fieldHint}>{showTemplateSection ? "Select the template, section, and providers this macro is assigned to." : "Choose which providers can use this macro."}</p>
+                {/* Template + Section in one row — hidden for dictation-only macros */}
+                {showTemplateSection && <div className="flex flex-row gap-[8px] mb-[8px]">
                   {/* Template */}
                   <div className="relative flex-1">
                     <button
@@ -865,53 +1121,88 @@ function MacroEditDrawer({ macro, onClose, onCreate, onSave, panelVariant = "v1"
                       </>
                     )}
                   </div>
-                  {/* Provider - V2 */}
-                  <div className="relative flex-1">
-                    <button
-                      onClick={() => { setOpenDropdown(openDropdown === `${assign.id}-provider` ? null : `${assign.id}-provider`); setProviderSearches(ps => ({ ...ps, [assign.id]: "" })); }}
-                      className="flex items-center justify-between w-full h-[36px] px-[12px] rounded-[6px] border border-[var(--shape-outline,rgba(0,0,0,0.1))] bg-white text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] hover:border-[var(--foreground-secondary,#666)] outline-none transition-colors"
-                      style={{ fontFamily: "Lato, sans-serif" }}
-                    >
-                      <span className={assign.providerCount === 0 ? "text-[var(--foreground-tertiary,#808080)]" : ""}>
-                        {assign.providerCount === 0 ? "Select providers" : `Providers (${assign.providerCount})`}
-                      </span>
-                      <Icon name={openDropdown === `${assign.id}-provider` ? "arrow_drop_up" : "arrow_drop_down"} size={20} className="text-[var(--foreground-secondary,#666)] shrink-0" />
-                    </button>
-                    {openDropdown === `${assign.id}-provider` && (
-                      <>
-                        <div className="fixed inset-0 z-[80]" onClick={() => { setOpenDropdown(null); setProviderSearches(ps => ({ ...ps, [assign.id]: "" })); }} />
-                        <div className="absolute top-full left-0 right-0 mt-[4px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.12)] z-[90] py-[4px]">
-                          <div className="px-[8px] pt-[4px] pb-[4px]">
-                            <div className="relative flex items-center">
-                              <span className="absolute left-[8px] text-[var(--foreground-secondary,#666)] pointer-events-none flex items-center"><Icon name="search" size={14} /></span>
-                              <input autoFocus type="text" placeholder="Search providers" value={provSearch}
-                                onChange={(e) => setProviderSearches(ps => ({ ...ps, [assign.id]: e.target.value }))}
-                                className="w-full h-[28px] pl-[28px] pr-[8px] rounded-[4px] border border-[var(--shape-outline,rgba(0,0,0,0.1))] text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] placeholder:text-[var(--foreground-tertiary,#808080)] outline-none focus:border-[var(--accent,#1132ee)] bg-white"
-                                style={{ fontFamily: "Lato, sans-serif" }} />
-                            </div>
-                          </div>
-                          <div className="max-h-[200px] overflow-y-auto">
-                            {filteredProv.length === 0 ? (
-                              <p className="px-[12px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>No providers found</p>
-                            ) : (<>
-                              <button onClick={() => toggleAllProviders(assign.id, filteredProv.map(u => u.id))}
-                                className="flex items-center gap-[10px] w-full px-[12px] py-[7px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
-                                <Checkbox state={filteredProv.every(u => assign.providerIds.includes(u.id)) ? "selected" : filteredProv.some(u => assign.providerIds.includes(u.id)) ? "indeterminate" : "unselected"} />
-                                <span className="text-[13px] font-bold leading-[1.4] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>Select all</span>
-                              </button>
-                              {filteredProv.map((u) => (
-                                <button key={u.id} onClick={() => toggleProvider(assign.id, u.id)}
-                                  className="flex items-center gap-[10px] w-full px-[12px] py-[7px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left">
-                                  <Checkbox state={assign.providerIds.includes(u.id) ? "selected" : "unselected"} />
-                                  <span className="text-[13px] font-normal leading-[1.4] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{u.name}</span>
-                                </button>
-                              ))}
-                            </>)}
+                </div>}
+                {/* Provider — stacked below */}
+                <div className="relative mb-[4px]">
+                  <button
+                    onClick={() => { setOpenDropdown(openDropdown === `${assign.id}-provider` ? null : `${assign.id}-provider`); setProviderSearches(ps => ({ ...ps, [assign.id]: "" })); }}
+                    className="flex items-center justify-between w-full h-[36px] px-[12px] rounded-[6px] border border-[var(--shape-outline,rgba(0,0,0,0.1))] bg-white text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] hover:border-[var(--foreground-secondary,#666)] outline-none transition-colors"
+                    style={{ fontFamily: "Lato, sans-serif" }}
+                  >
+                    <span className={assign.providerCount === 0 ? "text-[var(--foreground-tertiary,#808080)]" : ""}>
+                      {assign.providerCount === 0 ? "Select providers" : `Providers (${assign.providerCount})`}
+                    </span>
+                    <Icon name={openDropdown === `${assign.id}-provider` ? "arrow_drop_up" : "arrow_drop_down"} size={20} className="text-[var(--foreground-secondary,#666)] shrink-0" />
+                  </button>
+                  {openDropdown === `${assign.id}-provider` && (
+                    <>
+                      <div className="fixed inset-0 z-[80]" onClick={() => { setOpenDropdown(null); setProviderSearches(ps => ({ ...ps, [assign.id]: "" })); }} />
+                      <div className="absolute top-full left-0 right-0 mt-[4px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.12)] z-[90] py-[4px]">
+                        <div className="px-[8px] pt-[4px] pb-[4px]">
+                          <div className="relative flex items-center">
+                            <span className="absolute left-[8px] text-[var(--foreground-secondary,#666)] pointer-events-none flex items-center"><Icon name="search" size={14} /></span>
+                            <input autoFocus type="text" placeholder="Search providers" value={provSearch}
+                              onChange={(e) => setProviderSearches(ps => ({ ...ps, [assign.id]: e.target.value }))}
+                              className="w-full h-[28px] pl-[28px] pr-[8px] rounded-[4px] border border-[var(--shape-outline,rgba(0,0,0,0.1))] text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] placeholder:text-[var(--foreground-tertiary,#808080)] outline-none focus:border-[var(--accent,#1132ee)] bg-white"
+                              style={{ fontFamily: "Lato, sans-serif" }} />
                           </div>
                         </div>
-                      </>
-                    )}
-                  </div>
+                        {/* Filter row */}
+                        <div className="flex gap-[4px] px-[8px] pb-[6px] flex-wrap" onClick={e => e.stopPropagation()}>
+                          {(['facility', 'provType', 'specialty'] as const).map((key) => {
+                            const label = key === 'facility' ? 'Facility' : key === 'provType' ? 'Type' : 'Specialty';
+                            const options = key === 'facility' ? PROVIDER_FACILITIES : key === 'provType' ? PROVIDER_TYPES : PROVIDER_SPECIALTIES;
+                            const active = filters[key];
+                            const menuKey = `${assign.id}-${key}`;
+                            return (
+                              <div key={key} className="relative">
+                                <button
+                                  onClick={e => { e.stopPropagation(); setOpenFilterMenu(openFilterMenu === menuKey ? null : menuKey); }}
+                                  className={`flex items-center gap-[3px] h-[22px] px-[7px] rounded-[4px] text-[11px] font-normal border transition-colors ${active ? "border-[var(--accent,#1132ee)] text-[var(--accent,#1132ee)] bg-[var(--litmus-25,#f1f3fe)]" : "border-[var(--shape-outline,rgba(0,0,0,0.1))] text-[var(--foreground-secondary,#666)] hover:border-[var(--foreground-secondary,#666)]"}`}
+                                  style={{ fontFamily: "Lato, sans-serif" }}
+                                >
+                                  {active || label}
+                                  {active
+                                    ? <span onClick={e => { e.stopPropagation(); clearProviderFilter(assign.id, key); setOpenFilterMenu(null); }} className="ml-[2px] leading-none">×</span>
+                                    : <Icon name="arrow_drop_down" size={14} className="shrink-0" />
+                                  }
+                                </button>
+                                {openFilterMenu === menuKey && (
+                                  <div className="absolute top-full left-0 mt-[2px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] shadow-[0_4px_12px_rgba(0,0,0,0.12)] z-[100] py-[4px] min-w-[140px]" onClick={e => e.stopPropagation()}>
+                                    {options.map(opt => (
+                                      <button key={opt} onClick={e => { e.stopPropagation(); setProviderFilter(assign.id, key, opt); setOpenFilterMenu(null); }}
+                                        className={`flex items-center w-full px-[10px] py-[6px] text-[12px] text-left transition-colors ${filters[key] === opt ? "bg-[var(--litmus-25,#f1f3fe)] font-bold text-[var(--accent,#1132ee)]" : "hover:bg-[var(--surface-1,#f7f7f7)] text-[var(--foreground-primary,#1a1a1a)]"}`}
+                                        style={{ fontFamily: "Lato, sans-serif" }}>
+                                        {opt}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="max-h-[200px] overflow-y-auto">
+                          {filteredProv.length === 0 ? (
+                            <p className="px-[12px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>No providers found</p>
+                          ) : (<>
+                            <button onClick={() => toggleAllProviders(assign.id, filteredProv.map(u => u.id))}
+                              className="flex items-center gap-[10px] w-full px-[12px] py-[7px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
+                              <Checkbox state={filteredProv.every(u => assign.providerIds.includes(u.id)) ? "selected" : filteredProv.some(u => assign.providerIds.includes(u.id)) ? "indeterminate" : "unselected"} />
+                              <span className="text-[13px] font-bold leading-[1.4] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>Select all</span>
+                            </button>
+                            {filteredProv.map((u) => (
+                              <button key={u.id} onClick={() => toggleProvider(assign.id, u.id)}
+                                className="flex items-center gap-[10px] w-full px-[12px] py-[7px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left">
+                                <Checkbox state={assign.providerIds.includes(u.id) ? "selected" : "unselected"} />
+                                <span className="text-[13px] font-normal leading-[1.4] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{u.name}</span>
+                              </button>
+                            ))}
+                          </>)}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
                 {errors.template && idx === 0 && (
                   <p className="text-[12px] font-normal text-[var(--foreground-semantic-danger,#bb1411)] mt-[4px] mb-[4px]" style={{ fontFamily: "Lato, sans-serif" }}>
@@ -1159,8 +1450,8 @@ function FileTypeIcon({ name, error }: { name: string; error: boolean }) {
   }
 
   return (
-    <div className="relative shrink-0" style={{ width: 24, height: 29 }}>
-      <svg width="24" height="29" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className="relative shrink-0" style={{ width: 32, height: 38 }}>
+      <svg width="32" height="38" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Page body */}
         <path d="M3 0H20L32 12V35C32 36.6569 30.6569 38 29 38H3C1.34315 38 0 36.6569 0 35V3C0 1.34315 1.34315 0 3 0Z" fill={pageColor} stroke={strokeColor} strokeWidth="1" />
         {/* Fold triangle */}
@@ -1169,8 +1460,8 @@ function FileTypeIcon({ name, error }: { name: string; error: boolean }) {
         <path d="M20 0L32 12" stroke={strokeColor} strokeWidth="1" />
       </svg>
       {/* Extension label */}
-      <div className="absolute inset-0 flex items-end justify-center pb-[4px]">
-        <span style={{ fontSize: 6, fontWeight: 800, color: textColor, fontFamily: "Lato, sans-serif", letterSpacing: "0.3px", lineHeight: 1 }}>
+      <div className="absolute inset-0 flex items-end justify-center pb-[6px]">
+        <span style={{ fontSize: 8, fontWeight: 800, color: textColor, fontFamily: "Lato, sans-serif", letterSpacing: "0.3px", lineHeight: 1 }}>
           {ext}
         </span>
       </div>
@@ -1494,7 +1785,7 @@ function BulkUploadModal({ onClose, onImport }: BulkUploadModalProps) {
             {/* File entries */}
             {entries.length > 0 && (
               <div className="flex flex-col gap-[10px]">
-                {entries.map((entry) => {
+                {[...entries].sort((a, b) => (a.fileType === "csv" ? 0 : 1) - (b.fileType === "csv" ? 0 : 1)).map((entry) => {
                   const filteredProviders = mockUsers.filter(u =>
                     u.name.toLowerCase().includes(entry.providerDropSearch.toLowerCase())
                   );
@@ -1507,37 +1798,35 @@ function BulkUploadModal({ onClose, onImport }: BulkUploadModalProps) {
                           : "border-[var(--shape-outline,rgba(0,0,0,0.12))]"
                       }`}
                     >
-                      {/* Main row: icon · filename · remove */}
+                      {/* Main row: icon · filename+count · inline provider dropdown · remove */}
                       <div className="flex items-center gap-[10px]">
                         <FileTypeIcon name={entry.file.name} error={!!entry.error} />
                         <div className="flex-1 min-w-0">
-                          <p className="text-[13px] font-bold leading-[1.2] text-[var(--foreground-primary,#1a1a1a)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
-                            {entry.file.name}
-                          </p>
+                          <div className="relative group/filename">
+                            <p className="text-[13px] font-bold leading-[1.2] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap overflow-hidden" style={{ fontFamily: "Lato, sans-serif" }}>
+                              {truncateMiddle(entry.file.name)}
+                            </p>
+                            {entry.file.name.length > 38 && (
+                              <div className="absolute bottom-full left-0 mb-[5px] px-[8px] py-[5px] bg-[var(--neutral-100,#e6e6e6)] text-[var(--foreground-primary,#1a1a1a)] text-[12px] leading-[1.4] rounded-[5px] whitespace-nowrap pointer-events-none opacity-0 group-hover/filename:opacity-100 transition-opacity duration-75 z-50 shadow-[0_2px_8px_rgba(0,0,0,0.12)]" style={{ fontFamily: "Lato, sans-serif" }}>
+                                {entry.file.name}
+                              </div>
+                            )}
+                          </div>
+                          {!entry.error && entry.macros.length > 0 && (
+                            <p className="text-[12px] font-normal leading-[1.3] text-[var(--foreground-secondary,#666)] mt-[2px]" style={{ fontFamily: "Lato, sans-serif" }}>
+                              {entry.macros.length} macro{entry.macros.length !== 1 ? "s" : ""} found
+                            </p>
+                          )}
                           {entry.error && (
                             <p className="text-[12px] font-normal leading-[1.3] text-[var(--foreground-semantic-danger,#bb1411)] mt-[2px]" style={{ fontFamily: "Lato, sans-serif" }}>
                               {entry.error}
                             </p>
                           )}
                         </div>
-                        <button
-                          onClick={() => removeEntry(entry.id)}
-                          className="flex items-center justify-center w-[28px] h-[28px] rounded-[6px] text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-semantic-danger,#bb1411)] hover:bg-[rgba(187,20,17,0.06)] transition-colors shrink-0 outline-none"
-                        >
-                          <Icon name="delete_outline" size={16} />
-                        </button>
-                      </div>
 
-                      {/* Provider assignment — below filename, XML only */}
-                      {!entry.error && entry.fileType === "xml" && (
-                        <div className="flex flex-col gap-[4px] pl-[34px]">
-                          <div className="flex items-center gap-[4px]">
-                            <p className="text-[12px] font-bold leading-[1.2] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}>
-                              Assign Providers
-                            </p>
-                            <span className="text-[12px] font-normal text-[var(--foreground-semantic-danger,#bb1411)]" style={{ fontFamily: "Lato, sans-serif" }}>*</span>
-                          </div>
-                          <div className="relative">
+                        {/* Inline provider dropdown — XML only */}
+                        {!entry.error && entry.fileType === "xml" && (
+                          <div className="relative shrink-0 w-[178px]">
                             <button
                               onClick={(ev) => {
                                 const isOpening = !entry.providerDropOpen;
@@ -1553,15 +1842,15 @@ function BulkUploadModal({ onClose, onImport }: BulkUploadModalProps) {
                                   providerDropSearch: e.id === entry.id ? e.providerDropSearch : "",
                                 })));
                               }}
-                              className="flex items-center justify-between w-full h-[32px] px-[10px] rounded-[6px] border border-[var(--shape-outline,rgba(0,0,0,0.1))] bg-white text-[13px] font-normal text-[var(--foreground-primary,#1a1a1a)] hover:border-[var(--foreground-secondary,#666)] outline-none transition-colors"
+                              className="flex items-center justify-between w-full h-[32px] px-[10px] rounded-[6px] border border-[var(--shape-outline,rgba(0,0,0,0.1))] bg-white text-[13px] font-normal hover:border-[var(--foreground-secondary,#666)] outline-none transition-colors"
                               style={{ fontFamily: "Lato, sans-serif" }}
                             >
-                              <span className={entry.selectedProviderIds.length === 0 ? "text-[var(--foreground-tertiary,#808080)]" : ""}>
+                              <span className={`truncate ${entry.selectedProviderIds.length === 0 ? "text-[var(--foreground-tertiary,#808080)]" : "text-[var(--foreground-primary,#1a1a1a)]"}`}>
                                 {entry.selectedProviderIds.length === 0
-                                  ? "Select providers"
-                                  : `Selected (${entry.selectedProviderIds.length})`}
+                                  ? "Assign providers *"
+                                  : `Providers selected (${entry.selectedProviderIds.length})`}
                               </span>
-                              <Icon name={entry.providerDropOpen ? "arrow_drop_up" : "arrow_drop_down"} size={18} className="text-[var(--foreground-secondary,#666)] shrink-0" />
+                              <Icon name={entry.providerDropOpen ? "arrow_drop_up" : "arrow_drop_down"} size={18} className="text-[var(--foreground-secondary,#666)] shrink-0 ml-[2px]" />
                             </button>
 
                             {entry.providerDropOpen && dropAnchor?.entryId === entry.id && (
@@ -1625,9 +1914,16 @@ function BulkUploadModal({ onClose, onImport }: BulkUploadModalProps) {
                               </>
                             )}
                           </div>
+                        )}
 
-                        </div>
-                      )}
+                        {/* Delete button */}
+                        <button
+                          onClick={() => removeEntry(entry.id)}
+                          className="shrink-0 flex items-center justify-center w-[28px] h-[28px] rounded-[6px] text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-semantic-danger,#bb1411)] hover:bg-[rgba(187,20,17,0.06)] transition-colors outline-none"
+                        >
+                          <Icon name="delete_outline" size={16} />
+                        </button>
+                      </div>
                     </div>
                   );
                 })}
@@ -1677,17 +1973,24 @@ function BulkUploadModal({ onClose, onImport }: BulkUploadModalProps) {
   );
 }
 
-function SiteMacros({ panelVariant = "v1" }: { panelVariant?: "v1" | "v2" }) {
+function SiteMacros({ panelVariant = "v1" }: { panelVariant?: "v1" | "v2" | "v3" }) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [selectedProvider, setSelectedProvider] = useState<User | null>(null);
   const [providerSearch, setProviderSearch] = useState("");
   const [providerDropdownOpen, setProviderDropdownOpen] = useState(false);
-  const [editingMacro, setEditingMacro] = useState<Macro | null>(null);
-  const [creatingMacro, setCreatingMacro] = useState(false);
+  const [tableProvFilters, setTableProvFilters] = useState({ facility: '', specialty: '', provType: '' });
+  const [tableProvFilterMenu, setTableProvFilterMenu] = useState<string | null>(null);
+  const [macros, setMacros] = useState<Macro[]>(mockMacros);
+  const [editingMacro, setEditingMacro] = useState<Macro | null>(() => {
+    const id = uploadStore.getEditingMacroId();
+    return id ? (mockMacros.find(m => m.id === id) ?? null) : null;
+  });
+  const [creatingMacro, setCreatingMacro] = useState(() => uploadStore.getCreatingMacro());
+  useEffect(() => { uploadStore.setEditingMacroId(editingMacro?.id ?? null); }, [editingMacro]);
+  useEffect(() => { uploadStore.setCreatingMacro(creatingMacro); }, [creatingMacro]);
   const [bulkUploading, setBulkUploading] = useState(() => uploadStore.getBulkOpen());
   useEffect(() => { uploadStore.setBulkOpen(bulkUploading); }, [bulkUploading]);
-  const [macros, setMacros] = useState<Macro[]>(mockMacros);
   const [snackbar, setSnackbar] = useState<{ count: number; visible: boolean } | null>(null);
 
   function showImportSnackbar(count: number) {
@@ -1710,9 +2013,12 @@ function SiteMacros({ panelVariant = "v1" }: { panelVariant?: "v1" | "v2" }) {
     setPage(1);
   }
 
-  const filteredProviders = mockUsers.filter((u) =>
-    u.name.toLowerCase().includes(providerSearch.toLowerCase())
-  );
+  const filteredProviders = mockUsers
+    .filter(u => u.name.toLowerCase().includes(providerSearch.toLowerCase()))
+    .filter(u => !tableProvFilters.facility  || u.facility    === tableProvFilters.facility)
+    .filter(u => !tableProvFilters.specialty || u.specialty   === tableProvFilters.specialty)
+    .filter(u => !tableProvFilters.provType  || u.providerType === tableProvFilters.provType)
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   const filtered = macros
     .filter((m) => {
@@ -1791,7 +2097,7 @@ function SiteMacros({ panelVariant = "v1" }: { panelVariant?: "v1" | "v2" }) {
 
           {providerDropdownOpen && (
             <>
-              <div className="fixed inset-0 z-40" onClick={() => { setProviderDropdownOpen(false); setProviderSearch(""); }} />
+              <div className="fixed inset-0 z-40" onClick={() => { setProviderDropdownOpen(false); setProviderSearch(""); setTableProvFilterMenu(null); }} />
               <div className="absolute top-full left-0 mt-[4px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.12)] z-50 w-[240px] py-[4px]">
               {/* Search inside dropdown */}
               <div className="px-[8px] pt-[4px] pb-[6px]">
@@ -1809,6 +2115,45 @@ function SiteMacros({ panelVariant = "v1" }: { panelVariant?: "v1" | "v2" }) {
                     style={{ fontFamily: "Lato, sans-serif" }}
                   />
                 </div>
+              </div>
+              {/* Filter row */}
+              <div className="px-[8px] pb-[6px] border-b border-[var(--shape-outline,rgba(0,0,0,0.06))]" onClick={e => e.stopPropagation()}>
+                <div className="flex flex-wrap gap-[4px]">
+                  {(['facility', 'specialty', 'provType'] as const).map((key) => {
+                    const label = key === 'facility' ? 'Facility' : key === 'specialty' ? 'Specialty' : 'Type';
+                    const options = key === 'facility' ? PROVIDER_FACILITIES : key === 'specialty' ? PROVIDER_SPECIALTIES : PROVIDER_TYPES;
+                    const active = tableProvFilters[key];
+                    return (
+                      <div key={key} className="relative flex-1 min-w-[60px]">
+                        <button
+                          onClick={e => { e.stopPropagation(); setTableProvFilterMenu(tableProvFilterMenu === key ? null : key); }}
+                          className={`flex items-center justify-between gap-[3px] w-full h-[22px] px-[7px] rounded-[4px] text-[11px] font-normal border transition-colors ${active ? "border-[var(--accent,#1132ee)] text-[var(--accent,#1132ee)] bg-[var(--litmus-25,#f1f3fe)]" : "border-[var(--shape-outline,rgba(0,0,0,0.1))] text-[var(--foreground-secondary,#666)] hover:border-[var(--foreground-secondary,#666)]"}`}
+                          style={{ fontFamily: "Lato, sans-serif" }}
+                        >
+                          <span className={active ? "truncate" : ""}>{active || label}</span>
+                          {active
+                            ? <span onClick={e => { e.stopPropagation(); setTableProvFilters(f => ({ ...f, [key]: '' })); setTableProvFilterMenu(null); }} className="ml-[2px] leading-none shrink-0">×</span>
+                            : <Icon name="arrow_drop_down" size={14} className="shrink-0" />
+                          }
+                        </button>
+                        {tableProvFilterMenu === key && (
+                          <div className="absolute top-full left-0 mt-[2px] bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] shadow-[0_4px_12px_rgba(0,0,0,0.12)] z-[100] py-[4px] min-w-[140px]" onClick={e => e.stopPropagation()}>
+                            {options.map(opt => (
+                              <button key={opt} onClick={e => { e.stopPropagation(); setTableProvFilters(f => ({ ...f, [key]: f[key] === opt ? '' : opt })); setTableProvFilterMenu(null); }}
+                                className={`flex items-center w-full px-[10px] py-[6px] text-[12px] text-left transition-colors ${tableProvFilters[key] === opt ? "bg-[var(--litmus-25,#f1f3fe)] font-bold text-[var(--accent,#1132ee)]" : "hover:bg-[var(--surface-1,#f7f7f7)] text-[var(--foreground-primary,#1a1a1a)]"}`}
+                                style={{ fontFamily: "Lato, sans-serif" }}>
+                                {opt}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+                {Object.values(tableProvFilters).some(Boolean) && (
+                  <button onClick={e => { e.stopPropagation(); setTableProvFilters({ facility: '', specialty: '', provType: '' }); setTableProvFilterMenu(null); }} className="mt-[4px] text-[11px] font-normal text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-primary,#1a1a1a)] transition-colors" style={{ fontFamily: "Lato, sans-serif" }}>Clear all</button>
+                )}
               </div>
               {/* Provider list */}
               <div className="max-h-[200px] overflow-y-auto">
@@ -2098,7 +2443,7 @@ function AdminNavItem({ icon, label, isActive, onClick }: AdminNavItemProps) {
 
 type Props = {
   onNavClick: (id: string) => void;
-  panelVariant?: "v1" | "v2";
+  panelVariant?: "v1" | "v2" | "v3";
 };
 
 export default function AdminPage({ onNavClick, panelVariant = "v1" }: Props) {
