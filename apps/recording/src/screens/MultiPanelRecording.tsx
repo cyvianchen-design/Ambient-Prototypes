@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Icon, ButtonGroup } from "@ds/ui";
+import { Icon, ButtonGroup, MagicButton } from "@ds/ui";
 import { GradientBackground } from "../components/GradientBackground";
 import { Waveform } from "../components/Waveform";
 import { useTimer } from "../hooks/useTimer";
@@ -149,13 +149,22 @@ export default function MultiPanelRecording({ onEndVisit }: { onEndVisit?: () =>
     }
     if (id === "previsit") {
       return (
-        <PanelCard icon="clinical_notes" title="Previsit Summary" onClose={() => togglePanel("previsit")}>
+        <PanelCard
+          icon={<Icon name="admin_meds" size={20} />}
+          title="Previsit Summary"
+          onClose={() => togglePanel("previsit")}
+        >
           <PrevisitContent />
         </PanelCard>
       );
     }
     return (
-      <PanelCard icon="magic_button" title="Assistant" onClose={() => togglePanel("assistant")} footer={<ChatInput />}>
+      <PanelCard
+        icon={<MagicButton size={20} />}
+        title="Assistant"
+        onClose={() => togglePanel("assistant")}
+        footer={<ChatInput />}
+      >
         <AssistantBody />
       </PanelCard>
     );
