@@ -57,7 +57,7 @@ function BulletList({ items }: { items: string[] }) {
 
 export function PrevisitContent() {
   return (
-    <div className="flex flex-col gap-[24px] max-w-[800px]">
+    <div className="flex w-full flex-col gap-[24px]">
       <Section title="At a Glance">
         <div className="flex flex-col gap-[12px]">
           <div>

@@ -35,7 +35,7 @@ export type { AudioPlayerProps } from "./components/AudioPlayer";
 export { Avatar } from "./components/Avatar";
 export type { AvatarProps, AvatarSize, AvatarStatus } from "./components/Avatar";
 export { ButtonGroup, SplitButton } from "./components/ButtonGroup";
-export type { ButtonGroupProps, SplitButtonProps, ButtonGroupSize, SplitButtonVariant } from "./components/ButtonGroup";
+export type { ButtonGroupProps, SplitButtonProps, ButtonGroupSize, SplitButtonVariant, ButtonGroupTheme } from "./components/ButtonGroup";
 export { RadioButton, RadioGroup } from "./components/RadioButton";
 export type { RadioButtonProps, RadioGroupProps, RadioGroupOption } from "./components/RadioButton";
 export { DatePicker, TimePicker } from "./components/DatePicker";

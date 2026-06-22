@@ -3,11 +3,10 @@ import { VersionSwitcher } from "@ds/ui";
 import type { ScreenDef } from "@ds/ui";
 
 import PrevisitFlow from "./screens/PrevisitFlow";
+import MultiPanelFlow from "./screens/MultiPanelFlow";
 
-// The baseline is the full flow: Previsit → (Start Recording) → Recording →
-// (End Visit) → Previsit. It renders full-screen; layouts respond to their
-// own container width, so use the browser's responsive/device tools to test
-// different breakpoints.
+// Full flows render full-screen; layouts respond to their own container width,
+// so use the browser's responsive/device tools to test breakpoints.
 function Baseline() {
   return (
     <div className="h-screen w-full overflow-hidden">
@@ -16,8 +15,17 @@ function Baseline() {
   );
 }
 
+function MultiPanel() {
+  return (
+    <div className="h-screen w-full overflow-hidden">
+      <MultiPanelFlow />
+    </div>
+  );
+}
+
 const screens: ScreenDef[] = [
   { round: "R1", direction: "Baseline", component: Baseline },
+  { round: "R1", direction: "Multi-panel", component: MultiPanel },
 ];
 
 export default function App() {
@@ -28,5 +36,5 @@ export default function App() {
       </div>
     );
   }
-  return <VersionSwitcher screens={screens} />;
+  return <VersionSwitcher screens={screens} initialRound="R1" initialDirection="Multi-panel" />;
 }

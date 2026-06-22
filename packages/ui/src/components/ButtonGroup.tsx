@@ -17,12 +17,16 @@ const groupSizeTokens: Record<ButtonGroupSize, { h: string; text: string; px: st
   large:  { h: "h-[40px]", text: "text-[15px] tracking-[0.15px]", px: "px-[16px]", gap: "gap-[8px]",  radius: "rounded-[8px]", p: "p-[4px]" },
 };
 
+export type ButtonGroupTheme = "default" | "inverse";
+
 export type ButtonGroupProps = {
   items: GroupItem[];
   value: string | string[];
   onChange: (value: string) => void;
   size?: ButtonGroupSize;
   multiSelect?: boolean;
+  /** "inverse" for use on brand / dark gradient surfaces (white-on-translucent). */
+  theme?: ButtonGroupTheme;
   className?: string;
 };
 
@@ -32,6 +36,7 @@ export function ButtonGroup({
   onChange,
   size = "medium",
   multiSelect = false,
+  theme = "default",
   className = "",
 }: ButtonGroupProps) {
   const { h, text, px, gap, radius, p } = groupSizeTokens[size];
@@ -39,8 +44,10 @@ export function ButtonGroup({
 
   if (multiSelect) {
     // Multi-select: bare flex row of outlined buttons — no container wrapper.
-    // Unselected: white bg + surface-3 border + foreground-primary text.
-    // Selected:   litmus-25 bg + accent border + accent text/icon.
+    // Default theme — unselected: white bg + surface-3 border; selected: litmus-25 + accent.
+    // Inverse theme (brand surfaces) — unselected: translucent-white border + white/70 text;
+    //   selected: white/30 fill + white text.
+    const inverse = theme === "inverse";
     return (
       <div
         className={`inline-flex gap-[8px] font-['Lato',sans-serif] font-bold leading-[1.2] flex-wrap ${className}`}
@@ -48,6 +55,20 @@ export function ButtonGroup({
       >
         {items.map((item) => {
           const isSelected = selectedValues.includes(item.value);
+          const stateCls = inverse
+            ? isSelected
+              ? "bg-[rgba(255,255,255,0.3)] border-transparent text-white"
+              : "bg-transparent border-[rgba(255,255,255,0.3)] text-[rgba(255,255,255,0.7)] hover:bg-[rgba(255,255,255,0.1)] hover:text-white"
+            : isSelected
+              ? "bg-[var(--litmus-25,#f1f3fe)] border-[var(--accent,#1132ee)] text-[var(--accent,#1132ee)]"
+              : "bg-white border-[var(--surface-3,#e6e6e6)] text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-1,#f7f7f7)]";
+          const iconCls = inverse
+            ? isSelected
+              ? "text-white"
+              : "text-[rgba(255,255,255,0.7)]"
+            : isSelected
+              ? "text-[var(--accent,#1132ee)]"
+              : "text-[var(--foreground-secondary,#666)]";
           return (
             <button
               key={item.value}
@@ -56,23 +77,15 @@ export function ButtonGroup({
               aria-pressed={isSelected}
               className={[
                 `flex items-center justify-center ${gap} ${h} ${px} ${text} ${radius} border transition-all duration-150 outline-none`,
-                "focus-visible:ring-[2px] focus-visible:ring-[var(--litmus-100,#cfd6fc)]",
+                inverse
+                  ? "focus-visible:ring-[2px] focus-visible:ring-[rgba(255,255,255,0.5)]"
+                  : "focus-visible:ring-[2px] focus-visible:ring-[var(--litmus-100,#cfd6fc)]",
                 "disabled:opacity-40 disabled:cursor-not-allowed",
-                isSelected
-                  ? "bg-[var(--litmus-25,#f1f3fe)] border-[var(--accent,#1132ee)] text-[var(--accent,#1132ee)]"
-                  : "bg-white border-[var(--surface-3,#e6e6e6)] text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-1,#f7f7f7)]",
+                stateCls,
               ].join(" ")}
             >
               {item.icon && (
-                <span
-                  className={`flex items-center shrink-0 ${
-                    isSelected
-                      ? "text-[var(--accent,#1132ee)]"
-                      : "text-[var(--foreground-secondary,#666)]"
-                  }`}
-                >
-                  {item.icon}
-                </span>
+                <span className={`flex items-center shrink-0 ${iconCls}`}>{item.icon}</span>
               )}
               {item.label}
             </button>
