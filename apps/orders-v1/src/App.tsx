@@ -9,6 +9,8 @@ import R1DateNotes from "./screens/R1-DateNotes";
 import R2Baseline   from "./screens/R2-Baseline";
 import R2CheckCodes from "./screens/R2-CheckCodes";
 import R2MultiCode  from "./screens/R2-MultiCode";
+import R3Baseline   from "./screens/R3-Baseline";
+import R3TitleM     from "./screens/R3-TitleM";
 
 const screens: ScreenDef[] = [
   { round: "R1", direction: "Baseline",   component: R1Baseline },
@@ -19,6 +21,8 @@ const screens: ScreenDef[] = [
   { round: "R2", direction: "Baseline",    component: R2Baseline },
   { round: "R2", direction: "Multi-code",  component: R2MultiCode },
   { round: "R2", direction: "Check codes", component: R2CheckCodes },
+  { round: "R3", direction: "Baseline",    component: R3Baseline },
+  { round: "R3", direction: "Title M",     component: R3TitleM },
 ];
 
 export default function App() {

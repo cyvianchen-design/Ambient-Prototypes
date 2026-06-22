@@ -140,6 +140,37 @@
     --blue-950: #030d17;
     --blue-975: #02080e;
 
+    /* Transparent accent (#1132EE at opacity) */
+    --accent-3:  #1132ee08;
+    --accent-5:  #1132ee0d;
+    --accent-10: #1132ee1a;
+    --accent-20: #1132ee33;
+    --accent-30: #1132ee4d;
+    --accent-40: #1132ee66;
+    --accent-50: #1132ee80;
+    --accent-60: #1132ee99;
+    --accent-70: #1132eeb3;
+    --accent-80: #1132eecc;
+    --accent-90: #1132eee6;
+
+    /* Transparent white — white overlay for dark surfaces */
+    --white-3:  #ffffff08;
+    --white-5:  #ffffff0d;
+    --white-10: #ffffff1a;
+    --white-20: #ffffff33;
+    --white-30: #ffffff4d;
+    --white-40: #ffffff66;
+    --white-50: #ffffff80;
+
+    /* Transparent black — black overlay for light surfaces */
+    --black-3:  #00000008;
+    --black-5:  #0000000d;
+    --black-10: #0000001a;
+    --black-20: #00000033;
+    --black-30: #0000004d;
+    --black-40: #00000066;
+    --black-50: #00000080;
+
     /* Litmus */
     --litmus-25: #f1f3fe;
     --litmus-50: #e7eafd;

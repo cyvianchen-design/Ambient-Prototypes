@@ -10,6 +10,8 @@ import R1TitleL from "./screens/R1-TitleL";
 import R1LFlipped from "./screens/R1-LFlipped";
 import R2DragDrop from "./screens/R2-DragDrop";
 import R2CustomizeDrawer from "./screens/R2-CustomizeDrawer";
+import R2SubsectionDrag from "./screens/R2-SubsectionDrag";
+import R2HoverHandles from "./screens/R2-HoverHandles";
 
 const screens: ScreenDef[] = [
   { round: "R1", direction: "Baseline", component: R1Baseline },
@@ -20,6 +22,8 @@ const screens: ScreenDef[] = [
   { round: "R1", direction: "L Flipped", component: R1LFlipped },
   { round: "R2", direction: "Drag & Drop", component: R2DragDrop },
   { round: "R2", direction: "Customize Drawer", component: R2CustomizeDrawer },
+  { round: "R2", direction: "Subsection Drag", component: R2SubsectionDrag },
+  { round: "R2", direction: "Hover Handles", component: R2HoverHandles },
 ];
 
 export default function App() {
@@ -30,5 +34,5 @@ export default function App() {
       </div>
     );
   }
-  return <VersionSwitcher screens={screens} initialRound="R1" initialDirection="Title L" />;
+  return <VersionSwitcher screens={screens} initialRound="R2" initialDirection="Hover Handles" />;
 }

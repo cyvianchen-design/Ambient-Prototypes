@@ -1,4 +1,4 @@
-export type CodeItem = { code: string; description: string };
+export type CodeItem = { code: string; description: string; providerLabel?: string };
 export type OrderItem = { id: string; label: string; baseLabel?: string; company?: string; detail: string; checked: boolean; relatedIcd?: string };
 
 export type OrderSetChild = {
@@ -33,30 +33,30 @@ export type OrderSetPoolItem = {
 // ─── Code pools ───────────────────────────────────────────────────────────────
 
 export const icd10Pool: CodeItem[] = [
-  { code: "R07.9",  description: "Chest pain, unspecified" },
-  { code: "R07.1",  description: "Chest pain on breathing" },
-  { code: "R07.2",  description: "Precordial pain" },
-  { code: "R07.89", description: "Other chest pain" },
-  { code: "I10",    description: "Essential (primary) hypertension" },
-  { code: "I11.9",  description: "Hypertensive heart disease without heart failure" },
-  { code: "I20.9",  description: "Angina pectoris, unspecified" },
-  { code: "I21.9",  description: "Acute myocardial infarction, unspecified" },
-  { code: "I25.10", description: "Atherosclerotic heart disease of native coronary artery" },
-  { code: "E78.5",  description: "Hyperlipidemia, unspecified" },
-  { code: "E78.00", description: "Pure hypercholesterolemia, unspecified" },
-  { code: "E78.1",  description: "Pure hyperglyceridemia" },
-  { code: "E11.9",  description: "Type 2 diabetes mellitus without complications" },
-  { code: "Z82.49", description: "Family history of ischemic heart disease" },
-  { code: "R00.0",  description: "Tachycardia, unspecified" },
-  { code: "R00.1",  description: "Bradycardia, unspecified" },
-  { code: "J18.9",  description: "Pneumonia, unspecified organism" },
-  { code: "M54.6",  description: "Pain in thoracic spine" },
+  { code: "R07.9",   providerLabel: "Chest pain",                     description: "Chest pain, unspecified" },
+  { code: "R07.1",   providerLabel: "Pleuritic chest pain",           description: "Chest pain on breathing" },
+  { code: "R07.2",   providerLabel: "Precordial chest pain",          description: "Precordial pain" },
+  { code: "R07.89",  providerLabel: "Atypical chest pain",            description: "Other chest pain" },
+  { code: "I10",     providerLabel: "High blood pressure",            description: "Essential (primary) hypertension" },
+  { code: "I11.9",   providerLabel: "Hypertensive heart disease",     description: "Hypertensive heart disease without heart failure" },
+  { code: "I20.9",   providerLabel: "Angina",                         description: "Angina pectoris, unspecified" },
+  { code: "I21.9",   providerLabel: "Heart attack",                   description: "Acute myocardial infarction, unspecified" },
+  { code: "I25.10",  providerLabel: "Coronary artery disease",        description: "Atherosclerotic heart disease of native coronary artery" },
+  { code: "E78.5",   providerLabel: "High cholesterol",               description: "Hyperlipidemia, unspecified" },
+  { code: "E78.00",  providerLabel: "High LDL",                       description: "Pure hypercholesterolemia, unspecified" },
+  { code: "E78.1",   providerLabel: "High triglycerides",             description: "Pure hyperglyceridemia" },
+  { code: "E11.9",   providerLabel: "Type 2 diabetes",                description: "Type 2 diabetes mellitus without complications" },
+  { code: "Z82.49",  providerLabel: "Family Hx of heart disease",     description: "Family history of ischemic heart disease" },
+  { code: "R00.0",   providerLabel: "Fast heart rate",                description: "Tachycardia, unspecified" },
+  { code: "R00.1",   providerLabel: "Slow heart rate",                description: "Bradycardia, unspecified" },
+  { code: "J18.9",   providerLabel: "Pneumonia",                      description: "Pneumonia, unspecified organism" },
+  { code: "M54.6",   providerLabel: "Mid-back pain",                  description: "Pain in thoracic spine" },
   // Ankle / foot
-  { code: "S93.401", description: "Sprain of unspecified ligament of right ankle" },
-  { code: "S93.402", description: "Sprain of unspecified ligament of left ankle" },
-  { code: "S93.601", description: "Sprain of right foot, unspecified" },
-  { code: "M25.371", description: "Stiffness of right ankle, not elsewhere classified" },
-  { code: "M79.671", description: "Pain in right foot" },
+  { code: "S93.401", providerLabel: "Right ankle sprain",             description: "Sprain of unspecified ligament of right ankle" },
+  { code: "S93.402", providerLabel: "Left ankle sprain",              description: "Sprain of unspecified ligament of left ankle" },
+  { code: "S93.601", providerLabel: "Right foot sprain",              description: "Sprain of right foot, unspecified" },
+  { code: "M25.371", providerLabel: "Right ankle stiffness",          description: "Stiffness of right ankle, not elsewhere classified" },
+  { code: "M79.671", providerLabel: "Right foot pain",                description: "Pain in right foot" },
 ];
 
 export const cptPool: CodeItem[] = [
@@ -213,11 +213,11 @@ export const ordersAdjacent: Record<string, string[]> = {
 // ─── Initial screen state ─────────────────────────────────────────────────────
 
 export const initialIcd10: CodeItem[] = [
-  { code: "R07.9",   description: "Chest pain, unspecified" },
-  { code: "I10",     description: "Essential (primary) hypertension" },
-  { code: "E78.5",   description: "Hyperlipidemia, unspecified" },
-  { code: "Z82.49",  description: "Family history of ischemic heart disease" },
-  { code: "S93.401", description: "Sprain of unspecified ligament of right ankle" },
+  { code: "R07.9",   providerLabel: "Chest pain",                description: "Chest pain, unspecified" },
+  { code: "I10",     providerLabel: "High blood pressure",       description: "Essential (primary) hypertension" },
+  { code: "E78.5",   providerLabel: "High cholesterol",          description: "Hyperlipidemia, unspecified" },
+  { code: "Z82.49",  providerLabel: "Family Hx of heart disease", description: "Family history of ischemic heart disease" },
+  { code: "S93.401", providerLabel: "Right ankle sprain",        description: "Sprain of unspecified ligament of right ankle" },
 ];
 
 export const initialCpt: CodeItem[] = [

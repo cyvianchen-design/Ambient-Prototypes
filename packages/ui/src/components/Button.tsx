@@ -88,8 +88,8 @@ const iconSizes = {
 const iconVariants = {
   primary:            "bg-[var(--foreground-primary,#1a1a1a)] text-[var(--foreground-oninverse,white)] hover:bg-[var(--neutral-800,#333)] active:bg-[var(--neutral-700,#4d4d4d)]",
   secondary:          "border border-[var(--neutral-1000,black)] border-solid bg-transparent text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-1,#f7f7f7)] active:bg-[var(--surface-2,#f2f2f2)]",
-  tertiary:           "bg-transparent text-[var(--accent,#1132ee)] hover:bg-[var(--litmus-25,#f1f3fe)] active:bg-[var(--litmus-25,#f1f3fe)]",
-  "tertiary-neutral": "bg-transparent text-[var(--foreground-secondary,#666)] hover:bg-[var(--surface-1,#f7f7f7)] active:bg-[var(--surface-2,#f2f2f2)]",
+  tertiary:           "bg-transparent text-[var(--accent,#1132ee)] hover:bg-[var(--accent-10,#1132ee1a)] active:bg-[var(--accent-20,#1132ee33)]",
+  "tertiary-neutral": "bg-transparent text-[var(--foreground-secondary,#666)] hover:bg-[var(--black-3,#00000008)] active:bg-[var(--black-5,#0000000d)]",
   accent:             "bg-[var(--accent,#1132ee)] text-white hover:bg-[var(--hover,#0d28bf)] active:bg-[var(--active,#0a1e8f)]",
   danger:             "bg-transparent text-[var(--foreground-semantic-danger,#bb1411)] hover:bg-[var(--red-25,#fef1f1)] active:bg-[var(--red-50,#fde8e8)]",
   inverse:            "bg-transparent text-white hover:bg-white/10 active:bg-white/20",

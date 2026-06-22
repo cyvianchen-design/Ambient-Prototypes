@@ -68,7 +68,6 @@ function Section({ title, subtitle, children }: SectionProps) {
 
 // ─── Drawer components ───────────────────────────────────────────────────────
 
-
 function TimeFrameDropdown({ value, options, onChange }: { value: string; options: string[]; onChange: (v: string) => void }) {
   const [open, setOpen] = useState(false);
   return (
@@ -417,7 +416,7 @@ const suggestions = [
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
-export default function R2CustomizeDrawer() {
+export default function R2SubsectionDrag() {
   const [consentChecked, setConsentChecked] = useState(false);
   const [order, setOrder] = useState(() => sectionDefs.map((s) => s.id));
   const [pointerDragId, setPointerDragId] = useState<string | null>(null);
@@ -438,6 +437,20 @@ export default function R2CustomizeDrawer() {
     "historical-procedures": "Past 5 years",
     "last-visit-source":     "Any provider, any note",
   });
+
+  // Per-section child ordering (full child list — deleted children stay in their positions)
+  const [childOrder, setChildOrder] = useState<Record<string, string[]>>(() => {
+    const result: Record<string, string[]> = {};
+    drawerGroups.forEach((g) => {
+      if (g.children) result[g.id] = g.children.map((c) => c.id);
+    });
+    return result;
+  });
+
+  // Subsection drag state
+  const [subDragChildId, setSubDragChildId] = useState<string | null>(null);
+  const [subDragParentId, setSubDragParentId] = useState<string | null>(null);
+  const [subDropIndex, setSubDropIndex] = useState<number | null>(null);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -470,6 +483,16 @@ export default function R2CustomizeDrawer() {
   }
   function restoreChild(id: string) {
     setDeletedChildren((prev) => { const next = new Set(prev); next.delete(id); return next; });
+  }
+
+  // Returns visible children in their custom order
+  function getActiveChildren(group: DrawerRow): DrawerRow[] {
+    if (!group.children) return [];
+    const order = childOrder[group.id] ?? group.children.map((c) => c.id);
+    return order
+      .filter((cid) => !deletedChildren.has(cid))
+      .map((cid) => group.children!.find((c) => c.id === cid)!)
+      .filter((c): c is DrawerRow => c !== undefined);
   }
 
   const orderedSections = activeOrder.map((id) => sectionDefs.find((s) => s.id === id)!).filter(Boolean);
@@ -602,7 +625,7 @@ export default function R2CustomizeDrawer() {
                   const group = drawerGroups.find((g) => g.id === id);
                   if (!group) return null;
                   const isDragging = pointerDragId === id;
-                  const activeChildren = group.children?.filter((child) => !deletedChildren.has(child.id));
+                  const activeChildren = getActiveChildren(group);
                   const showDivider = dropIndex === index && pointerDragId !== null && pointerDragId !== id;
                   return (
                     <React.Fragment key={id}>
@@ -675,36 +698,108 @@ export default function R2CustomizeDrawer() {
                           />
                         </div>
 
-                        {/* Child rows */}
-                        {activeChildren?.map((child) => (
-                          <div
-                            key={child.id}
-                            className="flex items-center gap-[8px] h-[28px] pl-[20px] pr-[4px]"
-                          >
-                            <span
-                              className="flex-1 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] truncate"
-                              style={{ fontFamily: "Lato, sans-serif" }}
-                            >
-                              {child.label}
-                            </span>
-                            {child.timeFrameKey && child.options ? (
-                              <TimeFrameDropdown
-                                value={timeFrames[child.timeFrameKey]}
-                                options={child.options}
-                                onChange={(v) => setTimeFrames((prev) => ({ ...prev, [child.timeFrameKey!]: v }))}
-                              />
-                            ) : child.fixedLabel ? (
-                              <DisabledChip label={child.fixedLabel} />
-                            ) : null}
-                            <IconButton
-                              icon={<Icon name="close" size={14} />}
-                              variant="tertiary-neutral"
-                              size="small"
-                              aria-label="Remove subsection"
-                              onClick={() => deleteChild(child.id)}
-                            />
+                        {/* Child rows — draggable within their section */}
+                        {activeChildren.length > 0 && (
+                          <div data-children-of={id} className="flex flex-col">
+                            {activeChildren.map((child, ci) => {
+                              const isSubDragging = subDragChildId === child.id;
+                              const showSubDivider =
+                                subDragParentId === id &&
+                                subDropIndex === ci &&
+                                subDragChildId !== null &&
+                                subDragChildId !== child.id;
+                              return (
+                                <React.Fragment key={child.id}>
+                                  {showSubDivider && <DragDivider />}
+                                  <div
+                                    data-child-id={child.id}
+                                    className={[
+                                      "flex items-center gap-[8px] h-[28px] pl-[28px] pr-[4px] transition-opacity",
+                                      isSubDragging ? "opacity-40" : "opacity-100",
+                                    ].join(" ")}
+                                  >
+                                    {/* Sub-row drag handle */}
+                                    <div
+                                      className="shrink-0 leading-[0] text-[var(--foreground-secondary,#666)] cursor-grab touch-none select-none"
+                                      onPointerDown={(e) => {
+                                        e.currentTarget.setPointerCapture(e.pointerId);
+                                        setSubDragChildId(child.id);
+                                        setSubDragParentId(id);
+                                        setSubDropIndex(ci);
+                                      }}
+                                      onPointerMove={(e) => {
+                                        if (subDragChildId !== child.id) return;
+                                        const container = drawerListRef.current?.querySelector(`[data-children-of="${id}"]`);
+                                        if (!container) return;
+                                        const childEls = Array.from(container.querySelectorAll('[data-child-id]')) as HTMLElement[];
+                                        let newIdx = childEls.length;
+                                        for (let i = 0; i < childEls.length; i++) {
+                                          const rect = childEls[i].getBoundingClientRect();
+                                          if (e.clientY < rect.top + rect.height / 2) { newIdx = i; break; }
+                                        }
+                                        setSubDropIndex(newIdx);
+                                      }}
+                                      onPointerUp={() => {
+                                        if (subDragChildId !== child.id || subDropIndex === null) {
+                                          setSubDragChildId(null); setSubDragParentId(null); setSubDropIndex(null); return;
+                                        }
+                                        setChildOrder((prev) => {
+                                          const g = drawerGroups.find((g) => g.id === id);
+                                          if (!g?.children) return prev;
+                                          const current = prev[id] ?? g.children.map((c) => c.id);
+                                          // Active IDs in current order
+                                          const activeIds = current.filter((cid) => !deletedChildren.has(cid));
+                                          const from = activeIds.indexOf(child.id);
+                                          if (from === -1) return prev;
+                                          const newActive = [...activeIds];
+                                          newActive.splice(from, 1);
+                                          const to = subDropIndex > from ? subDropIndex - 1 : subDropIndex;
+                                          newActive.splice(to, 0, child.id);
+                                          // Rebuild full order: active items reordered, deleted items in original relative positions
+                                          let activeIdx = 0;
+                                          const result = current.map((cid) =>
+                                            deletedChildren.has(cid) ? cid : newActive[activeIdx++]
+                                          );
+                                          return { ...prev, [id]: result };
+                                        });
+                                        setSubDragChildId(null); setSubDragParentId(null); setSubDropIndex(null);
+                                      }}
+                                      onPointerCancel={() => { setSubDragChildId(null); setSubDragParentId(null); setSubDropIndex(null); }}
+                                    >
+                                      <Icon name="drag_indicator" size={16} />
+                                    </div>
+                                    <span
+                                      className="flex-1 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] truncate"
+                                      style={{ fontFamily: "Lato, sans-serif" }}
+                                    >
+                                      {child.label}
+                                    </span>
+                                    {child.timeFrameKey && child.options ? (
+                                      <TimeFrameDropdown
+                                        value={timeFrames[child.timeFrameKey]}
+                                        options={child.options}
+                                        onChange={(v) => setTimeFrames((prev) => ({ ...prev, [child.timeFrameKey!]: v }))}
+                                      />
+                                    ) : child.fixedLabel ? (
+                                      <DisabledChip label={child.fixedLabel} />
+                                    ) : null}
+                                    <IconButton
+                                      icon={<Icon name="close" size={14} />}
+                                      variant="tertiary-neutral"
+                                      size="small"
+                                      aria-label="Remove subsection"
+                                      onClick={() => deleteChild(child.id)}
+                                    />
+                                  </div>
+                                </React.Fragment>
+                              );
+                            })}
+                            {/* End-of-list divider for sub-drag */}
+                            {subDragParentId === id && subDropIndex === activeChildren.length && subDragChildId !== null && (
+                              <DragDivider />
+                            )}
                           </div>
-                        ))}
+                        )}
                       </div>
                     </React.Fragment>
                   );

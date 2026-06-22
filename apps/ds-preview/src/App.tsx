@@ -114,6 +114,17 @@ function ButtonsTab() {
           onChange={() => {}}
         />
       </Section>
+      <Section title="Button Group — Multi select, inverse (on brand surface)">
+        <div className="flex items-center bg-gradient-to-br from-[var(--litmus-500,#1132ee)] to-[var(--litmus-300,#7084f5)] rounded-[8px] px-[16px] py-[12px]">
+          <ButtonGroup
+            multiSelect
+            theme="inverse"
+            items={[{ label: "Bold", value: "bold" }, { label: "Italic", value: "italic" }, { label: "Underline", value: "underline" }]}
+            value={["bold", "underline"]}
+            onChange={() => {}}
+          />
+        </div>
+      </Section>
       <Section title="Split Button">
         <SplitButton label="Save" onClick={() => {}} onMenuOpen={() => {}} variant="primary" />
         <SplitButton label="Save" onClick={() => {}} onMenuOpen={() => {}} variant="secondary" />

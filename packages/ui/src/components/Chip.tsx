@@ -31,7 +31,7 @@ export function Chip({
   disabled = false,
   className = "",
 }: ChipProps) {
-  const bg        = color === "accent" ? "bg-[#f1f3fe]"   : "bg-[#f2f2f2]";
+  const bg        = color === "accent" ? "bg-[var(--accent-10,#1132ee1a)]" : "bg-[var(--black-5,#0000000d)]";
   const bgHover   = color === "accent" ? "hover:bg-[#e7eafd]" : "hover:bg-[#e6e6e6]";
   const textColor = color === "accent" ? "text-[#1132ee]" : "text-[#1a1a1a]";
 
