@@ -1,5 +1,5 @@
 {
-  "buildCommand": "",
+  "buildCommand": "cd ../.. && pnpm --filter previsit-customization build",
   "outputDirectory": "dist",
-  "installCommand": "echo skip"
+  "installCommand": "cd ../.. && pnpm install"
 }

@@ -157,6 +157,7 @@ Use the `<Icon name="..." size={N} filled? />` component for any Material Symbol
 - **Always use existing components** — never recreate a button, checkbox, chip, etc. from scratch
 - **If a needed component doesn't exist in `packages/ui`**, stop immediately and tell the user — do not build a one-off inline version. Ask for the Figma spec so it can be added to the DS properly.
 - **Never hardcode colors, font sizes, or spacing** that should come from design tokens
+- **Never guess icon names or fill variants** — icons are chosen intentionally. Always get the exact icon name and filled/unfilled state from Figma (via the `data-name` on the icon node in `get_design_context`). If the Figma context isn't available, ask before using a guess. Secondary nav item icons are 20×20px and use the filled style wherever a filled variant exists.
 
 ---
 
@@ -263,11 +264,26 @@ Always use **Claude in Chrome** MCP tools to verify UI changes in the browser �
 
 ## Deploy
 
-GitHub auto-deploy via Vercel is unreliable. To deploy manually:
+GitHub auto-deploy via Vercel is unreliable. Deploy manually per app:
 
+**orders-v1** → linked at repo root, deploys directly:
 ```bash
 cd "/Users/cyvianchen/Desktop/Ambient Prototypes"
 npx vercel --prod
 ```
 
-The project is linked to `cyvian-chens-projects/ambient-prototypes-orders-v1`. The user controls when to deploy — do not commit or push unless explicitly asked.
+**previsit-customization** → requires build-first + project swap (Vercel CLI hangs on `--prebuilt` streaming; use `--no-wait`):
+```bash
+cd "/Users/cyvianchen/Desktop/Ambient Prototypes"
+pnpm --filter previsit-customization build
+cp .vercel/project.json .vercel/project.json.bak
+cp apps/previsit-customization/.vercel/project.json .vercel/project.json
+npx vercel deploy --prebuilt --prod --no-wait
+mv .vercel/project.json.bak .vercel/project.json
+rm -rf .vercel/output
+```
+
+- **orders-v1**: `cyvian-chens-projects/ambient-prototypes-orders-v1` → `ambient-prototypes-orders-v1.vercel.app`
+- **previsit-customization**: `cyvian-chens-projects/ambient-prototypes-previsit` → `ambient-prototypes-previsit.vercel.app`
+
+The user controls when to deploy — do not commit or push unless explicitly asked.
