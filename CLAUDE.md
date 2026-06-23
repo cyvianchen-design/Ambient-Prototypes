@@ -272,15 +272,11 @@ cd "/Users/cyvianchen/Desktop/Ambient Prototypes"
 npx vercel --prod
 ```
 
-**previsit-customization** → requires build-first + project swap (Vercel CLI hangs on `--prebuilt` streaming; use `--no-wait`):
+**previsit-customization** → run from the app directory (has its own `.vercel/project.json`):
 ```bash
-cd "/Users/cyvianchen/Desktop/Ambient Prototypes"
-pnpm --filter previsit-customization build
-cp .vercel/project.json .vercel/project.json.bak
-cp apps/previsit-customization/.vercel/project.json .vercel/project.json
+cd "/Users/cyvianchen/Desktop/Ambient Prototypes/apps/previsit-customization"
+npx vercel build --yes --prod
 npx vercel deploy --prebuilt --prod --no-wait
-mv .vercel/project.json.bak .vercel/project.json
-rm -rf .vercel/output
 ```
 
 - **orders-v1**: `cyvian-chens-projects/ambient-prototypes-orders-v1` → `ambient-prototypes-orders-v1.vercel.app`
