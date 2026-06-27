@@ -8,11 +8,20 @@ const variantStyles = {
   default: "text-[var(--foreground-secondary,#666)]",
 };
 
+const filledBg = {
+  success: "bg-[var(--green-50,#edf7ee)]",
+  info:    "bg-[var(--accent-10,#1132ee1a)]",
+  warning: "bg-[var(--orange-50,#fff3e0)]",
+  error:   "bg-[var(--red-50,#fdecea)]",
+  default: "bg-[var(--black-5,#0000000d)]",
+};
+
 export type BadgeProps = {
   label: string;
   variant?: keyof typeof variantStyles;
   icon?: React.ReactNode;
   size?: "small" | "medium";
+  filled?: boolean;
   className?: string;
 };
 
@@ -21,12 +30,14 @@ export function Badge({
   variant = "default",
   icon,
   size = "small",
+  filled = false,
   className = "",
 }: BadgeProps) {
   return (
     <div
-      className={`inline-flex items-center gap-[4px] font-['Lato',sans-serif] font-bold leading-[1.2]
+      className={`self-start inline-flex items-center gap-[4px] font-['Lato',sans-serif] font-bold leading-[1.2]
         ${size === "small" ? "text-[12px] tracking-[0.24px]" : "text-[13px] tracking-[0.13px]"}
+        ${filled ? `${filledBg[variant]} px-[6px] py-[2px] rounded-[4px]` : ""}
         ${variantStyles[variant]} ${className}`}
       style={{ fontFeatureSettings: "'ss07'" }}
     >
