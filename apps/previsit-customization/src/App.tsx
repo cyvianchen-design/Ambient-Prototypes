@@ -14,6 +14,7 @@ import R2SubsectionDrag from "./screens/R2-SubsectionDrag";
 import R2HoverHandles from "./screens/R2-HoverHandles";
 import R3Baseline from "./screens/R3-Baseline";
 import R3Description from "./screens/R3-Description";
+import R3InlineDescription from "./screens/R3-InlineDescription";
 
 const screens: ScreenDef[] = [
   { round: "R1", direction: "Baseline", component: R1Baseline },
@@ -28,6 +29,7 @@ const screens: ScreenDef[] = [
   { round: "R2", direction: "Hover Handles", component: R2HoverHandles },
   { round: "R3", direction: "Baseline", component: R3Baseline },
   { round: "R3", direction: "Description", component: R3Description },
+  { round: "R3", direction: "Inline Description", component: R3InlineDescription },
 ];
 
 export default function App() {
