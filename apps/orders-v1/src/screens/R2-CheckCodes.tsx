@@ -9,10 +9,10 @@ function CodeMenuItem({ item, onSelect }: { item: CodeItemType; onSelect: (item:
       onMouseDown={(e) => { e.preventDefault(); onSelect(item); }}
       className="flex items-center w-full gap-[8px] h-[36px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left"
     >
-      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}>
+      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]">
         {item.code}
       </span>
-      <span className="text-[13px] font-normal leading-none text-[var(--foreground-primary,#1a1a1a)] flex-1 min-w-0 truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+      <span className="text-[13px] font-normal leading-none text-[var(--foreground-primary,#1a1a1a)] flex-1 min-w-0 truncate">
         {item.description}
       </span>
     </button>
@@ -346,14 +346,14 @@ export default function R2CheckCodes() {
         {/* ── Diagnostic Codes ─────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
               Diagnostic Codes
             </h2>
           </div>
 
           {/* ICD-10 */}
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
             <Button variant="tertiary" size="small" prefix={<Icon name="content_copy" size={16} />}>Copy Codes</Button>
           </div>
           <div className="flex flex-col gap-[2px] mb-[24px]">
@@ -363,10 +363,10 @@ export default function R2CheckCodes() {
                   className="flex items-center h-[28px] px-[8px] gap-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer"
                   onClick={(e) => openPopover(e, "icd10", c.code)}
                 >
-                  <span className="w-[80px] shrink-0 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                  <span className="w-[80px] shrink-0 t-title-sm text-[var(--foreground-brand,#1132ee)]">
                     {c.code}
                   </span>
-                  <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {c.description}
                   </span>
                 </div>
@@ -384,7 +384,7 @@ export default function R2CheckCodes() {
         {/* ── Orders ───────────────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
               Orders
             </h2>
             {(() => {
@@ -419,7 +419,7 @@ export default function R2CheckCodes() {
                   onClick={(e) => openPopover(e, "order", o.id)}
                   className="flex items-center h-[28px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
                 >
-                  <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {o.baseLabel ?? o.label}
                   </span>
                 </button>
@@ -473,7 +473,7 @@ export default function R2CheckCodes() {
                       onClick={(e) => openPopover(e, "set-title", set.id)}
                       className="flex items-center h-[28px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
                     >
-                      <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                      <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                         {set.baseLabel ?? set.label}
                       </span>
                     </button>
@@ -507,7 +507,7 @@ export default function R2CheckCodes() {
                           state={child.checked ? "selected" : "unselected"}
                           onChange={() => toggleSetChild(set.id, child.id)}
                         />
-                        <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                        <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                           {child.label}
                         </span>
                         <Chip
@@ -544,7 +544,7 @@ export default function R2CheckCodes() {
               <MenuHeader>Link diagnostic codes</MenuHeader>
               {icd10.length === 0
                 ? (
-                  <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>
+                  <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">
                     No codes in this note — add codes in the Diagnostic Codes section.
                   </p>
                 )
@@ -555,10 +555,9 @@ export default function R2CheckCodes() {
                         key={c.code}
                         onMouseDown={(e) => { e.preventDefault(); if (popover.code) toggleOrderIcd(popover.code, c.code); }}
                         className="flex items-center gap-[8px] w-full h-[36px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
-                        style={{ fontFamily: "Lato, sans-serif" }}
                       >
                         <Checkbox state={checked ? "selected" : "unselected"} onChange={() => {}} />
-                        <span className="shrink-0 w-[56px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                        <span className="shrink-0 w-[56px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]">
                           {c.code}
                         </span>
                         <span className="text-[13px] font-normal leading-none text-[var(--foreground-primary,#1a1a1a)] flex-1 min-w-0 truncate">
@@ -575,7 +574,7 @@ export default function R2CheckCodes() {
               <MenuHeader>Link diagnostic code</MenuHeader>
               {icd10.length === 0
                 ? (
-                  <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>
+                  <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">
                     No codes in this note — add codes in the Diagnostic Codes section.
                   </p>
                 )
@@ -634,7 +633,7 @@ export default function R2CheckCodes() {
                   {hasSuggested && (<><MenuHeader>Suggested</MenuHeader>{adjSets.map((s) => <MenuItem key={s.id} label={s.baseLabel} onClick={() => handleSetTitleSelect(s)} />)}{childOrders.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleSetReplaceWithOrder(o)} />)}</>)}
                   {yourSets.length > 0 && (<><MenuHeader>Your Order Sets</MenuHeader>{yourSets.map((s) => <MenuItem key={s.id} label={s.baseLabel} onClick={() => handleSetTitleSelect(s)} />)}</>)}
                   {filteredOrders.length > 0 && (<><MenuHeader>All Orders</MenuHeader>{filteredOrders.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleSetReplaceWithOrder(o)} />)}</>)}
-                  {!hasResults && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No results found</p>}
+                  {!hasResults && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No results found</p>}
                 </div>
               </Menu>
             );
@@ -677,7 +676,7 @@ export default function R2CheckCodes() {
                   {filteredAdj.length > 0 && (<><MenuHeader>Suggested</MenuHeader>{filteredAdj.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
                   {addableSets.length > 0 && (<><MenuHeader>Your Order Sets</MenuHeader>{addableSets.map((s) => { const co = [s.defaultLabCompany, s.defaultImagingCompany].filter(Boolean).join(" · "); return <MenuItem key={s.id} label={s.baseLabel + (co ? ` (${co})` : "")} description={`${s.children.length} orders${s.relatedIcd ? ` · ${s.relatedIcd}` : ""}`} onClick={() => handleAddOrderSet(s)} />; })}</>)}
                   {filteredRest.length > 0 && (<>{(filteredAdj.length > 0 || addableSets.length > 0) && <MenuHeader>All Orders</MenuHeader>}{filteredRest.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
-                  {isEmpty && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No orders found</p>}
+                  {isEmpty && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No orders found</p>}
                 </div>
               </Menu>
             );
@@ -728,7 +727,7 @@ export default function R2CheckCodes() {
                   {fAdj.length > 0 && (<><MenuHeader>Suggested</MenuHeader>{fAdj.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={onSelect} />)}</>)}
                   {fRest.length > 0 && <MenuHeader>All Codes</MenuHeader>}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={onSelect} />)}
-                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
+                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No codes found</p>}
                 </div>
               </Menu>
             );

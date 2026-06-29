@@ -35,8 +35,8 @@ export function Badge({
 }: BadgeProps) {
   return (
     <div
-      className={`self-start inline-flex items-center gap-[4px] font-['Lato',sans-serif] font-bold leading-[1.2]
-        ${size === "small" ? "text-[12px] tracking-[0.24px]" : "text-[13px] tracking-[0.13px]"}
+      className={`self-start inline-flex items-center gap-[4px]
+        ${size === "small" ? "t-title-xs" : "t-title-sm"}
         ${filled ? `${filledBg[variant]} px-[6px] py-[2px] rounded-[4px]` : ""}
         ${variantStyles[variant]} ${className}`}
       style={{ fontFeatureSettings: "'ss07'" }}

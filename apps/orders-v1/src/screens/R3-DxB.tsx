@@ -14,15 +14,15 @@ function CodeMenuItem({ item, onSelect }: { item: CodeItemType; onSelect: (item:
       onMouseDown={(e) => { e.preventDefault(); onSelect(item); }}
       className="flex items-center w-full gap-[8px] min-h-[36px] py-[4px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left"
     >
-      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}>
+      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]">
         {item.code}
       </span>
       <div className="flex flex-col min-w-0 flex-1">
-        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate">
           {item.providerLabel ?? item.description}
         </span>
         {item.providerLabel && (
-          <span className="text-[12px] font-normal leading-[1.2] text-[var(--foreground-secondary,#666)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+          <span className="t-body-xs text-[var(--foreground-secondary,#666)] truncate">
             {item.description}
           </span>
         )}
@@ -311,7 +311,7 @@ export default function R3DxB() {
       <div className="bg-[var(--surface-1,#f7f7f7)] rounded-[12px] pl-[16px] pr-[12px] py-[12px] flex flex-col">
         <div className="flex items-center justify-between mb-[10px]">
           <div className="flex items-center gap-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>Evidence</span>
+            <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Evidence</span>
             {setItem && <Chip label={setItem.setName} color="neutral" size="XS" />}
           </div>
           <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />} onClick={onClose} aria-label="Close" />
@@ -320,11 +320,11 @@ export default function R3DxB() {
           <React.Fragment key={i}>
             {i > 0 && <div className="h-[1px] bg-[#e0e0e0] my-[10px]" />}
             <div className="flex flex-col gap-[2px]">
-              <span className="text-[11px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>
+              <span className="text-[11px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)]">
                 {item.source === "note" ? "Note" : "Transcript"}
               </span>
               <div className="flex items-start justify-between gap-[12px]">
-                <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{item.text}</span>
+                <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)]">{item.text}</span>
                 <span className="shrink-0 mt-[2px] text-[var(--foreground-secondary,#666)]"><Icon name="chevron_right" size={16} /></span>
               </div>
             </div>
@@ -345,7 +345,7 @@ export default function R3DxB() {
             className="flex items-center gap-[4px] flex-1 min-w-0 h-[28px] px-[6px] rounded-[6px] group-hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer"
             onClick={() => toggleOrder(order.id)}
           >
-            <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{order.label}</span>
+            <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{order.label}</span>
             {order.company && (
               <Chip label={order.company} color="neutral" size="XS"
                 onClick={(e) => { e.stopPropagation(); openPopover(e, "order-company", undefined, order.id); }} />
@@ -387,10 +387,10 @@ export default function R3DxB() {
         {/* ── Diagnostic Codes ─────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">Diagnostic Codes</h2>
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">Diagnostic Codes</h2>
           </div>
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">ICD-10 Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">ICD-10 Codes</span>
             <div className="flex items-center gap-[4px]">
               <Button variant="tertiary" size="small" onClick={selectConfidentCodes}>Select confident</Button>
               <Button variant="tertiary" size="small" prefix={<Checkbox state={codesState} onChange={toggleAllCodes} />} onClick={toggleAllCodes}>Select all</Button>
@@ -409,14 +409,14 @@ export default function R3DxB() {
                     <div className="flex flex-col flex-1 px-[8px] py-[4px] rounded-[6px] group-hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer min-h-[28px] min-w-0"
                       onClick={(e) => openPopover(e, "icd10", c.code)}>
                       <div className="flex items-center gap-[8px]">
-                        <span className="shrink-0 w-[72px] text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--accent,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>{c.code}</span>
-                        <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]">{c.providerLabel ?? c.description}</span>
+                        <span className="shrink-0 w-[72px] t-title-md text-[var(--accent,#1132ee)]">{c.code}</span>
+                        <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)]">{c.providerLabel ?? c.description}</span>
                         <div className="shrink-0" onClick={(e) => { e.stopPropagation(); setInfoOpenCode((p) => p === c.code ? null : c.code); }}>
                           <IconButton size="small" variant="tertiary" icon={<Icon name="info" size={16} />} aria-label="Info" />
                         </div>
                       </div>
                       {c.providerLabel && (
-                        <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] ml-[80px]">{c.description}</span>
+                        <span className="t-body-sm text-[var(--foreground-secondary,#666)] ml-[80px]">{c.description}</span>
                       )}
                     </div>
                     <div className="flex items-center h-[28px] mt-[4px] opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
@@ -427,14 +427,14 @@ export default function R3DxB() {
                   {isInfoOpen && evidence.length > 0 && (
                     <div className="mt-[4px] ml-[28px] bg-[var(--surface-1,#f7f7f7)] rounded-[12px] pl-[16px] pr-[12px] py-[12px] flex flex-col">
                       <div className="flex items-center justify-between mb-[10px]">
-                        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>Evidence</span>
+                        <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Evidence</span>
                         <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />} onClick={() => setInfoOpenCode(null)} aria-label="Close" />
                       </div>
                       {evidence.map((quote, i) => (
                         <React.Fragment key={i}>
                           {i > 0 && <div className="h-[1px] bg-[#e0e0e0] my-[10px]" />}
                           <div className="flex items-start justify-between gap-[12px]">
-                            <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{quote}</span>
+                            <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)]">{quote}</span>
                             <span className="shrink-0 mt-[2px] text-[var(--foreground-secondary,#666)]"><Icon name="chevron_right" size={16} /></span>
                           </div>
                         </React.Fragment>
@@ -452,16 +452,16 @@ export default function R3DxB() {
         {/* ── Orders ───────────────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">Orders</h2>
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">Orders</h2>
           </div>
 
           {/* Hero CTA — primary action to select confident items in both sections */}
           <div className="flex items-center gap-[8px] mb-[20px] p-[12px] bg-[var(--surface-1,#f7f7f7)] rounded-[12px]">
             <div className="flex-1">
-              <p className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>
+              <p className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">
                 Select confident items
               </p>
-              <p className="text-[13px] font-normal leading-[1.4] text-[var(--foreground-secondary,#666)] mt-[2px]" style={{ fontFamily: "Lato, sans-serif" }}>
+              <p className="t-body-sm text-[var(--foreground-secondary,#666)] mt-[2px]">
                 Checks codes and orders the AI is most confident about
               </p>
             </div>
@@ -469,7 +469,7 @@ export default function R3DxB() {
           </div>
 
           <div className="flex items-center justify-between mb-[12px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">All orders</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">All orders</span>
             <Button variant="tertiary" size="small" onClick={selectAll}>Select all</Button>
           </div>
 
@@ -481,8 +481,8 @@ export default function R3DxB() {
               return (
                 <div key={code} className="flex flex-col gap-[4px]">
                   <div className="flex items-center gap-[6px] mb-[2px]">
-                    <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}>{code}</span>
-                    <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>{label}</span>
+                    <span className="t-title-sm text-[var(--accent,#1132ee)]">{code}</span>
+                    <span className="t-body-sm text-[var(--foreground-secondary,#666)]">{label}</span>
                   </div>
                   {active.map((o) => renderActiveOrderRow(o))}
                   {charted.length > 0 && (
@@ -490,11 +490,11 @@ export default function R3DxB() {
                       {charted.map((order) => (
                         <div key={order.id} className="flex items-center gap-[6px] min-h-[28px] pl-[32px] opacity-40">
                           <Icon name="check_circle" size={16} filled />
-                          <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]">{order.label}</span>
+                          <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)]">{order.label}</span>
                           {order.company && (
-                            <span className="text-[13px] font-normal leading-[1.2] text-[var(--foreground-secondary,#666)] ml-[2px]">· {order.company}</span>
+                            <span className="t-body-sm text-[var(--foreground-secondary,#666)] ml-[2px]">· {order.company}</span>
                           )}
-                          <span className="text-[12px] font-normal text-[var(--foreground-secondary,#666)] ml-auto" style={{ fontFamily: "Lato, sans-serif" }}>In chart</span>
+                          <span className="text-[12px] font-normal text-[var(--foreground-secondary,#666)] ml-auto">In chart</span>
                         </div>
                       ))}
                     </div>
@@ -504,7 +504,7 @@ export default function R3DxB() {
             })}
             {unlinkedOrders.filter((o) => !o.precharted).length > 0 && (
               <div className="flex flex-col gap-[4px]">
-                <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] mb-[2px]" style={{ fontFamily: "Lato, sans-serif" }}>Unlinked</span>
+                <span className="t-title-sm text-[var(--foreground-secondary,#666)] mb-[2px]">Unlinked</span>
                 {unlinkedOrders.filter((o) => !o.precharted).map((o) => renderActiveOrderRow(o))}
               </div>
             )}
@@ -524,7 +524,7 @@ export default function R3DxB() {
                 <MenuItem key={v.id} label={v.company ?? v.label} description={v.detail} onClick={() => handleOrderVariantSelect(v)} />
               ))}
               {companyVariants.length === 0 && (
-                <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>No other vendors available</p>
+                <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]">No other vendors available</p>
               )}
             </Menu>
           ) : popover.list === "order" ? (() => {
@@ -550,7 +550,7 @@ export default function R3DxB() {
                 <div className="overflow-y-auto max-h-[280px]">
                   {filteredAdj.length > 0 && (<><MenuHeader>Suggested</MenuHeader>{filteredAdj.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
                   {filteredRest.length > 0 && (<>{filteredAdj.length > 0 && <MenuHeader>All Orders</MenuHeader>}{filteredRest.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
-                  {filteredAdj.length === 0 && filteredRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>No orders found</p>}
+                  {filteredAdj.length === 0 && filteredRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]">No orders found</p>}
                 </div>
               </Menu>
             );
@@ -570,7 +570,7 @@ export default function R3DxB() {
                   {fAdj.length > 0 && (<><MenuHeader>{isReassign ? "Current codes" : "Suggested"}</MenuHeader>{fAdj.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleIcd10Select} />)}</>)}
                   {fRest.length > 0 && <MenuHeader>All Codes</MenuHeader>}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleIcd10Select} />)}
-                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
+                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]">No codes found</p>}
                 </div>
               </Menu>
             );

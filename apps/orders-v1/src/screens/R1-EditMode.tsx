@@ -236,7 +236,7 @@ export default function R2EditMode() {
         {/* ── Diagnostic Codes ─────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
               Diagnostic Codes
             </h2>
             <Button
@@ -251,7 +251,7 @@ export default function R2EditMode() {
 
           {/* ICD-10 */}
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
             {!diagEditMode && <Button variant="tertiary" size="small" prefix={<Icon name="content_copy" size={16} />}>Copy Codes</Button>}
           </div>
           <div className="flex flex-col gap-[4px] mb-[24px]">
@@ -264,7 +264,7 @@ export default function R2EditMode() {
                       readOnly
                       className="flex-1 cursor-pointer"
                       prefix={
-                        <span className="text-[12px] font-bold text-[var(--foreground-brand,#1132ee)] w-[56px] shrink-0 leading-[1.2] tracking-[0.13px]" style={{ fontFeatureSettings: "'ss07'" }}>
+                        <span className="text-[12px] font-bold text-[var(--foreground-brand,#1132ee)] w-[56px] shrink-0 leading-[1.2] tracking-[0.13px]">
                           {c.code}
                         </span>
                       }
@@ -279,10 +279,10 @@ export default function R2EditMode() {
                   </>
                 ) : (
                   <div className="flex items-center h-[28px] px-[8px] gap-[8px]">
-                    <span className="w-[80px] shrink-0 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                    <span className="w-[80px] shrink-0 t-title-sm text-[var(--foreground-brand,#1132ee)]">
                       {c.code}
                     </span>
-                    <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{c.description}</span>
+                    <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{c.description}</span>
                   </div>
                 )}
               </div>
@@ -294,7 +294,7 @@ export default function R2EditMode() {
 
           {/* CPT */}
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">CPT Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">CPT Codes</span>
             {!diagEditMode && <Button variant="tertiary" size="small" prefix={<Icon name="content_copy" size={16} />}>Copy Codes</Button>}
           </div>
           <div className="flex flex-col gap-[4px]">
@@ -307,7 +307,7 @@ export default function R2EditMode() {
                       readOnly
                       className="flex-1 cursor-pointer"
                       prefix={
-                        <span className="text-[12px] font-bold text-[var(--foreground-brand,#1132ee)] w-[56px] shrink-0 leading-[1.2] tracking-[0.13px]" style={{ fontFeatureSettings: "'ss07'" }}>
+                        <span className="text-[12px] font-bold text-[var(--foreground-brand,#1132ee)] w-[56px] shrink-0 leading-[1.2] tracking-[0.13px]">
                           {c.code}
                         </span>
                       }
@@ -322,10 +322,10 @@ export default function R2EditMode() {
                   </>
                 ) : (
                   <div className="flex items-center h-[28px] px-[8px] gap-[8px]">
-                    <span className="w-[80px] shrink-0 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                    <span className="w-[80px] shrink-0 t-title-sm text-[var(--foreground-brand,#1132ee)]">
                       {c.code}
                     </span>
-                    <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{c.description}</span>
+                    <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{c.description}</span>
                   </div>
                 )}
               </div>
@@ -338,7 +338,7 @@ export default function R2EditMode() {
 
         {/* ── Orders ───────────────────────────────────────────────── */}
         <section>
-          <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)] mb-[16px]">
+          <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)] mb-[16px]">
             Orders
           </h2>
           <div className="flex flex-col gap-[8px]">
@@ -385,7 +385,7 @@ export default function R2EditMode() {
                   </>
                 ) : (
                   <div className="flex items-center gap-[6px] h-[28px] px-[8px]">
-                    <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                    <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                       {o.baseLabel ? `${o.baseLabel} (${o.company})` : o.label}
                     </span>
                     {o.relatedIcd && <Chip label={o.relatedIcd} color="accent" size="XS" />}
@@ -432,7 +432,7 @@ export default function R2EditMode() {
                       </>
                     ) : (
                       <>
-                        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap px-[8px]">
+                        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap px-[8px]">
                           {set.label} ({companyLabel})
                         </span>
                         {set.relatedIcd && <Chip label={set.relatedIcd} color="accent" size="XS" />}
@@ -456,7 +456,7 @@ export default function R2EditMode() {
                           </>
                         ) : (
                           <div className="flex items-center gap-[6px] h-[28px] px-[8px]">
-                            <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                            <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                               {child.label} ({child.company})
                             </span>
                           </div>
@@ -524,7 +524,7 @@ export default function R2EditMode() {
             <div className="flex flex-col bg-white">
               <div className="flex items-center gap-[8px] px-[12px] py-[8px] border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
                 <Icon name="business" size={16} className="text-[var(--foreground-tertiary,#808080)] shrink-0" />
-                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]" style={{ fontFamily: "Lato, sans-serif" }}>
+                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]">
                   Select lab for {orders.find((o) => o.id === popover.code)?.baseLabel}
                 </span>
               </div>
@@ -534,7 +534,6 @@ export default function R2EditMode() {
                     key={variant.id}
                     onMouseDown={(e) => { e.preventDefault(); handleCompanySelect(variant); }}
                     className="w-full flex items-center gap-[8px] px-[12px] py-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
-                    style={{ fontFamily: "Lato, sans-serif" }}
                   >
                     <span className="text-[13px] font-bold text-[var(--foreground-primary,#1a1a1a)] leading-[1.2] w-[80px] shrink-0">{variant.company}</span>
                     <span className="text-[12px] text-[var(--foreground-secondary,#666)] leading-[1.4]">{variant.detail}</span>
@@ -546,7 +545,7 @@ export default function R2EditMode() {
             <div className="flex flex-col bg-white">
               <div className="flex items-center gap-[8px] px-[12px] py-[8px] border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
                 <Icon name="business" size={16} className="text-[var(--foreground-tertiary,#808080)] shrink-0" />
-                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]" style={{ fontFamily: "Lato, sans-serif" }}>
+                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]">
                   Select lab for all orders in {orderSets.find((s) => s.id === popover.code)?.label}
                 </span>
               </div>
@@ -556,7 +555,6 @@ export default function R2EditMode() {
                     key={company}
                     onMouseDown={(e) => { e.preventDefault(); handleSetCompanySelect(company); }}
                     className="w-full flex items-center px-[12px] py-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
-                    style={{ fontFamily: "Lato, sans-serif" }}
                   >
                     <span className="text-[13px] font-bold text-[var(--foreground-primary,#1a1a1a)] leading-[1.2]">{company}</span>
                   </button>
@@ -567,7 +565,7 @@ export default function R2EditMode() {
             <div className="flex flex-col bg-white">
               <div className="flex items-center gap-[8px] px-[12px] py-[8px] border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
                 <Icon name="business" size={16} className="text-[var(--foreground-tertiary,#808080)] shrink-0" />
-                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]" style={{ fontFamily: "Lato, sans-serif" }}>
+                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]">
                   {(() => {
                     const set = orderSets.find((s) => s.id === popover.setId);
                     const child = set?.children.find((c) => c.id === popover.code);
@@ -581,7 +579,6 @@ export default function R2EditMode() {
                     key={variant.id}
                     onMouseDown={(e) => { e.preventDefault(); handleSetChildCompanySelect(variant); }}
                     className="w-full flex items-center gap-[8px] px-[12px] py-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
-                    style={{ fontFamily: "Lato, sans-serif" }}
                   >
                     <span className="text-[13px] font-bold text-[var(--foreground-primary,#1a1a1a)] leading-[1.2] w-[80px] shrink-0">{variant.company}</span>
                     <span className="text-[12px] text-[var(--foreground-secondary,#666)] leading-[1.4]">{variant.detail}</span>

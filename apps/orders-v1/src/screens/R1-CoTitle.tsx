@@ -178,14 +178,14 @@ export default function R2HoverReveal() {
         {/* ── Diagnostic Codes ─────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
               Diagnostic Codes
             </h2>
           </div>
 
           {/* ICD-10 */}
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
             <Button variant="tertiary" size="small" prefix={<Icon name="content_copy" size={16} />}>Copy Codes</Button>
           </div>
           <div className="flex flex-col gap-[2px] mb-[24px]">
@@ -195,10 +195,10 @@ export default function R2HoverReveal() {
                   className="flex items-center h-[28px] px-[8px] gap-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer"
                   onClick={(e) => openPopover(e, "icd10", c.code)}
                 >
-                  <span className="w-[80px] shrink-0 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                  <span className="w-[80px] shrink-0 t-title-sm text-[var(--foreground-brand,#1132ee)]">
                     {c.code}
                   </span>
-                  <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {c.description}
                   </span>
                 </div>
@@ -214,7 +214,7 @@ export default function R2HoverReveal() {
 
           {/* CPT */}
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">CPT Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">CPT Codes</span>
             <Button variant="tertiary" size="small" prefix={<Icon name="content_copy" size={16} />}>Copy Codes</Button>
           </div>
           <div className="flex flex-col gap-[2px]">
@@ -224,10 +224,10 @@ export default function R2HoverReveal() {
                   className="flex items-center h-[28px] px-[8px] gap-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer"
                   onClick={(e) => openPopover(e, "cpt", c.code)}
                 >
-                  <span className="w-[80px] shrink-0 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                  <span className="w-[80px] shrink-0 t-title-sm text-[var(--foreground-brand,#1132ee)]">
                     {c.code}
                   </span>
-                  <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {c.description}
                   </span>
                 </div>
@@ -244,7 +244,7 @@ export default function R2HoverReveal() {
 
         {/* ── Orders ───────────────────────────────────────────────── */}
         <section>
-          <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)] mb-[16px]">
+          <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)] mb-[16px]">
             Orders
           </h2>
           <div className="flex flex-col gap-[8px]">
@@ -255,7 +255,7 @@ export default function R2HoverReveal() {
                   onClick={(e) => openPopover(e, "order", o.id)}
                   className="flex items-center h-[28px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
                 >
-                  <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {o.baseLabel ? `${o.baseLabel} (${o.company})` : o.label}
                   </span>
                 </button>
@@ -296,7 +296,7 @@ export default function R2HoverReveal() {
                       onClick={(e) => openPopover(e, "set-title", set.id)}
                       className="flex items-center h-[28px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
                     >
-                      <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                      <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                         {set.baseLabel ?? set.label}{companySuffix ? ` (${companySuffix})` : ""}
                       </span>
                     </button>
@@ -318,7 +318,7 @@ export default function R2HoverReveal() {
                           state={child.checked ? "selected" : "unselected"}
                           onChange={() => toggleSetChild(set.id, child.id)}
                         />
-                        <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                        <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                           {child.label} ({child.company})
                         </span>
                       </div>

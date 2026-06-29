@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "orders-v1",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "orders-v1", "run", "dev"],
+      "cwd": "/Users/cyvianchen/Desktop/Ambient Prototypes",
+      "port": 5173,
+      "autoPort": true
+    }
+  ]
+}

@@ -269,14 +269,14 @@ export default function R3Merge() {
     return (
       <div className="bg-[var(--surface-1,#f7f7f7)] rounded-[12px] pl-[16px] pr-[12px] py-[12px] flex flex-col">
         <div className="flex items-center justify-between mb-[10px]">
-          <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>Evidence</span>
+          <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Evidence</span>
           <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />} onClick={onClose} aria-label="Close evidence" />
         </div>
         {quotes.map((q, i) => (
           <React.Fragment key={i}>
             {i > 0 && <div className="h-[1px] bg-[#e0e0e0] my-[10px]" />}
             <div className="flex items-start justify-between gap-[12px]">
-              <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{q}</span>
+              <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)]">{q}</span>
               <span className="shrink-0 mt-[2px] text-[var(--foreground-secondary,#666)]"><Icon name="chevron_right" size={16} /></span>
             </div>
           </React.Fragment>
@@ -310,7 +310,7 @@ export default function R3Merge() {
             <button
               className="flex items-center h-[28px] px-[8px] text-left"
             >
-              <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap" style={{ fontFamily: "Lato, sans-serif" }}>
+              <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                 {order.label}
               </span>
             </button>
@@ -351,7 +351,7 @@ export default function R3Merge() {
 
         {/* ── Header ─────────────────────────────────────────────────────── */}
         <div className="flex items-center justify-between">
-          <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>
+          <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
             Diagnostics &amp; Orders
           </h2>
           <Button
@@ -428,12 +428,11 @@ export default function R3Merge() {
                   >
                     <div className="flex items-center gap-[8px]">
                       <span
-                        className="shrink-0 w-[72px] text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-brand,#1132ee)]"
-                        style={{ fontFeatureSettings: "'ss07'", fontFamily: "Lato, sans-serif" }}
+                        className="shrink-0 w-[72px] t-title-md text-[var(--foreground-brand,#1132ee)]"
                       >
                         {c.code}
                       </span>
-                      <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>
+                      <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)]">
                         {c.providerLabel ?? c.description}
                       </span>
                       <div
@@ -444,7 +443,7 @@ export default function R3Merge() {
                       </div>
                     </div>
                     {c.providerLabel && (
-                      <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] ml-[80px]" style={{ fontFamily: "Lato, sans-serif" }}>
+                      <span className="t-body-sm text-[var(--foreground-secondary,#666)] ml-[80px]">
                         {c.description}
                       </span>
                     )}
@@ -496,7 +495,7 @@ export default function R3Merge() {
         {/* ── Unlinked orders ─────────────────────────────────────────────── */}
         {unlinkedOrders.length > 0 && (
           <div className="flex flex-col gap-[4px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] mb-[4px]" style={{ fontFamily: "Lato, sans-serif" }}>
+            <span className="t-title-sm text-[var(--foreground-secondary,#666)] mb-[4px]">
               Other orders
             </span>
             {unlinkedOrders.map((order) => renderOrderRow(order))}
@@ -539,7 +538,6 @@ export default function R3Merge() {
               onChange={(e) => setPopoverQuery(e.target.value)}
               placeholder="Search ICD-10…"
               className="w-full text-[13px] outline-none bg-transparent placeholder:text-[var(--foreground-tertiary,#808080)]"
-              style={{ fontFamily: "Lato, sans-serif" }}
             />
           </div>
           <div className="h-[1px] bg-[var(--neutral-100,#e6e6e6)] mx-[6px]" />
@@ -549,15 +547,15 @@ export default function R3Merge() {
               onMouseDown={(e) => { e.preventDefault(); handleCodeSelect(item); }}
               className="flex items-center gap-[8px] min-h-[36px] py-[4px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
             >
-              <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}>
+              <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]">
                 {item.code}
               </span>
               <div className="flex flex-col min-w-0 flex-1">
-                <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate">
                   {item.providerLabel ?? item.description}
                 </span>
                 {item.providerLabel && (
-                  <span className="text-[12px] font-normal leading-[1.2] text-[var(--foreground-secondary,#666)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                  <span className="t-body-xs text-[var(--foreground-secondary,#666)] truncate">
                     {item.description}
                   </span>
                 )}

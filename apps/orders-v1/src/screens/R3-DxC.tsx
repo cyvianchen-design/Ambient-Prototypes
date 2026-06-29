@@ -14,15 +14,15 @@ function CodeMenuItem({ item, onSelect }: { item: CodeItemType; onSelect: (item:
       onMouseDown={(e) => { e.preventDefault(); onSelect(item); }}
       className="flex items-center w-full gap-[8px] min-h-[36px] py-[4px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left"
     >
-      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}>
+      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]">
         {item.code}
       </span>
       <div className="flex flex-col min-w-0 flex-1">
-        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate">
           {item.providerLabel ?? item.description}
         </span>
         {item.providerLabel && (
-          <span className="text-[12px] font-normal leading-[1.2] text-[var(--foreground-secondary,#666)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+          <span className="t-body-xs text-[var(--foreground-secondary,#666)] truncate">
             {item.description}
           </span>
         )}
@@ -40,7 +40,8 @@ type FlatOrder = {
 
 type EvidenceItem =
   | { kind: "quote"; source: "note" | "transcript"; text: string }
-  | { kind: "orderset"; setName: string };
+  | { kind: "orderset"; setName: string }
+  | { kind: "reason"; text: string };
 
 type PopoverTarget = {
   rect: DOMRect; list: "icd10" | "order" | "reassign" | "order-company"; code?: string; orderId?: string;
@@ -63,44 +64,68 @@ const preChartedOrders: FlatOrder[] = [
 
 // ─── Evidence data ───────────────────────────────────────────────────────────────
 
-const codeEvidenceMap: Record<string, string[]> = {
+const codeEvidenceMap: Record<string, EvidenceItem[]> = {
   "R07.9": [
-    "“Patient presents with chest pain, 6/10 in severity, worse with exertion and relieved by rest.”",
-    "“Pain radiating to the left arm, onset 3 days ago during yard work.”",
+    { kind: "quote", source: "note", text: `"58-year-old male with 3-day history of pressure-like chest pain, 6/10, onset during yard work — radiating to the left arm, exertional, partially relieved by rest."` },
+    { kind: "quote", source: "note", text: `"Associated palpitations noted. BP 148/92 on arrival. Positive family history of MI. ACS workup initiated."` },
   ],
   "I10": [
-    "“Blood pressure 148/92 mmHg at today's visit.”",
-    "“Patient reports compliance with lisinopril 10 mg daily, but admits to high sodium diet.”",
+    { kind: "quote", source: "note", text: `"BP 148/92 mmHg on today's visit despite reported adherence to lisinopril 10 mg daily."` },
+    { kind: "quote", source: "note", text: `"Patient admits to high-sodium diet. Medication compliance confirmed verbally."` },
   ],
-  "E78.5": ["“Total cholesterol 234 mg/dL, LDL 162 mg/dL on labs from last month.”"],
+  "E78.5": [
+    { kind: "quote", source: "note", text: `"Total cholesterol 234 mg/dL, LDL 162 mg/dL on labs from last month."` },
+  ],
   "Z82.49": [
-    "“Father had a myocardial infarction at age 52.”",
-    "“Maternal grandfather also had coronary artery disease in his 60s.”",
+    { kind: "quote", source: "note", text: `"Father had a myocardial infarction at age 52."` },
+    { kind: "quote", source: "note", text: `"Maternal grandfather had coronary artery disease in his 60s."` },
   ],
   "S93.401": [
-    "“Patient twisted right ankle stepping off a curb — immediate swelling and inability to bear weight.”",
-    "“Lateral ankle tenderness with positive anterior drawer sign on exam.”",
+    { kind: "quote", source: "note", text: `"Patient twisted right ankle stepping off a curb yesterday — immediate swelling and inability to bear weight."` },
+    { kind: "quote", source: "note", text: `"Ottawa ankle rules positive: posterior lateral malleolus tenderness confirmed on exam."` },
   ],
 };
 
 const individualOrderEvidence: Record<string, EvidenceItem[]> = {
   "ecg-inhouse": [
-    { kind: "quote", source: "transcript", text: "“Patient reports palpitations and exertional chest tightness — no EKG on file in the past 12 months.”" },
+    { kind: "quote", source: "note", text: `"ECG ordered urgently — exertional chest pain with radiation to left arm, palpitations reported, and no EKG on file in the past 12 months."` },
+    { kind: "quote", source: "transcript", text: `"I'm going to order an ECG right now — you mentioned the tightness gets worse when you exert yourself, and I want to check for any electrical changes."` },
   ],
   "ddimer-quest": [
-    { kind: "quote", source: "transcript", text: "“Pleuritic chest pain and a recent 8-hour flight raise moderate concern for PE.”" },
-    { kind: "quote", source: "transcript", text: "“Wells score 4 — D-dimer indicated prior to further imaging.”" },
+    { kind: "quote", source: "note", text: `"D-dimer ordered: Wells score 4, pleuritic chest pain component, and recent 8-hour flight. CT-PA deferred pending D-dimer result."` },
+    { kind: "quote", source: "transcript", text: `"Pleuritic chest pain and a recent 8-hour flight raise moderate concern for PE — Wells score 4, D-dimer indicated prior to further imaging."` },
   ],
   "ankle-xr-3v-radnet": [
-    { kind: "quote", source: "note", text: "“Patient unable to bear weight immediately after twisting right ankle.”" },
-    { kind: "quote", source: "transcript", text: "“Ottawa ankle rules positive: tenderness over the posterior lateral malleolus.”" },
+    { kind: "quote", source: "note", text: `"Ottawa ankle rules positive: posterior lateral malleolus tenderness confirmed on exam. X-ray ordered to rule out fracture."` },
+    { kind: "quote", source: "transcript", text: `"Ottawa ankle rules positive: tenderness over the posterior lateral malleolus."` },
+  ],
+  // Orderset children — Chest Pain Workup
+  "set-chest-pain-quest-radnet__set-trop": [
+    { kind: "quote", source: "note", text: `"Troponin I ordered to rule out ACS — exertional chest pain with radiation to left arm, positive family history, and 3-day onset constitute moderate-to-high pre-test probability."` },
+  ],
+  "set-chest-pain-quest-radnet__set-cxr-pa": [
+    { kind: "quote", source: "note", text: `"Chest X-ray PA & Lateral ordered to evaluate for pneumothorax, aortic pathology, and cardiomegaly in the setting of acute chest pain."` },
+  ],
+  "set-chest-pain-quest-radnet__set-bmp": [
+    { kind: "reason", text: "BMP is part of the Chest Pain Workup orderset. Not independently indicated today — electrolytes checked 4 months ago with no abnormalities, no diuretic use, and no known renal disease. Included for provider review." },
+  ],
+  "set-chest-pain-quest-radnet__set-cbc": [
+    { kind: "reason", text: "CBC is part of the Chest Pain Workup orderset. No current signs of infection, anemia, or hematologic concern — CBC was within normal limits 4 months ago. Included for provider review." },
+  ],
+  // Standalone suggested orders
+  "holter-mock": [
+    { kind: "quote", source: "transcript", text: `"I also want to keep an eye on the heart rhythm over time — we'll set you up with a Holter monitor to wear for 24 hours."` },
+    { kind: "reason", text: "Holter monitor requested by provider. Palpitations were incidental in the context of exertional chest pain — a primary rhythm disorder was not the dominant concern at today's visit. Placed under Suggested pending provider review." },
+  ],
+  "inr-mock": [
+    { kind: "reason", text: "INR / Prothrombin Time not directly indicated by today's presentation. Patient is not on anticoagulation therapy and has no documented bleeding concern or coagulopathy. Placed under Suggested pending provider review." },
   ],
 };
 
 const orderSetQuotes: Record<string, Array<{ source: "note" | "transcript"; text: string }>> = {
   "set-chest-pain-quest-radnet": [
-    { source: "transcript", text: "“Let's go ahead and get some standard tests and imaging for your chest pain — I want to make sure we're not missing anything.”" },
-    { source: "transcript", text: "“Given everything you've described and your history, I'd like to run a full chest pain workup today.”" },
+    { source: "transcript", text: `"Let's go ahead and get some standard tests and imaging for your chest pain — I want to make sure we're not missing anything."` },
+    { source: "transcript", text: `"Given everything you've described and your history, I'd like to run a full chest pain workup today."` },
   ],
 };
 
@@ -108,9 +133,11 @@ function getOrderEvidence(order: FlatOrder): EvidenceItem[] {
   if (order.fromOrderSet) {
     const setId = order.id.split("__")[0];
     const quotes = orderSetQuotes[setId] ?? [];
+    const childExtra = individualOrderEvidence[order.id] ?? [];
     return [
       { kind: "orderset", setName: order.fromOrderSet },
       ...quotes.map((q): EvidenceItem => ({ kind: "quote", source: q.source, text: q.text })),
+      ...childExtra,
     ];
   }
   return individualOrderEvidence[order.id] ?? [];
@@ -152,6 +179,8 @@ export default function R3DxC() {
     initialIcd10.map((c) => ({ ...c, checked: false }))
   );
   const [flatOrders, setFlatOrders] = useState<FlatOrder[]>(buildInitialFlatOrders);
+  const [leavingOrders, setLeavingOrders] = useState<FlatOrder[]>([]);
+  const [highlightedOrderId, setHighlightedOrderId] = useState<string | null>(null);
   const [popover, setPopover] = useState<PopoverTarget | null>(null);
   const [popoverQuery, setPopoverQuery] = useState("");
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -195,13 +224,22 @@ export default function R3DxC() {
   // ── Order handlers ────────────────────────────────────────────────────────────
 
   function handleOrderSelect(opt: typeof ordersPool[0]) {
-    const newOrder = {
+    const newOrder: FlatOrder = {
       id: opt.id, label: opt.baseLabel ?? opt.label, company: opt.company,
       relatedIcd: opt.relatedIcd, checked: false,
       confidence: highConfidenceLabels.has(opt.baseLabel ?? opt.label) ? "high" : "low",
     };
     if (popover?.orderId) {
+      const existingOrder = flatOrders.find((o) => o.id === popover.orderId);
+      const oldIcd = existingOrder?.relatedIcd;
       setFlatOrders((prev) => prev.map((o) => o.id === popover.orderId ? { ...newOrder, checked: o.checked } : o));
+      if (existingOrder && oldIcd && oldIcd !== opt.relatedIcd) {
+        const ghost = { ...existingOrder };
+        setLeavingOrders((prev) => [...prev, ghost]);
+        setHighlightedOrderId(newOrder.id);
+        setTimeout(() => setLeavingOrders((prev) => prev.filter((o) => o.id !== ghost.id)), 450);
+        setTimeout(() => setHighlightedOrderId(null), 900);
+      }
     } else {
       setFlatOrders((prev) => [...prev, newOrder]);
     }
@@ -223,21 +261,35 @@ export default function R3DxC() {
   }
 
   function toggleOrder(id: string) {
-    setFlatOrders((prev) => prev.map((o) => o.id === id && !o.precharted ? { ...o, checked: !o.checked } : o));
+    const order = flatOrders.find((o) => o.id === id);
+    if (!order || order.precharted) return;
+    const newChecked = !order.checked;
+    setFlatOrders((prev) => prev.map((o) => o.id === id ? { ...o, checked: newChecked } : o));
+    if (newChecked && order.relatedIcd) {
+      const code = order.relatedIcd;
+      setIcd10((prev) => prev.map((c) => c.code === code ? { ...c, checked: true } : c));
+    }
   }
 
   function selectConfidentOrders() {
-    setFlatOrders((prev) => {
-      const confidents = prev.filter((o) => !o.precharted && o.confidence === "high");
-      const allChecked = confidents.length > 0 && confidents.every((o) => o.checked);
-      return prev.map((o) => !o.precharted && o.confidence === "high" ? { ...o, checked: !allChecked } : o);
-    });
+    const confidents = flatOrders.filter((o) => !o.precharted && o.confidence === "high");
+    const allChecked = confidents.length > 0 && confidents.every((o) => o.checked);
+    const newChecked = !allChecked;
+    setFlatOrders((prev) => prev.map((o) => !o.precharted && o.confidence === "high" ? { ...o, checked: newChecked } : o));
+    if (newChecked) {
+      const codes = new Set(confidents.map((o) => o.relatedIcd).filter(Boolean) as string[]);
+      setIcd10((prev) => prev.map((c) => codes.has(c.code) ? { ...c, checked: true } : c));
+    }
   }
 
   function selectAllOrders() {
     const active = flatOrders.filter((o) => !o.precharted);
     const next = !active.every((o) => o.checked);
     setFlatOrders((prev) => prev.map((o) => o.precharted ? o : { ...o, checked: next }));
+    if (next) {
+      const codes = new Set(active.map((o) => o.relatedIcd).filter(Boolean) as string[]);
+      setIcd10((prev) => prev.map((c) => codes.has(c.code) ? { ...c, checked: true } : c));
+    }
   }
 
   function selectConfidentCodes() {
@@ -334,11 +386,12 @@ export default function R3DxC() {
   function renderOrderEvidence(items: EvidenceItem[], onClose: () => void) {
     const setItem = items.find((i): i is Extract<EvidenceItem, { kind: "orderset" }> => i.kind === "orderset");
     const quotes = items.filter((i): i is Extract<EvidenceItem, { kind: "quote" }> => i.kind === "quote");
+    const reasons = items.filter((i): i is Extract<EvidenceItem, { kind: "reason" }> => i.kind === "reason");
     return (
       <div className="bg-[var(--surface-1,#f7f7f7)] rounded-[12px] pl-[16px] pr-[12px] py-[12px] flex flex-col">
         <div className="flex items-center justify-between mb-[10px]">
           <div className="flex items-center gap-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>Evidence</span>
+            <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Evidence</span>
             {setItem && <Chip label={setItem.setName} color="neutral" size="XS" />}
           </div>
           <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />} onClick={onClose} aria-label="Close" />
@@ -347,16 +400,36 @@ export default function R3DxC() {
           <React.Fragment key={i}>
             {i > 0 && <div className="h-[1px] bg-[#e0e0e0] my-[10px]" />}
             <div className="flex flex-col gap-[2px]">
-              <span className="text-[11px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>
+              <span className="text-[11px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)]">
                 {item.source === "note" ? "Note" : "Transcript"}
               </span>
               <div className="flex items-start justify-between gap-[12px]">
-                <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{item.text}</span>
+                <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)]">{item.text}</span>
                 <span className="shrink-0 mt-[2px] text-[var(--foreground-secondary,#666)]"><Icon name="chevron_right" size={16} /></span>
               </div>
             </div>
           </React.Fragment>
         ))}
+        {reasons.map((item, i) => (
+          <React.Fragment key={`reason-${i}`}>
+            {(quotes.length > 0 || i > 0) && <div className="h-[1px] bg-[#e0e0e0] my-[10px]" />}
+            <span className="t-body-sm text-[var(--foreground-secondary,#666)] italic">{item.text}</span>
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  }
+
+  function renderGhostOrderRow(order: FlatOrder) {
+    return (
+      <div key={`ghost-${order.id}`}
+        className="flex items-center gap-[2px] min-h-[28px] rounded-[6px] pointer-events-none overflow-hidden"
+        style={{ animation: "fadeCollapse 400ms ease forwards" }}>
+        <Checkbox state={order.checked ? "selected" : "unselected"} onChange={() => {}} />
+        <div className="flex items-center gap-[4px] flex-1 min-w-0 px-[6px]">
+          <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{order.label}</span>
+          {order.company && <Chip label={order.company} color="neutral" size="XS" />}
+        </div>
       </div>
     );
   }
@@ -366,13 +439,13 @@ export default function R3DxC() {
     const isInfoOpen = infoOpenOrderId === order.id;
     return (
       <div key={order.id} className="flex flex-col">
-        <div className="group flex items-center gap-[2px] min-h-[28px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer" onClick={() => toggleOrder(order.id)}>
+        <div className={`group flex items-center gap-[2px] min-h-[28px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer transition-colors duration-[600ms] ${highlightedOrderId === order.id ? "bg-[var(--litmus-25,#eef0fd)]" : ""}`} onClick={() => toggleOrder(order.id)}>
           <div onClick={(e) => e.stopPropagation()}>
             <Checkbox state={order.checked ? "selected" : "unselected"} onChange={() => toggleOrder(order.id)} />
           </div>
           <div className="flex items-center gap-[4px] flex-1 min-w-0 h-[28px] px-[6px] cursor-pointer"
             onClick={(e) => { e.stopPropagation(); openPopover(e, "order", undefined, order.id); }}>
-            <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{order.label}</span>
+            <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{order.label}</span>
             {order.company && (
               <Chip label={order.company} color="neutral" size="XS"
                 onClick={(e) => { e.stopPropagation(); openPopover(e, "order-company", undefined, order.id); }} />
@@ -412,7 +485,7 @@ export default function R3DxC() {
         <div className="flex items-center gap-[2px] min-h-[28px]">
           <Checkbox state="selected" disabled />
           <div className="flex items-center gap-[4px] flex-1 min-w-0 h-[28px] px-[6px]">
-            <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-secondary,#666)] whitespace-nowrap">{order.label}</span>
+            <span className="t-title-md text-[var(--foreground-secondary,#666)] whitespace-nowrap">{order.label}</span>
             {order.company && (
               <Chip label={order.company} color="neutral" size="XS" disabled />
             )}
@@ -432,23 +505,29 @@ export default function R3DxC() {
 
   return (
     <ScribeLayout activeTab={activeTab} onTabChange={setActiveTab}>
+      <style>{`
+        @keyframes fadeCollapse {
+          from { opacity: 1; max-height: 40px; margin-bottom: 0; }
+          to   { opacity: 0; max-height: 0;    margin-bottom: 0; }
+        }
+      `}</style>
       <div className="max-w-[640px] w-full px-[20px] py-[32px] flex flex-col gap-[24px]">
 
         {/* ── Diagnostic Codes ─────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">Diagnostic Codes</h2>
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">Diagnostic Codes</h2>
           </div>
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">ICD-10 Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">ICD-10 Codes</span>
             <div className="flex items-center gap-[2px]">
               <div className="flex items-center rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer pr-[8px]" onClick={selectConfidentCodes}>
                 <div onClick={(e) => e.stopPropagation()}><Checkbox state={confidentCodesState} onChange={selectConfidentCodes} /></div>
-                <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">Select confident</span>
+                <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)]">Select confident</span>
               </div>
               <div className="flex items-center rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer pr-[8px]" onClick={toggleAllCodes}>
                 <div onClick={(e) => e.stopPropagation()}><Checkbox state={codesState} onChange={toggleAllCodes} /></div>
-                <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">Select all</span>
+                <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)]">Select all</span>
               </div>
             </div>
           </div>
@@ -466,11 +545,11 @@ export default function R3DxC() {
                     <div className="flex flex-col flex-1 px-[4px] py-[4px] cursor-pointer min-h-[28px] min-w-0"
                       onClick={(e) => openPopover(e, "icd10", c.code)}>
                       <div className="flex items-center gap-[8px]">
-                        <span className="shrink-0 w-[72px] text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--accent,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>{c.code}</span>
-                        <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]">{c.providerLabel ?? c.description}</span>
+                        <span className="shrink-0 w-[72px] t-title-md text-[var(--accent,#1132ee)]">{c.code}</span>
+                        <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)]">{c.providerLabel ?? c.description}</span>
                       </div>
                       {c.providerLabel && (
-                        <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] ml-[80px]">{c.description}</span>
+                        <span className="t-body-sm text-[var(--foreground-secondary,#666)] ml-[80px]">{c.description}</span>
                       )}
                     </div>
                     {evidence.length > 0 && (
@@ -484,21 +563,7 @@ export default function R3DxC() {
                     </div>
                   </div>
                   {isInfoOpen && evidence.length > 0 && (
-                    <div className="mt-[4px] ml-[28px] bg-[var(--surface-1,#f7f7f7)] rounded-[12px] pl-[16px] pr-[12px] py-[12px] flex flex-col">
-                      <div className="flex items-center justify-between mb-[10px]">
-                        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>Evidence</span>
-                        <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />} onClick={() => setInfoOpenCode(null)} aria-label="Close" />
-                      </div>
-                      {evidence.map((quote, i) => (
-                        <React.Fragment key={i}>
-                          {i > 0 && <div className="h-[1px] bg-[#e0e0e0] my-[10px]" />}
-                          <div className="flex items-start justify-between gap-[12px]">
-                            <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{quote}</span>
-                            <span className="shrink-0 mt-[2px] text-[var(--foreground-secondary,#666)]"><Icon name="chevron_right" size={16} /></span>
-                          </div>
-                        </React.Fragment>
-                      ))}
-                    </div>
+                    <div className="mt-[4px]">{renderOrderEvidence(evidence, () => setInfoOpenCode(null))}</div>
                   )}
                 </div>
               );
@@ -511,15 +576,15 @@ export default function R3DxC() {
         {/* ── Orders ───────────────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[12px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">Orders</h2>
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">Orders</h2>
             <div className="flex items-center gap-[2px]">
               <div className="flex items-center rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer pr-[8px]" onClick={selectConfidentOrders}>
                 <div onClick={(e) => e.stopPropagation()}><Checkbox state={confidentOrdersState} onChange={selectConfidentOrders} /></div>
-                <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">Select confident</span>
+                <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)]">Select confident</span>
               </div>
               <div className="flex items-center rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer pr-[8px]" onClick={selectAllOrders}>
                 <div onClick={(e) => e.stopPropagation()}><Checkbox state={ordersState} onChange={selectAllOrders} /></div>
-                <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">Select all</span>
+                <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)]">Select all</span>
               </div>
             </div>
           </div>
@@ -530,26 +595,30 @@ export default function R3DxC() {
               const highOrders = orders.filter((o) => !o.precharted && o.confidence === "high");
               const lowOrders  = orders.filter((o) => !o.precharted && o.confidence === "low");
               const charted    = orders.filter((o) => o.precharted);
+              const leavingHigh = leavingOrders.filter((o) => o.relatedIcd === code && !o.precharted && o.confidence === "high");
+              const leavingLow  = leavingOrders.filter((o) => o.relatedIcd === code && !o.precharted && o.confidence === "low");
               return (
                 <div key={code} className="flex flex-col">
                   {index > 0 && <div className="h-[1px] bg-[#e0e0e0] mt-[20px] mb-[20px]" />}
 
                   <div className="flex items-center gap-[6px] mb-[6px]">
-                    <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}>{code}</span>
-                    <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>{label}</span>
+                    <span className="t-title-sm text-[var(--accent,#1132ee)]">{code}</span>
+                    <span className="t-body-sm text-[var(--foreground-secondary,#666)]">{label}</span>
                   </div>
 
                   <div className="flex flex-col gap-[8px]">
-                    {highOrders.length > 0 && (
+                    {(highOrders.length > 0 || leavingHigh.length > 0) && (
                       <div className="flex flex-col gap-[2px]">
                         <Badge label="Confident" variant="success" filled />
                         {highOrders.map((o) => renderOrderRow(o))}
+                        {leavingHigh.map((o) => renderGhostOrderRow(o))}
                       </div>
                     )}
-                    {lowOrders.length > 0 && (
+                    {(lowOrders.length > 0 || leavingLow.length > 0) && (
                       <div className="flex flex-col gap-[2px]">
                         <Badge label="Suggested" variant="default" filled />
                         {lowOrders.map((o) => renderOrderRow(o))}
+                        {leavingLow.map((o) => renderGhostOrderRow(o))}
                       </div>
                     )}
                     {charted.length > 0 && (
@@ -569,7 +638,7 @@ export default function R3DxC() {
             )}
             {unlinkedOrders.filter((o) => !o.precharted).length > 0 && (
               <div className="flex flex-col gap-[8px]">
-                <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>Unlinked</span>
+                <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Unlinked</span>
                 {unlinkedOrders.filter((o) => !o.precharted && o.confidence === "high").length > 0 && (
                   <div className="flex flex-col gap-[2px]">
                     <Chip label="Confident" color="success" size="XS" />
@@ -601,7 +670,7 @@ export default function R3DxC() {
                 <MenuItem key={v.id} label={v.company ?? v.label} description={v.detail} onClick={() => handleOrderVariantSelect(v)} />
               ))}
               {companyVariants.length === 0 && (
-                <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>No other vendors available</p>
+                <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]">No other vendors available</p>
               )}
             </Menu>
           ) : popover.list === "order" ? (() => {
@@ -627,7 +696,7 @@ export default function R3DxC() {
                 <div className="overflow-y-auto max-h-[280px]">
                   {filteredAdj.length > 0 && (<><MenuHeader>Suggested</MenuHeader>{filteredAdj.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
                   {filteredRest.length > 0 && (<>{filteredAdj.length > 0 && <MenuHeader>All Orders</MenuHeader>}{filteredRest.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
-                  {filteredAdj.length === 0 && filteredRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>No orders found</p>}
+                  {filteredAdj.length === 0 && filteredRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]">No orders found</p>}
                 </div>
               </Menu>
             );
@@ -647,7 +716,7 @@ export default function R3DxC() {
                   {fAdj.length > 0 && (<><MenuHeader>{isReassign ? "Current codes" : "Suggested"}</MenuHeader>{fAdj.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleIcd10Select} />)}</>)}
                   {fRest.length > 0 && <MenuHeader>All Codes</MenuHeader>}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleIcd10Select} />)}
-                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
+                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]">No codes found</p>}
                 </div>
               </Menu>
             );

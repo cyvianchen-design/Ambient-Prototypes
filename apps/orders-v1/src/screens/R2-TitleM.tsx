@@ -9,15 +9,15 @@ function CodeMenuItem({ item, onSelect }: { item: CodeItemType; onSelect: (item:
       onMouseDown={(e) => { e.preventDefault(); onSelect(item); }}
       className="flex items-center w-full gap-[8px] min-h-[36px] py-[4px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left"
     >
-      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}>
+      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]">
         {item.code}
       </span>
       <div className="flex flex-col min-w-0 flex-1">
-        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate">
           {item.providerLabel ?? item.description}
         </span>
         {item.providerLabel && (
-          <span className="text-[12px] font-normal leading-[1.2] text-[var(--foreground-secondary,#666)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+          <span className="t-body-xs text-[var(--foreground-secondary,#666)] truncate">
             {item.description}
           </span>
         )}
@@ -395,14 +395,14 @@ export default function R2TitleM() {
         {/* ── Diagnostic Codes ─────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
               Diagnostic Codes
             </h2>
           </div>
 
           {/* ICD-10 */}
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
             {(() => {
               const allChecked = icd10.length > 0 && icd10.every((c) => c.checked);
               const someChecked = icd10.some((c) => c.checked);
@@ -436,10 +436,10 @@ export default function R2TitleM() {
                       onClick={(e) => openPopover(e, "icd10", c.code)}
                     >
                       <div className="flex items-center gap-[8px]">
-                        <span className="shrink-0 w-[72px] text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                        <span className="shrink-0 w-[72px] t-title-md text-[var(--foreground-brand,#1132ee)]">
                           {c.code}
                         </span>
-                        <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]">
+                        <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)]">
                           {c.providerLabel ?? c.description}
                         </span>
                         <div className="shrink-0" onClick={(e) => { e.stopPropagation(); setInfoOpenCode((prev) => prev === c.code ? null : c.code); }}>
@@ -447,7 +447,7 @@ export default function R2TitleM() {
                         </div>
                       </div>
                       {c.providerLabel && (
-                        <span className="text-[13px] font-normal leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] ml-[80px]">
+                        <span className="t-body-sm text-[var(--foreground-secondary,#666)] ml-[80px]">
                           {c.description}
                         </span>
                       )}
@@ -460,7 +460,7 @@ export default function R2TitleM() {
                   {isInfoOpen && evidence.length > 0 && (
                     <div className="mt-[4px] ml-[28px] bg-[var(--surface-1,#f7f7f7)] rounded-[12px] pl-[16px] pr-[12px] py-[12px] flex flex-col">
                       <div className="flex items-center justify-between mb-[10px]">
-                        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>
+                        <span className="t-title-sm text-[var(--foreground-secondary,#666)]">
                           Evidence
                         </span>
                         <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />} onClick={() => setInfoOpenCode(null)} aria-label="Close evidence" />
@@ -469,7 +469,7 @@ export default function R2TitleM() {
                         <React.Fragment key={i}>
                           {i > 0 && <div className="h-[1px] bg-[#e0e0e0] my-[10px]" />}
                           <div className="flex items-start justify-between gap-[12px]">
-                            <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>
+                            <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)]">
                               {quote}
                             </span>
                             <span className="shrink-0 mt-[2px] text-[var(--foreground-secondary,#666)]">
@@ -491,7 +491,7 @@ export default function R2TitleM() {
         {/* ── Orders ───────────────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
               Orders
             </h2>
             {(() => {
@@ -531,7 +531,7 @@ export default function R2TitleM() {
                         onClick={(e) => openPopover(e, "order", o.id)}
                         className="flex items-center h-[28px] px-[8px] text-left"
                       >
-                        <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                        <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                           {o.baseLabel ?? o.label}
                         </span>
                       </button>
@@ -560,14 +560,14 @@ export default function R2TitleM() {
                   {isOrderInfoOpen && orderEvidence.length > 0 && (
                     <div className="mt-[4px] ml-[28px] bg-[var(--surface-1,#f7f7f7)] rounded-[12px] pl-[16px] pr-[12px] py-[12px] flex flex-col">
                       <div className="flex items-center justify-between mb-[10px]">
-                        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>Evidence</span>
+                        <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Evidence</span>
                         <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />} onClick={() => setInfoOpenOrderId(null)} aria-label="Close evidence" />
                       </div>
                       {orderEvidence.map((quote, i) => (
                         <React.Fragment key={i}>
                           {i > 0 && <div className="h-[1px] bg-[#e0e0e0] my-[10px]" />}
                           <div className="flex items-start justify-between gap-[12px]">
-                            <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{quote}</span>
+                            <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)]">{quote}</span>
                             <span className="shrink-0 mt-[2px] text-[var(--foreground-secondary,#666)]"><Icon name="chevron_right" size={16} /></span>
                           </div>
                         </React.Fragment>
@@ -607,7 +607,7 @@ export default function R2TitleM() {
                         onClick={(e) => openPopover(e, "set-title", set.id)}
                         className="flex items-center h-[28px] px-[8px] text-left"
                       >
-                        <span className="text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                        <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                           {set.baseLabel ?? set.label}
                         </span>
                       </button>
@@ -634,14 +634,14 @@ export default function R2TitleM() {
                   {isSetInfoOpen && setEvidence.length > 0 && (
                     <div className="ml-[28px] bg-[var(--surface-1,#f7f7f7)] rounded-[12px] pl-[16px] pr-[12px] py-[12px] flex flex-col">
                       <div className="flex items-center justify-between mb-[10px]">
-                        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>Evidence</span>
+                        <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Evidence</span>
                         <IconButton size="small" variant="tertiary-neutral" icon={<Icon name="close" size={16} />} onClick={() => setInfoOpenOrderId(null)} aria-label="Close evidence" />
                       </div>
                       {setEvidence.map((quote, i) => (
                         <React.Fragment key={i}>
                           {i > 0 && <div className="h-[1px] bg-[#e0e0e0] my-[10px]" />}
                           <div className="flex items-start justify-between gap-[12px]">
-                            <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>{quote}</span>
+                            <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)]">{quote}</span>
                             <span className="shrink-0 mt-[2px] text-[var(--foreground-secondary,#666)]"><Icon name="chevron_right" size={16} /></span>
                           </div>
                         </React.Fragment>
@@ -657,7 +657,7 @@ export default function R2TitleM() {
                           state={child.checked ? "selected" : "unselected"}
                           onChange={() => toggleSetChild(set.id, child.id)}
                         />
-                        <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                        <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                           {child.label}
                         </span>
                         <Chip
@@ -749,7 +749,7 @@ export default function R2TitleM() {
                       {filteredOrders.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleSetReplaceWithOrder(o)} />)}
                     </>
                   )}
-                  {!hasResults && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No results found</p>}
+                  {!hasResults && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No results found</p>}
                 </div>
               </Menu>
             );
@@ -817,7 +817,7 @@ export default function R2TitleM() {
                       {filteredRest.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}
                     </>
                   )}
-                  {isEmpty && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No orders found</p>}
+                  {isEmpty && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No orders found</p>}
                 </div>
               </Menu>
             );
@@ -836,7 +836,7 @@ export default function R2TitleM() {
                 <div className="overflow-y-auto max-h-[220px]">
                   {fVisit.length > 0 && (<><MenuHeader>Your current codes</MenuHeader>{fVisit.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleOrderIcdSelect} />)}{fRest.length > 0 && <MenuHeader>Add more codes</MenuHeader>}</>)}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleOrderIcdSelect} />)}
-                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
+                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No codes found</p>}
                 </div>
               </Menu>
             );
@@ -884,7 +884,7 @@ export default function R2TitleM() {
                 <div className="overflow-y-auto max-h-[220px]">
                   {fVisit.length > 0 && (<><MenuHeader>Your current codes</MenuHeader>{fVisit.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleSetChildIcdSelect} />)}{fRest.length > 0 && <MenuHeader>Add more codes</MenuHeader>}</>)}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleSetChildIcdSelect} />)}
-                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
+                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No codes found</p>}
                 </div>
               </Menu>
             );
@@ -907,7 +907,7 @@ export default function R2TitleM() {
                   {fAdj.length > 0 && (<><MenuHeader>Suggested</MenuHeader>{fAdj.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={onSelect} />)}</>)}
                   {fRest.length > 0 && <MenuHeader>All Codes</MenuHeader>}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={onSelect} />)}
-                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
+                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No codes found</p>}
                 </div>
               </Menu>
             );

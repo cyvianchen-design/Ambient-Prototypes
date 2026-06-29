@@ -281,14 +281,14 @@ export default function R2Inline() {
         {/* ── Diagnostic Codes ─────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
               Diagnostic Codes
             </h2>
           </div>
 
           {/* ICD-10 */}
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
             <Button variant="tertiary" size="small" prefix={<Icon name="content_copy" size={16} />}>Copy Codes</Button>
           </div>
           <div className="flex flex-col gap-[2px] mb-[24px]">
@@ -298,10 +298,10 @@ export default function R2Inline() {
                   className="flex items-center h-[28px] px-[8px] gap-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer"
                   onClick={(e) => openPopover(e, "icd10", c.code)}
                 >
-                  <span className="w-[80px] shrink-0 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                  <span className="w-[80px] shrink-0 t-title-sm text-[var(--foreground-brand,#1132ee)]">
                     {c.code}
                   </span>
-                  <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {c.description}
                   </span>
                 </div>
@@ -317,7 +317,7 @@ export default function R2Inline() {
 
           {/* CPT */}
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">CPT Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">CPT Codes</span>
             <Button variant="tertiary" size="small" prefix={<Icon name="content_copy" size={16} />}>Copy Codes</Button>
           </div>
           <div className="flex flex-col gap-[2px]">
@@ -327,10 +327,10 @@ export default function R2Inline() {
                   className="flex items-center h-[28px] px-[8px] gap-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer"
                   onClick={(e) => openPopover(e, "cpt", c.code)}
                 >
-                  <span className="w-[80px] shrink-0 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                  <span className="w-[80px] shrink-0 t-title-sm text-[var(--foreground-brand,#1132ee)]">
                     {c.code}
                   </span>
-                  <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {c.description}
                   </span>
                 </div>
@@ -347,7 +347,7 @@ export default function R2Inline() {
 
         {/* ── Orders ───────────────────────────────────────────────── */}
         <section>
-          <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)] mb-[16px]">
+          <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)] mb-[16px]">
             Orders
           </h2>
           <div className="flex flex-col gap-[8px]">
@@ -358,7 +358,7 @@ export default function R2Inline() {
                   onClick={(e) => openPopover(e, "order", o.id)}
                   className="flex items-center h-[28px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
                 >
-                  <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {o.baseLabel ?? o.label}
                   </span>
                 </button>
@@ -401,7 +401,7 @@ export default function R2Inline() {
                       onClick={(e) => openPopover(e, "set-title", set.id)}
                       className="flex items-center h-[28px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
                     >
-                      <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                      <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                         {set.baseLabel ?? set.label}
                       </span>
                     </button>
@@ -429,7 +429,7 @@ export default function R2Inline() {
                           state={child.checked ? "selected" : "unselected"}
                           onChange={() => toggleSetChild(set.id, child.id)}
                         />
-                        <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                        <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                           {child.label}
                         </span>
                         <Chip
@@ -496,7 +496,7 @@ export default function R2Inline() {
             <div className="flex flex-col bg-white">
               <div className="flex items-center gap-[8px] px-[12px] py-[8px] border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
                 <Icon name="business" size={16} className="text-[var(--foreground-tertiary,#808080)] shrink-0" />
-                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]" style={{ fontFamily: "Lato, sans-serif" }}>
+                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]">
                   Select vendor for {orders.find((o) => o.id === popover.code)?.baseLabel}
                 </span>
               </div>
@@ -506,7 +506,6 @@ export default function R2Inline() {
                     key={variant.id}
                     onMouseDown={(e) => { e.preventDefault(); handleCompanySelect(variant); }}
                     className="w-full flex items-center gap-[8px] px-[12px] py-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
-                    style={{ fontFamily: "Lato, sans-serif" }}
                   >
                     <span className="text-[13px] font-bold text-[var(--foreground-primary,#1a1a1a)] leading-[1.2] w-[80px] shrink-0">{variant.company}</span>
                     <span className="text-[12px] text-[var(--foreground-secondary,#666)] leading-[1.4]">{variant.detail}</span>
@@ -518,7 +517,7 @@ export default function R2Inline() {
             <div className="flex flex-col bg-white">
               <div className="flex items-center gap-[8px] px-[12px] py-[8px] border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
                 <Icon name="science" size={16} className="text-[var(--foreground-tertiary,#808080)] shrink-0" />
-                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]" style={{ fontFamily: "Lato, sans-serif" }}>
+                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]">
                   Select vendor for all labs in {orderSets.find((s) => s.id === popover.code)?.label}
                 </span>
               </div>
@@ -528,7 +527,6 @@ export default function R2Inline() {
                     key={company}
                     onMouseDown={(e) => { e.preventDefault(); handleSetLabCompanySelect(company); }}
                     className="w-full flex items-center px-[12px] py-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
-                    style={{ fontFamily: "Lato, sans-serif" }}
                   >
                     <span className="text-[13px] font-bold text-[var(--foreground-primary,#1a1a1a)] leading-[1.2]">{company}</span>
                   </button>
@@ -539,7 +537,7 @@ export default function R2Inline() {
             <div className="flex flex-col bg-white">
               <div className="flex items-center gap-[8px] px-[12px] py-[8px] border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
                 <Icon name="radiology" size={16} className="text-[var(--foreground-tertiary,#808080)] shrink-0" />
-                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]" style={{ fontFamily: "Lato, sans-serif" }}>
+                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]">
                   Select vendor for all imaging in {orderSets.find((s) => s.id === popover.code)?.label}
                 </span>
               </div>
@@ -549,7 +547,6 @@ export default function R2Inline() {
                     key={company}
                     onMouseDown={(e) => { e.preventDefault(); handleSetImagingCompanySelect(company); }}
                     className="w-full flex items-center px-[12px] py-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
-                    style={{ fontFamily: "Lato, sans-serif" }}
                   >
                     <span className="text-[13px] font-bold text-[var(--foreground-primary,#1a1a1a)] leading-[1.2]">{company}</span>
                   </button>
@@ -560,7 +557,7 @@ export default function R2Inline() {
             <div className="flex flex-col bg-white">
               <div className="flex items-center gap-[8px] px-[12px] py-[8px] border-b border-[var(--shape-outline,rgba(0,0,0,0.1))]">
                 <Icon name="business" size={16} className="text-[var(--foreground-tertiary,#808080)] shrink-0" />
-                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]" style={{ fontFamily: "Lato, sans-serif" }}>
+                <span className="text-[13px] text-[var(--foreground-secondary,#666)] leading-[1.4]">
                   {(() => {
                     const set = orderSets.find((s) => s.id === popover.setId);
                     const child = set?.children.find((c) => c.id === popover.code);
@@ -574,7 +571,6 @@ export default function R2Inline() {
                     key={variant.id}
                     onMouseDown={(e) => { e.preventDefault(); handleSetChildCompanySelect(variant); }}
                     className="w-full flex items-center gap-[8px] px-[12px] py-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
-                    style={{ fontFamily: "Lato, sans-serif" }}
                   >
                     <span className="text-[13px] font-bold text-[var(--foreground-primary,#1a1a1a)] leading-[1.2] w-[80px] shrink-0">{variant.company}</span>
                     <span className="text-[12px] text-[var(--foreground-secondary,#666)] leading-[1.4]">{variant.detail}</span>

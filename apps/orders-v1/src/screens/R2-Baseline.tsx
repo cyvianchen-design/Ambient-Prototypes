@@ -9,10 +9,10 @@ function CodeMenuItem({ item, onSelect }: { item: CodeItemType; onSelect: (item:
       onMouseDown={(e) => { e.preventDefault(); onSelect(item); }}
       className="flex items-center w-full gap-[8px] h-[36px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors text-left"
     >
-      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}>
+      <span className="shrink-0 w-[64px] text-[13px] font-bold leading-none tracking-[0.13px] text-[var(--accent,#1132ee)]">
         {item.code}
       </span>
-      <span className="text-[13px] font-normal leading-none text-[var(--foreground-primary,#1a1a1a)] flex-1 min-w-0 truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+      <span className="text-[13px] font-normal leading-none text-[var(--foreground-primary,#1a1a1a)] flex-1 min-w-0 truncate">
         {item.description}
       </span>
     </button>
@@ -333,14 +333,14 @@ export default function R2Baseline() {
         {/* ── Diagnostic Codes ─────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
               Diagnostic Codes
             </h2>
           </div>
 
           {/* ICD-10 */}
           <div className="flex items-center justify-between mb-[8px]">
-            <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">ICD10 Codes</span>
             <Button variant="tertiary" size="small" prefix={<Icon name="content_copy" size={16} />}>Copy Codes</Button>
           </div>
           <div className="flex flex-col gap-[2px] mb-[24px]">
@@ -350,10 +350,10 @@ export default function R2Baseline() {
                   className="flex items-center h-[28px] px-[8px] gap-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer"
                   onClick={(e) => openPopover(e, "icd10", c.code)}
                 >
-                  <span className="w-[80px] shrink-0 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-brand,#1132ee)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                  <span className="w-[80px] shrink-0 t-title-sm text-[var(--foreground-brand,#1132ee)]">
                     {c.code}
                   </span>
-                  <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {c.description}
                   </span>
                 </div>
@@ -371,7 +371,7 @@ export default function R2Baseline() {
         {/* ── Orders ───────────────────────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]">
+            <h2 className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">
               Orders
             </h2>
             {(() => {
@@ -406,7 +406,7 @@ export default function R2Baseline() {
                   onClick={(e) => openPopover(e, "order", o.id)}
                   className="flex items-center h-[28px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
                 >
-                  <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                  <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                     {o.baseLabel ?? o.label}
                   </span>
                 </button>
@@ -456,7 +456,7 @@ export default function R2Baseline() {
                       onClick={(e) => openPopover(e, "set-title", set.id)}
                       className="flex items-center h-[28px] px-[8px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] text-left"
                     >
-                      <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                      <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                         {set.baseLabel ?? set.label}
                       </span>
                     </button>
@@ -483,7 +483,7 @@ export default function R2Baseline() {
                           state={child.checked ? "selected" : "unselected"}
                           onChange={() => toggleSetChild(set.id, child.id)}
                         />
-                        <span className="text-[15px] font-normal leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
+                        <span className="t-body-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">
                           {child.label}
                         </span>
                         <Chip
@@ -575,7 +575,7 @@ export default function R2Baseline() {
                       {filteredOrders.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleSetReplaceWithOrder(o)} />)}
                     </>
                   )}
-                  {!hasResults && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No results found</p>}
+                  {!hasResults && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No results found</p>}
                 </div>
               </Menu>
             );
@@ -643,7 +643,7 @@ export default function R2Baseline() {
                       {filteredRest.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}
                     </>
                   )}
-                  {isEmpty && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No orders found</p>}
+                  {isEmpty && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No orders found</p>}
                 </div>
               </Menu>
             );
@@ -662,7 +662,7 @@ export default function R2Baseline() {
                 <div className="overflow-y-auto max-h-[220px]">
                   {fVisit.length > 0 && (<><MenuHeader>Your current codes</MenuHeader>{fVisit.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleOrderIcdSelect} />)}{fRest.length > 0 && <MenuHeader>Add more codes</MenuHeader>}</>)}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleOrderIcdSelect} />)}
-                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
+                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No codes found</p>}
                 </div>
               </Menu>
             );
@@ -710,7 +710,7 @@ export default function R2Baseline() {
                 <div className="overflow-y-auto max-h-[220px]">
                   {fVisit.length > 0 && (<><MenuHeader>Your current codes</MenuHeader>{fVisit.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleSetChildIcdSelect} />)}{fRest.length > 0 && <MenuHeader>Add more codes</MenuHeader>}</>)}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleSetChildIcdSelect} />)}
-                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
+                  {fVisit.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No codes found</p>}
                 </div>
               </Menu>
             );
@@ -733,7 +733,7 @@ export default function R2Baseline() {
                   {fAdj.length > 0 && (<><MenuHeader>Suggested</MenuHeader>{fAdj.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={onSelect} />)}</>)}
                   {fRest.length > 0 && <MenuHeader>All Codes</MenuHeader>}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={onSelect} />)}
-                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>No codes found</p>}
+                  {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-tertiary,#808080)]">No codes found</p>}
                 </div>
               </Menu>
             );
