@@ -1090,7 +1090,7 @@ export default function R3InlineDescription() {
 
                         {/* Child rows — draggable within their section */}
                         {activeChildren.length > 0 && (
-                          <div data-children-of={id} className="flex flex-col">
+                          <div data-children-of={id} className="flex flex-col gap-[6px]">
                             {activeChildren.map((child, ci) => {
                               const isSubDragging = subDragChildId === child.id;
                               const showSubDivider =
