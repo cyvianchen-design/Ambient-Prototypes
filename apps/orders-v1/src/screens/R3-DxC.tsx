@@ -179,11 +179,32 @@ export default function R3DxC() {
     initialIcd10.map((c) => ({ ...c, checked: false }))
   );
   const [flatOrders, setFlatOrders] = useState<FlatOrder[]>(buildInitialFlatOrders);
-  const [leavingOrders, setLeavingOrders] = useState<FlatOrder[]>([]);
   const [highlightedOrderId, setHighlightedOrderId] = useState<string | null>(null);
   const [popover, setPopover] = useState<PopoverTarget | null>(null);
   const [popoverQuery, setPopoverQuery] = useState("");
   const popoverRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!highlightedOrderId) return;
+    let originX: number | null = null;
+    let originY: number | null = null;
+    const onMove = (e: MouseEvent) => {
+      if (originX === null) { originX = e.clientX; originY = e.clientY; return; }
+      const dx = e.clientX - originX;
+      const dy = e.clientY - originY!;
+      if (dx * dx + dy * dy > 30 * 30) {
+        setHighlightedOrderId(null);
+        window.removeEventListener("mousemove", onMove);
+      }
+    };
+    const timer = setTimeout(() => {
+      window.addEventListener("mousemove", onMove);
+    }, 400);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("mousemove", onMove);
+    };
+  }, [highlightedOrderId]);
 
   useEffect(() => {
     if (!popover) return;
@@ -204,9 +225,14 @@ export default function R3DxC() {
 
   function handleIcd10Select(item: CodeItem) {
     if (popover?.list === "reassign" && popover.orderId) {
+      const existingOrder = flatOrders.find((o) => o.id === popover.orderId);
+      const oldIcd = existingOrder?.relatedIcd;
       setFlatOrders((prev) => prev.map((o) => o.id === popover.orderId ? { ...o, relatedIcd: item.code } : o));
       if (!icd10.find((c) => c.code === item.code))
         setIcd10((prev) => [...prev, { ...item, checked: false }]);
+      if (existingOrder && oldIcd && oldIcd !== item.code) {
+        setHighlightedOrderId(existingOrder.id);
+      }
     } else if (popover?.code) {
       const old = popover.code;
       setIcd10((prev) => prev.map((c) => c.code === old ? { ...item, checked: c.checked } : c));
@@ -224,28 +250,37 @@ export default function R3DxC() {
   // ── Order handlers ────────────────────────────────────────────────────────────
 
   function handleOrderSelect(opt: typeof ordersPool[0]) {
-    const newOrder: FlatOrder = {
-      id: opt.id, label: opt.baseLabel ?? opt.label, company: opt.company,
-      relatedIcd: opt.relatedIcd, checked: false,
-      confidence: highConfidenceLabels.has(opt.baseLabel ?? opt.label) ? "high" : "low",
-    };
     if (popover?.orderId) {
+      // Replacing an existing order: preserve code, confidence, and vendor if possible
       const existingOrder = flatOrders.find((o) => o.id === popover.orderId);
-      const oldIcd = existingOrder?.relatedIcd;
-      setFlatOrders((prev) => prev.map((o) => o.id === popover.orderId ? { ...newOrder, checked: o.checked } : o));
-      if (existingOrder && oldIcd && oldIcd !== opt.relatedIcd) {
-        const ghost = { ...existingOrder };
-        setLeavingOrders((prev) => [...prev, ghost]);
-        setHighlightedOrderId(newOrder.id);
-        setTimeout(() => setLeavingOrders((prev) => prev.filter((o) => o.id !== ghost.id)), 450);
-        setTimeout(() => setHighlightedOrderId(null), 900);
-      }
+      if (!existingOrder) { setPopover(null); return; }
+
+      const baseLabel = opt.baseLabel ?? opt.label;
+      // Keep current vendor if the new order has a variant for it; otherwise use opt's vendor
+      const sameVendor = existingOrder.company
+        ? ordersPool.find((o) => (o.baseLabel ?? o.label) === baseLabel && o.company === existingOrder.company)
+        : undefined;
+      const best = sameVendor ?? opt;
+
+      setFlatOrders((prev) => prev.map((o) => o.id === popover.orderId ? {
+        ...existingOrder,
+        id: best.id,
+        label: baseLabel,
+        company: best.company,
+      } : o));
     } else {
+      // Adding a new order
+      const newOrder: FlatOrder = {
+        id: opt.id, label: opt.baseLabel ?? opt.label, company: opt.company,
+        relatedIcd: opt.relatedIcd, checked: false,
+        confidence: highConfidenceLabels.has(opt.baseLabel ?? opt.label) ? "high" : "low",
+      };
       setFlatOrders((prev) => [...prev, newOrder]);
-    }
-    if (opt.relatedIcd && !icd10.find((c) => c.code === opt.relatedIcd)) {
-      const match = icd10Pool.find((c) => c.code === opt.relatedIcd);
-      if (match) setIcd10((prev) => [...prev, { ...match, checked: false }]);
+      setHighlightedOrderId(newOrder.id);
+      if (opt.relatedIcd && !icd10.find((c) => c.code === opt.relatedIcd)) {
+        const match = icd10Pool.find((c) => c.code === opt.relatedIcd);
+        if (match) setIcd10((prev) => [...prev, { ...match, checked: false }]);
+      }
     }
     setPopover(null);
   }
@@ -420,26 +455,12 @@ export default function R3DxC() {
     );
   }
 
-  function renderGhostOrderRow(order: FlatOrder) {
-    return (
-      <div key={`ghost-${order.id}`}
-        className="flex items-center gap-[2px] min-h-[28px] rounded-[6px] pointer-events-none overflow-hidden"
-        style={{ animation: "fadeCollapse 400ms ease forwards" }}>
-        <Checkbox state={order.checked ? "selected" : "unselected"} onChange={() => {}} />
-        <div className="flex items-center gap-[4px] flex-1 min-w-0 px-[6px]">
-          <span className="t-title-md text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">{order.label}</span>
-          {order.company && <Chip label={order.company} color="neutral" size="XS" />}
-        </div>
-      </div>
-    );
-  }
-
   function renderOrderRow(order: FlatOrder) {
     const items = getOrderEvidence(order);
     const isInfoOpen = infoOpenOrderId === order.id;
     return (
       <div key={order.id} className="flex flex-col">
-        <div className={`group flex items-center gap-[2px] min-h-[28px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer transition-colors duration-[600ms] ${highlightedOrderId === order.id ? "bg-[var(--litmus-25,#eef0fd)]" : ""}`} onClick={() => toggleOrder(order.id)}>
+        <div className={`group flex items-center gap-[2px] min-h-[28px] rounded-[6px] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer ${highlightedOrderId === order.id ? "bg-[var(--surface-1,#f7f7f7)]" : ""}`} onClick={() => toggleOrder(order.id)}>
           <div onClick={(e) => e.stopPropagation()}>
             <Checkbox state={order.checked ? "selected" : "unselected"} onChange={() => toggleOrder(order.id)} />
           </div>
@@ -505,12 +526,6 @@ export default function R3DxC() {
 
   return (
     <ScribeLayout activeTab={activeTab} onTabChange={setActiveTab}>
-      <style>{`
-        @keyframes fadeCollapse {
-          from { opacity: 1; max-height: 40px; margin-bottom: 0; }
-          to   { opacity: 0; max-height: 0;    margin-bottom: 0; }
-        }
-      `}</style>
       <div className="max-w-[640px] w-full px-[20px] py-[32px] flex flex-col gap-[24px]">
 
         {/* ── Diagnostic Codes ─────────────────────────────────────── */}
@@ -595,8 +610,6 @@ export default function R3DxC() {
               const highOrders = orders.filter((o) => !o.precharted && o.confidence === "high");
               const lowOrders  = orders.filter((o) => !o.precharted && o.confidence === "low");
               const charted    = orders.filter((o) => o.precharted);
-              const leavingHigh = leavingOrders.filter((o) => o.relatedIcd === code && !o.precharted && o.confidence === "high");
-              const leavingLow  = leavingOrders.filter((o) => o.relatedIcd === code && !o.precharted && o.confidence === "low");
               return (
                 <div key={code} className="flex flex-col">
                   {index > 0 && <div className="h-[1px] bg-[#e0e0e0] mt-[20px] mb-[20px]" />}
@@ -607,18 +620,16 @@ export default function R3DxC() {
                   </div>
 
                   <div className="flex flex-col gap-[8px]">
-                    {(highOrders.length > 0 || leavingHigh.length > 0) && (
+                    {highOrders.length > 0 && (
                       <div className="flex flex-col gap-[2px]">
                         <Badge label="Confident" variant="success" filled />
                         {highOrders.map((o) => renderOrderRow(o))}
-                        {leavingHigh.map((o) => renderGhostOrderRow(o))}
                       </div>
                     )}
-                    {(lowOrders.length > 0 || leavingLow.length > 0) && (
+                    {lowOrders.length > 0 && (
                       <div className="flex flex-col gap-[2px]">
                         <Badge label="Suggested" variant="default" filled />
                         {lowOrders.map((o) => renderOrderRow(o))}
-                        {leavingLow.map((o) => renderGhostOrderRow(o))}
                       </div>
                     )}
                     {charted.length > 0 && (
