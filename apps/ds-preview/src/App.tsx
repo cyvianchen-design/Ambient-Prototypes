@@ -512,73 +512,6 @@ function NavigationTab() {
   return (
     <div className="flex flex-wrap gap-[24px] items-start">
 
-      {/* Customize / Settings mode */}
-      <div className={navCard}>
-        <span className={navLabel}>Customize / Settings</span>
-        <div className={navFrame}>
-          <PrimaryNav activeItem="customize" />
-          <div className="w-[220px] shrink-0 h-full flex flex-col bg-white border-r border-[var(--shape-outline,rgba(0,0,0,0.1))]">
-            <div className="h-[48px] shrink-0 flex items-center px-[16px]">
-              <span className="t-title-md text-[var(--foreground-primary)]" style={{ fontFeatureSettings: "'ss07'" }}>
-                Customize
-              </span>
-            </div>
-            <div className="flex-1 overflow-y-auto">
-              <div className="px-[12px] h-[30px] flex items-center">
-                <span className="t-title-xs text-[var(--foreground-secondary)]">Global Settings</span>
-              </div>
-              {customizeGlobalItems.map((item) => (
-                <button key={item.id} className="w-full flex items-center gap-[10px] px-[16px] h-[42px] hover:bg-[var(--surface-1)] cursor-pointer text-left transition-colors">
-                  <span className="text-[var(--accent)] flex items-center shrink-0">
-                    {item.iconEl ?? <Icon name={item.icon!} size={20} filled />}
-                  </span>
-                  <span className="t-title-sm text-[var(--foreground-primary)]" style={{ fontFeatureSettings: "'ss07'" }}>
-                    {item.label}
-                  </span>
-                </button>
-              ))}
-              <div className="px-[12px] h-[30px] flex items-center mt-[8px]">
-                <span className="t-title-xs text-[var(--foreground-secondary)]">Template Settings</span>
-              </div>
-              {customizeTemplateItems.map((item) => {
-                const isSelected = selectedTemplate === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setSelectedTemplate(item.id)}
-                    className={`w-full flex items-center gap-[6px] h-[42px] cursor-pointer text-left transition-colors ${
-                      isSelected
-                        ? "bg-[var(--litmus-25)] border-r-[2px] border-r-[var(--accent)] pl-[16px] pr-[10px]"
-                        : "px-[16px] hover:bg-[var(--surface-1)]"
-                    }`}
-                  >
-                    <div className="flex-1 min-w-0 flex items-center gap-[6px] overflow-hidden">
-                      <span className="shrink-0 t-title-sm text-[var(--foreground-primary)]" style={{ fontFeatureSettings: "'ss07'" }}>
-                        {item.label}
-                      </span>
-                      {item.isDefault && (
-                        <span className="t-body-sm text-[var(--foreground-secondary)] truncate">(default)</span>
-                      )}
-                    </div>
-                    {isSelected && (
-                      <span className="shrink-0 text-[var(--foreground-secondary)] flex items-center">
-                        <Icon name="more_horiz" size={16} />
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-            <div className="shrink-0 p-[12px] border-t border-[var(--shape-outline,rgba(0,0,0,0.1))]">
-              <Button variant="secondary" size="small" prefix={<Icon name="add" size={16} />} className="w-full">
-                Add Template
-              </Button>
-            </div>
-          </div>
-          <div className="flex-1 bg-[var(--surface-2,#fafafa)]" />
-        </div>
-      </div>
-
       {/* Visits mode */}
       <div className={navCard}>
         <span className={navLabel}>Visits</span>
@@ -644,6 +577,73 @@ function NavigationTab() {
             <div className="shrink-0 p-[12px]">
               <Button variant="primary" size="medium" prefix={<Icon name="mic" size={16} filled />} className="w-full">
                 Record New Scribe
+              </Button>
+            </div>
+          </div>
+          <div className="flex-1 bg-[var(--surface-2,#fafafa)]" />
+        </div>
+      </div>
+
+      {/* Customize / Settings mode */}
+      <div className={navCard}>
+        <span className={navLabel}>Customize / Settings</span>
+        <div className={navFrame}>
+          <PrimaryNav activeItem="customize" />
+          <div className="w-[220px] shrink-0 h-full flex flex-col bg-white border-r border-[var(--shape-outline,rgba(0,0,0,0.1))]">
+            <div className="h-[48px] shrink-0 flex items-center px-[16px]">
+              <span className="t-title-md text-[var(--foreground-primary)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                Customize
+              </span>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              <div className="px-[12px] h-[30px] flex items-center">
+                <span className="t-title-xs text-[var(--foreground-secondary)]">Global Settings</span>
+              </div>
+              {customizeGlobalItems.map((item) => (
+                <button key={item.id} className="w-full flex items-center gap-[10px] px-[16px] h-[42px] hover:bg-[var(--surface-1)] cursor-pointer text-left transition-colors">
+                  <span className="text-[var(--accent)] flex items-center shrink-0">
+                    {item.iconEl ?? <Icon name={item.icon!} size={20} filled />}
+                  </span>
+                  <span className="t-title-sm text-[var(--foreground-primary)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                    {item.label}
+                  </span>
+                </button>
+              ))}
+              <div className="px-[12px] h-[30px] flex items-center mt-[8px]">
+                <span className="t-title-xs text-[var(--foreground-secondary)]">Template Settings</span>
+              </div>
+              {customizeTemplateItems.map((item) => {
+                const isSelected = selectedTemplate === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setSelectedTemplate(item.id)}
+                    className={`w-full flex items-center gap-[6px] h-[42px] cursor-pointer text-left transition-colors ${
+                      isSelected
+                        ? "bg-[var(--litmus-25)] border-r-[2px] border-r-[var(--accent)] pl-[16px] pr-[10px]"
+                        : "px-[16px] hover:bg-[var(--surface-1)]"
+                    }`}
+                  >
+                    <div className="flex-1 min-w-0 flex items-center gap-[6px] overflow-hidden">
+                      <span className="shrink-0 t-title-sm text-[var(--foreground-primary)]" style={{ fontFeatureSettings: "'ss07'" }}>
+                        {item.label}
+                      </span>
+                      {item.isDefault && (
+                        <span className="t-body-sm text-[var(--foreground-secondary)] truncate">(default)</span>
+                      )}
+                    </div>
+                    {isSelected && (
+                      <span className="shrink-0 text-[var(--foreground-secondary)] flex items-center">
+                        <Icon name="more_horiz" size={16} />
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="shrink-0 p-[12px] border-t border-[var(--shape-outline,rgba(0,0,0,0.1))]">
+              <Button variant="secondary" size="small" prefix={<Icon name="add" size={16} />} className="w-full">
+                Add Template
               </Button>
             </div>
           </div>
@@ -1327,7 +1327,7 @@ export default function App() {
       <div className="px-8 pt-4 border-b border-[var(--surface-3,#eee)]">
         <Tabs tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
-      <div className="px-8 py-8 max-w-4xl">
+      <div className="px-8 py-8 max-w-[1400px]">
         <ActiveComponent />
       </div>
     </div>
