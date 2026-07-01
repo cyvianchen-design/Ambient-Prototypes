@@ -505,12 +505,18 @@ const customizeTemplateItems = [
 function NavigationTab() {
   const [selectedTemplate, setSelectedTemplate] = useState("soap-note");
 
+  const navCard = "flex flex-col gap-[8px]";
+  const navLabel = "t-title-xs text-[var(--foreground-secondary)]";
+  const navFrame = "flex h-[640px] w-[360px] border border-[var(--surface-3,#eee)] rounded-[8px] overflow-hidden";
+
   return (
-    <div>
-      <Section title="Primary Nav + Secondary Nav — Customize / Settings mode">
-        <div className="flex h-[600px] border border-[var(--surface-3,#eee)] rounded-[8px] overflow-hidden">
+    <div className="flex flex-wrap gap-[24px] items-start">
+
+      {/* Customize / Settings mode */}
+      <div className={navCard}>
+        <span className={navLabel}>Customize / Settings</span>
+        <div className={navFrame}>
           <PrimaryNav activeItem="customize" />
-          {/* Customize secondary nav */}
           <div className="w-[220px] shrink-0 h-full flex flex-col bg-white border-r border-[var(--shape-outline,rgba(0,0,0,0.1))]">
             <div className="h-[48px] shrink-0 flex items-center px-[16px]">
               <span className="t-title-md text-[var(--foreground-primary)]" style={{ fontFeatureSettings: "'ss07'" }}>
@@ -518,7 +524,6 @@ function NavigationTab() {
               </span>
             </div>
             <div className="flex-1 overflow-y-auto">
-              {/* Global Settings */}
               <div className="px-[12px] h-[30px] flex items-center">
                 <span className="t-title-xs text-[var(--foreground-secondary)]">Global Settings</span>
               </div>
@@ -532,7 +537,6 @@ function NavigationTab() {
                   </span>
                 </button>
               ))}
-              {/* Template Settings */}
               <div className="px-[12px] h-[30px] flex items-center mt-[8px]">
                 <span className="t-title-xs text-[var(--foreground-secondary)]">Template Settings</span>
               </div>
@@ -573,15 +577,16 @@ function NavigationTab() {
           </div>
           <div className="flex-1 bg-[var(--surface-2,#fafafa)]" />
         </div>
-      </Section>
-      <Section title="Primary Nav + Secondary Nav — Visits mode">
-        <div className="flex h-[800px] border border-[var(--surface-3,#eee)] rounded-[8px] overflow-hidden">
+      </div>
+
+      {/* Visits mode */}
+      <div className={navCard}>
+        <span className={navLabel}>Visits</span>
+        <div className={navFrame}>
           <PrimaryNav activeItem="visits" />
           <div className="w-[220px] flex flex-col border-r border-[rgba(0,0,0,0.1)] bg-white">
             <div className="flex items-center h-[48px] shrink-0 px-[8px] gap-[4px]">
-              <span className="flex-1 text-[15px] font-bold tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] px-[8px]" style={{ fontFamily: "Lato, sans-serif" }}>
-                May 13, Today
-              </span>
+              <span className="flex-1 t-title-md text-[var(--foreground-primary)] px-[8px]">May 13, Today</span>
               <IconButton icon={<Icon name="keyboard_arrow_left" size={16} />} variant="tertiary-neutral" size="small" aria-label="Previous" />
               <IconButton icon={<Icon name="keyboard_arrow_right" size={16} />} variant="tertiary-neutral" size="small" aria-label="Next" />
             </div>
@@ -589,7 +594,7 @@ function NavigationTab() {
               <Button variant="tertiary" size="small" prefix={<Icon name="search" size={16} />}>Search</Button>
               <Button variant="tertiary" size="small" prefix={<Icon name="filter_list" size={16} />}>Filter</Button>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 overflow-y-auto">
               <SecondaryNavItem name="Jane Doe" age={38} gender="F" duration="12 min" time="9:00 am" status="Generated" isSelected />
               <SecondaryNavItem name="Linda Williams" age={53} gender="F" duration="20 min" time="9:30 am" status="In Queue" />
               <SecondaryNavItem name="David Jones" age={67} gender="M" duration="15 min" time="10:00 am" status="Processing" />
@@ -604,25 +609,24 @@ function NavigationTab() {
           </div>
           <div className="flex-1 bg-[var(--surface-2,#fafafa)]" />
         </div>
-      </Section>
-      <Section title="Primary Nav + Secondary Nav — Scribes mode">
-        <div className="flex h-[800px] border border-[var(--surface-3,#eee)] rounded-[8px] overflow-hidden">
+      </div>
+
+      {/* Scribes mode */}
+      <div className={navCard}>
+        <span className={navLabel}>Scribes</span>
+        <div className={navFrame}>
           <PrimaryNav activeItem="scribes" />
           <div className="w-[220px] flex flex-col border-r border-[rgba(0,0,0,0.1)] bg-white">
             <div className="flex items-center h-[48px] shrink-0 px-[8px] py-[12px]">
-              <div className="flex items-center h-[28px] px-[4px] rounded-[6px]">
-                <span className="text-[17px] font-bold tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif" }}>
-                  My Scribes
-                </span>
-              </div>
+              <span className="t-title-md text-[var(--foreground-primary)] px-[4px]">My Scribes</span>
             </div>
             <div className="flex gap-[4px] items-center px-[4px] pb-[4px] shrink-0">
               <Button variant="tertiary" size="small" prefix={<Icon name="search" size={16} />}>Search</Button>
               <Button variant="tertiary" size="small" prefix={<Icon name="filter_list" size={16} />}>Filter</Button>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 overflow-y-auto">
               <div className="px-[12px] py-[8px]">
-                <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFeatureSettings: "'ss07' 1" }}>
+                <span className="t-title-sm text-[var(--foreground-secondary)]" style={{ fontFeatureSettings: "'ss07' 1" }}>
                   Tue, May 13th (Today)
                 </span>
               </div>
@@ -630,7 +634,7 @@ function NavigationTab() {
               <SecondaryNavItem name="Linda Williams" chiefComplaint="Follow-up" age={53} gender="F" duration="20 min" />
               <SecondaryNavItem name="David Jones" chiefComplaint="Hypertension check" age={67} gender="M" duration="15 min" />
               <div className="px-[12px] py-[8px]">
-                <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)]" style={{ fontFeatureSettings: "'ss07' 1" }}>
+                <span className="t-title-sm text-[var(--foreground-secondary)]" style={{ fontFeatureSettings: "'ss07' 1" }}>
                   Mon, May 12th
                 </span>
               </div>
@@ -645,7 +649,8 @@ function NavigationTab() {
           </div>
           <div className="flex-1 bg-[var(--surface-2,#fafafa)]" />
         </div>
-      </Section>
+      </div>
+
     </div>
   );
 }
