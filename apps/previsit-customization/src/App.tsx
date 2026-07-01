@@ -17,6 +17,8 @@ import R3Description from "./screens/R3-Description";
 import R3InlineDescription from "./screens/R3-InlineDescription";
 import R3InlineTitleM from "./screens/R3-InlineTitleM";
 import R4Baseline from "./screens/R4-Baseline";
+import R4Grey from "./screens/R4-Grey";
+import R4Shadow from "./screens/R4-Shadow";
 
 const screens: ScreenDef[] = [
   { round: "R1", direction: "Baseline", component: R1Baseline },
@@ -34,6 +36,8 @@ const screens: ScreenDef[] = [
   { round: "R3", direction: "Inline Description", component: R3InlineDescription },
   { round: "R3", direction: "Inline Title M", component: R3InlineTitleM },
   { round: "R4", direction: "Baseline", component: R4Baseline },
+  { round: "R4", direction: "Grey", component: R4Grey },
+  { round: "R4", direction: "Shadow", component: R4Shadow },
 ];
 
 export default function App() {
@@ -44,5 +48,5 @@ export default function App() {
       </div>
     );
   }
-  return <VersionSwitcher screens={screens} initialRound="R3" initialDirection="Baseline" />;
+  return <VersionSwitcher screens={screens} initialRound="R4" initialDirection="Baseline" />;
 }

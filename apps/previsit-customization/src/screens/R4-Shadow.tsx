@@ -716,7 +716,7 @@ const suggestions = [
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
-export default function R4Baseline() {
+export default function R4Shadow() {
   const [consentChecked, setConsentChecked] = useState(false);
   const [order, setOrder] = useState(() => sectionDefs.map((s) => s.id));
   const [pointerDragId, setPointerDragId] = useState<string | null>(null);
@@ -1021,7 +1021,7 @@ export default function R4Baseline() {
                       <div
                         data-drag-id={id}
                         className={[
-                          "shrink-0 bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] p-[4px] flex flex-col gap-[8px] transition-opacity",
+                          "shrink-0 bg-white rounded-[6px] p-[4px] flex flex-col gap-[8px] [box-shadow:var(--shadow-default)] transition-opacity",
                           isDragging ? "opacity-40" : "opacity-100",
                         ].join(" ")}
                       >

@@ -716,7 +716,7 @@ const suggestions = [
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
-export default function R4Baseline() {
+export default function R4Grey() {
   const [consentChecked, setConsentChecked] = useState(false);
   const [order, setOrder] = useState(() => sectionDefs.map((s) => s.id));
   const [pointerDragId, setPointerDragId] = useState<string | null>(null);
@@ -1186,7 +1186,7 @@ export default function R4Baseline() {
                       const group = drawerGroups.find((g) => g.id === id);
                       if (!group) return null;
                       return (
-                        <div key={id} className="shrink-0 bg-white border border-[var(--neutral-100,#e6e6e6)] rounded-[6px] p-[4px] flex flex-col gap-[8px]">
+                        <div key={id} className="shrink-0 bg-[var(--surface-1,#f7f7f7)] border border-[var(--neutral-100,#e6e6e6)] rounded-[6px] p-[4px] flex flex-col gap-[8px]">
                           <div className="flex items-center gap-[8px] h-[28px] px-[4px]">
                             <div className="shrink-0 leading-[0] text-[var(--foreground-tertiary,#808080)]">
                               <Icon name="drag_indicator" size={16} />
@@ -1248,7 +1248,7 @@ export default function R4Baseline() {
                       const removedKids = group.children.filter((c) => deletedChildren.has(c.id));
                       if (removedKids.length === 0) return null;
                       return (
-                        <div key={id} className="shrink-0 bg-white border border-[var(--neutral-100,#e6e6e6)] rounded-[6px] p-[4px] flex flex-col gap-[8px]">
+                        <div key={id} className="shrink-0 bg-[var(--surface-1,#f7f7f7)] border border-[var(--neutral-100,#e6e6e6)] rounded-[6px] p-[4px] flex flex-col gap-[8px]">
                           <div className="flex items-center gap-[8px] h-[28px] px-[4px]">
                             <div className="shrink-0 leading-[0] text-[var(--foreground-tertiary,#808080)]">
                               <Icon name="drag_indicator" size={16} />
