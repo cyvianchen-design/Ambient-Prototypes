@@ -1303,28 +1303,44 @@ export default function R3Description() {
                       if (removedKids.length === 0) return null;
                       return (
                         <div key={id} className="shrink-0 bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] p-[4px] flex flex-col gap-[8px]">
-                          <div className="flex items-center h-[28px] px-[4px]">
-                            <span
-                              className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
-                              style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
-                            >
-                              {group.label}
-                            </span>
+                          <div className="flex items-center gap-[8px] min-h-[28px] px-[4px] py-[5px]">
+                            <div className="flex-1 flex flex-col gap-[2px] min-w-0">
+                              <span
+                                className="t-title-sm text-[var(--foreground-tertiary,#808080)] truncate"
+                                style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
+                              >
+                                {group.label}
+                              </span>
+                              {group.description && (
+                                <span className="t-body-xs leading-[1.3] text-[var(--foreground-tertiary,#808080)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                                  {group.description}
+                                </span>
+                              )}
+                            </div>
                           </div>
                           {removedKids.map((child) => (
-                            <div key={child.id} className="flex items-center gap-[8px] h-[28px] pl-[20px] pr-[4px]">
-                              <span
-                                className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
-                                style={{ fontFamily: "Lato, sans-serif" }}
-                              >
-                                {child.label}
-                              </span>
+                            <div key={child.id} className="flex items-center gap-[8px] min-h-[28px] pl-[28px] pr-[4px] py-[4px]">
+                              <div className="flex-1 flex flex-col gap-[2px] min-w-0">
+                                <span
+                                  className="t-title-sm text-[var(--foreground-tertiary,#808080)] truncate"
+                                  style={{ fontFamily: "Lato, sans-serif" }}
+                                >
+                                  {child.label}
+                                </span>
+                                {child.description && (
+                                  <span className="t-body-xs leading-[1.3] text-[var(--foreground-tertiary,#808080)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                                    {child.description}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-start gap-[4px] shrink-0 self-start">
                               {child.timeFrameKey && child.options ? (
                                 <DisabledChip label={pendingTimeFrames[child.timeFrameKey] ?? child.options[0]} />
                               ) : child.fixedLabel ? (
                                 <DisabledChip label={child.fixedLabel} />
                               ) : null}
                               <Button variant="tertiary" size="small" onClick={() => restoreChild(child.id)}>Add</Button>
+                              </div>
                             </div>
                           ))}
                         </div>
