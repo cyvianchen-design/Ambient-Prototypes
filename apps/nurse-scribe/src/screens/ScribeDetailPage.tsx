@@ -62,7 +62,7 @@ const SHIFT_CITATIONS: Record<string, CitationSource> = {
   "Drain output (last 4h)":   { type: "manual", by: "Sarah Chen, RN", time: "Today, 08:00" },
   "Dressing last changed":    { type: "manual", by: "Sarah Chen, RN", time: "Today, 08:00" },
   "Patient":                  { type: "transcript", num: 5, quote: '"She gave me her own history — very coherent and detailed."' },
-  "Medical record":           { type: "manual", by: "Sarah Chen, RN", time: "Today, 14:32" },
+  "Medical record":           { type: "transcript", num: 6, quote: '"Cross-referenced her history with the medical record on file — consistent."' },
   // Admission / Triage fields
   "mode-of-arrival":          { type: "transcript", num: 1, quote: '"They brought her in on a stretcher from the ambulance bay."' },
   "pain-present":             { type: "transcript", num: 3, quote: '"She reported pain right away — said it was about an 8 out of 10 when she arrived."' },
