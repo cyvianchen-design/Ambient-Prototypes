@@ -44,7 +44,6 @@ export function MenuHeader({ children, icon }: MenuHeaderProps) {
       {icon && <span className="shrink-0 text-[var(--foreground-tertiary,#808080)]">{icon}</span>}
       <span
         className="text-[11px] font-bold leading-none tracking-[0.13px] text-[var(--foreground-tertiary,#808080)]"
-        style={{ fontFamily: "Lato, sans-serif" }}
       >
         {children}
       </span>
@@ -64,8 +63,7 @@ export function MenuSearch({ value, onChange, onClose, placeholder = "Search…"
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => { if (e.key === "Escape") onClose?.(); }}
         placeholder={placeholder}
-        className="flex-1 min-w-0 text-[13px] leading-[1.4] text-[var(--foreground-primary,#1a1a1a)] placeholder-[var(--foreground-tertiary,#808080)] outline-none bg-transparent"
-        style={{ fontFamily: "Lato, sans-serif" }}
+        className="flex-1 min-w-0 t-body-sm text-[var(--foreground-primary,#1a1a1a)] placeholder-[var(--foreground-tertiary,#808080)] outline-none bg-transparent"
       />
       {value && (
         <button onClick={() => onChange("")} className="shrink-0 text-[var(--foreground-tertiary,#808080)] hover:text-[var(--foreground-primary,#1a1a1a)]">
@@ -98,19 +96,16 @@ export function MenuItem({
     >
       {icon && <span className="shrink-0 text-[var(--accent,#1132ee)]">{icon}</span>}
       {description ? (
-        <span className="flex flex-col gap-[1px]" style={{ fontFamily: "Lato, sans-serif" }}>
-          <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">
+        <span className="flex flex-col gap-[1px]">
+          <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">
             {label}
           </span>
-          <span className="text-[12px] font-normal leading-[1.4] text-[var(--foreground-secondary,#666)]">
+          <span className="t-body-xs text-[var(--foreground-secondary,#666)]">
             {description}
           </span>
         </span>
       ) : (
-        <span
-          className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]"
-          style={{ fontFamily: "Lato, sans-serif" }}
-        >
+        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">
           {label}
         </span>
       )}

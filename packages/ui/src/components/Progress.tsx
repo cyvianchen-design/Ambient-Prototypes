@@ -19,7 +19,7 @@ export type ProgressBarProps = {
 export function ProgressBar({ steps, current, className = "" }: ProgressBarProps) {
   return (
     <div
-      className={`flex items-center gap-[3px] w-full font-['Lato',sans-serif] ${className}`}
+      className={`flex items-center gap-[3px] w-full ${className}`}
       role="progressbar"
       aria-valuenow={current}
       aria-valuemin={1}
@@ -121,7 +121,7 @@ function range(start: number, end: number) {
 
 export function Pagination({ page, totalPages, onChange, siblings = 1, className = "" }: PaginationProps) {
   const btnBase =
-    "flex items-center justify-center w-[32px] h-[32px] rounded-[6px] text-[13px] font-bold leading-none transition-colors select-none";
+    "flex items-center justify-center w-[32px] h-[32px] rounded-[6px] t-title-sm leading-none transition-colors select-none";
   const btnActive = "bg-[var(--accent,#1132ee)] text-white";
   const btnIdle =
     "text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-1,#f7f7f7)] cursor-pointer";
@@ -142,7 +142,7 @@ export function Pagination({ page, totalPages, onChange, siblings = 1, className
   return (
     <nav
       aria-label="Pagination"
-      className={`flex items-center gap-[4px] font-['Lato',sans-serif] ${className}`}
+      className={`flex items-center gap-[4px] ${className}`}
     >
       <button
         onClick={() => onChange(page - 1)}
@@ -155,7 +155,7 @@ export function Pagination({ page, totalPages, onChange, siblings = 1, className
 
       {pages.map((p, i) =>
         p === "…" ? (
-          <span key={`ellipsis-${i}`} className="flex items-center justify-center w-[32px] h-[32px] text-[13px] text-[var(--foreground-secondary,#666)]">
+          <span key={`ellipsis-${i}`} className="flex items-center justify-center w-[32px] h-[32px] t-body-sm text-[var(--foreground-secondary,#666)]">
             …
           </span>
         ) : (

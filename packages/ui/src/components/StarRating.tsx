@@ -25,11 +25,11 @@ export function StarRating({
 
   return (
     <div
-      className={`flex flex-col gap-[4px] font-['Lato',sans-serif] ${className}`}
+      className={`flex flex-col gap-[4px] ${className}`}
       aria-label={label ?? `Rating: ${value} out of ${max}`}
     >
       {label && (
-        <span className="text-[12px] font-normal text-[var(--foreground-secondary,#666)]">{label}</span>
+        <span className="t-body-xs text-[var(--foreground-secondary,#666)]">{label}</span>
       )}
       <div className="flex items-center gap-[2px]">
         {Array.from({ length: max }, (_, i) => {

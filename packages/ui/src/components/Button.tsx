@@ -1,20 +1,20 @@
 import React from "react";
 
-const base = "content-stretch flex items-center justify-center relative rounded-[6px] shrink-0 cursor-pointer transition-colors font-['Lato',sans-serif] font-bold leading-[1.2] not-italic outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--litmus-100,#cfd6fc)] disabled:opacity-40 disabled:cursor-not-allowed";
+const base = "content-stretch flex items-center justify-center relative rounded-[6px] shrink-0 cursor-pointer transition-colors not-italic outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--litmus-100,#cfd6fc)] disabled:opacity-40 disabled:cursor-not-allowed";
 
 // Icon-side padding is nudged 4px inward (Figma visual compactness trick).
 // All class strings must be static for Tailwind JIT.
 const sizeTokens = {
   small: {
-    gap: "gap-[4px]", py: "py-[6px]", h: "h-[28px]", text: "text-[13px] tracking-[0.13px]",
+    gap: "gap-[4px]", py: "py-[6px]", h: "h-[28px]", text: "t-title-sm",
     pad: { nn: "px-[10px]", pn: "pl-[6px] pr-[10px]", np: "pl-[10px] pr-[6px]", pp: "px-[6px]" },
   },
   medium: {
-    gap: "gap-[8px]", py: "py-[8px]", h: "h-[36px]", text: "text-[15px] tracking-[0.15px]",
+    gap: "gap-[8px]", py: "py-[8px]", h: "h-[36px]", text: "t-title-md",
     pad: { nn: "px-[16px]", pn: "pl-[12px] pr-[16px]", np: "pl-[16px] pr-[12px]", pp: "px-[12px]" },
   },
   large: {
-    gap: "gap-[8px]", py: "py-[12px]", h: "h-[48px]", text: "text-[17px] tracking-[0.34px]",
+    gap: "gap-[8px]", py: "py-[12px]", h: "h-[48px]", text: "t-title-lg",
     pad: { nn: "px-[20px]", pn: "pl-[16px] pr-[20px]", np: "pl-[20px] pr-[16px]", pp: "px-[16px]" },
   },
 };
@@ -33,6 +33,7 @@ const variants = {
   "tertiary-neutral": "bg-transparent text-[var(--foreground-secondary,#666)] hover:bg-[var(--surface-1,#f7f7f7)] active:bg-[var(--surface-2,#f2f2f2)]",
   danger:             "bg-[var(--foreground-semantic-danger,#bb1411)] text-white hover:bg-[var(--red-700,#8c0f0d)] active:bg-[var(--red-800,#5d0a09)]",
   "danger-secondary": "border border-[var(--foreground-semantic-danger,#bb1411)] border-solid bg-transparent text-[var(--foreground-semantic-danger,#bb1411)] hover:bg-[var(--red-25,#fef1f1)] active:bg-[var(--red-50,#fde8e8)]",
+  "tertiary-danger":  "bg-transparent text-[var(--foreground-semantic-danger,#bb1411)] hover:bg-[var(--red-25,#fef1f1)] active:bg-[var(--red-50,#fde8e8)]",
   // Inverse — for use on dark/colored backgrounds
   "primary-inverse":  "bg-white text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--neutral-100,#e6e6e6)] active:bg-[var(--neutral-200,#ccc)]",
   "secondary-inverse":"border border-white border-solid bg-transparent text-white hover:bg-white/10 active:bg-white/20",

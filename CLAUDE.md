@@ -12,6 +12,17 @@ After the first screen is built, include a short note at the end of your respons
 
 Don't repeat this every message — just once after the initial screen is ready. Always guide the user to the next step rather than waiting for them to ask.
 
+## Information Lookup Order
+
+For any question about how this project works — what a "direction" is, what rounds exist, what ports are used, what components are available — always check the codebase first:
+1. Read `CLAUDE.md`
+2. Read `App.tsx` for the relevant app
+3. Search `packages/ui` or `apps/<project>/src/`
+
+Never use Notion, web search, or other external tools to answer questions about this project's own conventions. External tools are only for specs outside this repo (e.g. a third-party API or a Figma file link).
+
+---
+
 ## Repo Structure
 
 ```
@@ -55,7 +66,7 @@ When a design or screenshot includes a component not yet in `packages/ui`, searc
 ## Component Library (`packages/ui`)
 
 ### Available components (import from `@ds/ui`)
-`Button`, `IconButton`, `Icon`, `Checkbox`, `Chip`, `Switch`, `TextField`, `TextArea`, `Tabs`, `Badge`, `VisitStatus`, `Link`, `PrimaryNav`, `SecondaryNavItem`, `Menu`, `MenuItem`, `MenuHeader`, `MenuSearch`, `Overlay`, `VersionSwitcher`, `Alert`, `Snackbar`, `AudioInputVolume`, `AudioPlayer`, `Avatar`, `ButtonGroup`, `SplitButton`, `RadioButton`, `RadioGroup`, `DatePicker`, `TimePicker`, `Divider`, `Loader`, `Skeleton`, `NotificationDot`, `Highlight`, `MobileHeader`, `StickyButtonBar`, `ListItem`, `ListSection`, `PopUp`, `ProgressBar`, `Pagination`, `StepIndicator`, `StarRating`, `Tooltip`, `PINInput`, `Table`, `TableCell`
+`Button`, `IconButton`, `Icon`, `Checkbox`, `Chip`, `Switch`, `TextField`, `TextArea`, `Tabs`, `Badge`, `VisitStatus`, `Link`, `PrimaryNav`, `SecondaryNavItem`, `Menu`, `MenuItem`, `MenuHeader`, `MenuSearch`, `Overlay`, `VersionSwitcher`, `Alert`, `Snackbar`, `AudioInputVolume`, `AudioPlayer`, `Avatar`, `ButtonGroup`, `SplitButton`, `RadioButton`, `RadioGroup`, `DatePicker`, `TimePicker`, `Divider`, `Loader`, `Skeleton`, `NotificationDot`, `Highlight`, `MobileHeader`, `StickyButtonBar`, `ListItem`, `ListSection`, `PopUp`, `ProgressBar`, `Pagination`, `StepIndicator`, `StarRating`, `Tooltip`, `PINInput`, `Table`, `TableCell`, `Citation`
 
 ### `Menu` / `MenuItem` / `MenuHeader` / `MenuSearch` — composable dropdown menus
 
@@ -154,10 +165,28 @@ Each prototype page that needs a secondary nav has its own layout component (app
 Use the `<Icon name="..." size={N} filled? />` component for any Material Symbols Rounded icon.
 
 ### Rules
-- **Always use existing components** — never recreate a button, checkbox, chip, etc. from scratch
+- **Before writing any UI element, scan the Available components list above.** If there is a DS component that serves the purpose — even partially — use it. Do not build inline versions of things that exist. This applies to every element: navigation, inputs, overlays, badges, loaders, lists, tables, pagination, tooltips, etc.
 - **If a needed component doesn't exist in `packages/ui`**, stop immediately and tell the user — do not build a one-off inline version. Ask for the Figma spec so it can be added to the DS properly.
 - **Never hardcode colors, font sizes, or spacing** that should come from design tokens
 - **Never guess icon names or fill variants** — icons are chosen intentionally. Always get the exact icon name and filled/unfilled state from Figma (via the `data-name` on the icon node in `get_design_context`). If the Figma context isn't available, ask before using a guess. Secondary nav item icons are 20×20px and use the filled style wherever a filled variant exists.
+
+### Hover state guidelines (extracted from DS components)
+Hover states must be defined in CSS (not inline styles — `:hover` cannot override `style` attributes). Use a `data-*` attribute as a CSS selector hook when needed.
+
+| Element type | Normal | Hover | Transition |
+|---|---|---|---|
+| Accent-filled (chip, tag) | bg `--litmus-25` (#f1f3fe) | bg `--litmus-50` (#e7eafd) | `background 150ms` |
+| Outlined accent (field token) | bg light tint + border `--accent/10` | bg `--litmus-50` + border `--accent/20` (#1132ee33) | `background 150ms, border-color 150ms` |
+| Neutral surface row (menu item, list item) | transparent | bg `--surface-1` (#f7f7f7) | `background 150ms` |
+| Primary/filled button | base color | one shade darker (darken token) | `background 150ms` |
+| Tertiary text (brand) | transparent | bg `--accent-10` (#1132ee1a) | `background 150ms` |
+| Tertiary text (neutral) | transparent | bg `--black-3` (#00000008) | `background 150ms` |
+| Link / colored text | color `X-600` | color `X-700` (one step darker — never opacity) | `color 150ms` |
+
+### Dialog / popup layout rules
+- **No divider under the header.** No divider above the footer/sticky-button row. Dividers inside dialogs are not part of the DS pattern.
+- **Always use `Chip` for removable option tags** — never build custom tag spans. Use `color="neutral"` for user-entered values; `color="accent"` for system/pre-set values.
+- **Match `TextField` and `Button` heights.** Both components share the same size scale: `S`/`small` = 28px, `M`/`medium` = 36px, `L`/`large` = 48px (TextField only). Always use the same tier for adjacent field + button pairs (e.g. `TextField size="M"` + `Button size="medium"`).
 
 ---
 
@@ -189,6 +218,20 @@ Figma uses slash notation — our code uses hyphens:
 
 ---
 
+## Spacing
+
+Two contexts with different rules:
+
+**Inside a component** (`packages/ui` or a standalone app-level component)
+Any value on the 2px grid is fine: `2`, `4`, `6`, `8`, `10`, `12`, `16`… These tighter increments exist to get component internals (icon padding, label gaps, input chrome) pixel-precise.
+
+**Screen / interface level** (gaps between components, section padding, layout structure in a screen file)
+Strict 4px grid only: `4`, `8`, `12`, `16`, `20`, `24`, `32`, `48`… Values like `6px`, `10px`, and `2px` must not appear as layout spacing between components or sections on a screen.
+
+The quick test: if you're spacing two DS components apart, or padding a card/panel/section, use 4px multiples. If you're sizing something *inside* a single component, 2px increments are fine.
+
+---
+
 ## Tailwind Usage
 
 - Tailwind JIT requires **static class strings** — never construct class names dynamically (e.g. no `"text-[" + size + "px]"`)
@@ -202,17 +245,34 @@ Figma uses slash notation — our code uses hyphens:
 
 - **Never use all-caps text** in UI labels, buttons, or headings — use sentence case or title case only
 - **Font**: Lato — loaded via Google Fonts in `index.html`, no local font files needed
-- **Font sizes**: use `text-[NNpx]` Tailwind values matching Figma specs; do not use Tailwind's named scale (sm, base, lg, etc.)
-- **Letter spacing**: always specify tracking to match Figma exactly (see type scale below)
-- **Line height**: use `leading-[1.2]` or `leading-[N]` to match Figma; do not omit
 
-### Type scale (from Figma DS)
-| Name | Size | Weight | Tracking | Usage |
+### Always use `.t-*` utility classes for text styling — never hardcode
+
+Typography tokens are defined in `packages/ui/src/styles/tokens.css` as both CSS custom properties (`--t-title-sm-size` etc.) and utility classes. **Always use the utility classes directly — never write raw `text-[NNpx]`, `font-bold`, or `tracking-[...]` for type styling.**
+
+```tsx
+// Wrong
+<span className="text-[13px] font-bold tracking-[0.13px]">Label</span>
+
+// Right
+<span className="t-title-sm">Label</span>
+```
+
+### Type scale
+
+| Class | Size | Weight | Tracking | Usage |
 |---|---|---|---|---|
-| Title/Nav | 12px | Bold | `tracking-[-0.36px]` | Primary nav labels |
-| Title/S | 13px | Bold | `tracking-[0.13px]` | Secondary nav patient names, section headers |
-| Title/M | 15px | Bold | `tracking-[0.15px]` | Secondary nav date header |
-| Title/L | 17px | Bold | `tracking-[0.34px]` | Secondary nav section titles (e.g. "My Scribes") |
+| `t-title-xs` | 12px | Bold | 0.24px | Primary nav labels |
+| `t-title-sm` | 13px | Bold | 0.13px | Section headers, patient names |
+| `t-title-md` | 15px | Bold | 0.1px | Date headers |
+| `t-title-lg` | 17px | Bold | 0.3px | Section titles |
+| `t-title-xl` | 24px | Bold | 0px | Large headings |
+| `t-body-xs` | 12px | Regular | 0px | Fine print, captions |
+| `t-body-sm` | 13px | Regular | 0.07px | Body text, descriptions |
+| `t-body-md` | 15px | Regular | 0.15px | Medium body |
+| `t-body-lg` | 17px | Regular | 0.18px | Large body |
+
+Line height is set per-token in tokens.css — do not override with `leading-[...]` unless explicitly asked.
 
 ---
 
@@ -231,7 +291,25 @@ Round labels (R1, R2…) and direction labels are arbitrary strings — use what
 
 `VersionSwitcher` defaults to the **last round** in the list. Pass `initialRound="R1"` to override.
 
-**Never modify an existing screen to add a new design idea.** Any time the user asks for a new direction, option, iteration, or variation — create a new screen file and register it as a new entry in `App.tsx`. Existing screens must stay untouched so all directions remain comparable side-by-side.
+**New design idea = new file. Feedback on an existing idea = edit in place.**
+
+- **Create a new screen file** only when the user explicitly signals a new design direction to compare side-by-side: phrases like "new direction", "new option", "try a different approach", "explore another version", or "I want to compare."
+- **Edit the existing screen file** for everything else: feedback, fixes, tweaks, refinements, copy changes, layout adjustments. If the user is reacting to what's on screen ("move this", "make it bigger", "change the color", "this doesn't feel right"), that's iteration on the current direction — update in place.
+- When in doubt, ask: "Do you want this as a new direction to compare, or should I update the current one?"
+
+Existing screens must stay untouched when branching to a new direction so all directions remain comparable side-by-side.
+
+**Each app has a `REQUIREMENTS.md` at its root — read it before editing any screen.**
+
+Every prototype app contains a `REQUIREMENTS.md` listing the hard functional requirements that must survive any layout iteration. Before making any structural or visual change to an existing screen:
+
+1. Read `apps/<project>/REQUIREMENTS.md`
+2. Treat every listed item as a non-negotiable constraint — the new layout must preserve all of them
+3. If a proposed change would drop a requirement, stop and flag it explicitly rather than silently removing it
+
+**Keep `REQUIREMENTS.md` up to date.** When the user confirms new functionality is working ("this is good", "approved", moving to a new round), add it to the list if it's not there yet. Use the same format: one line per requirement, written as what the user can *do*. Entries can be removed if something turns out not to be a real requirement — but only when the user explicitly says so.
+
+**Skipping a requirement for a specific iteration.** If a proposed layout or form factor change would drop a requirement, stop and flag it before proceeding — name the specific requirement(s) that would be lost. Only skip them if the user explicitly confirms after the warning (e.g. "yes skip that", "that's fine", "ignore it for now"). A general "go ahead" counts as confirmation. Do not skip requirements silently or preemptively.
 
 **Keep code and UI in sync.** When a direction or round is renamed, update everything together: the `direction`/`round` string in `App.tsx`, the screen filename, and the component's `export default function` name. The VersionSwitcher label is just display copy — the filename and export name must always reflect the same name so the codebase stays readable and unambiguous.
 
@@ -251,9 +329,11 @@ Always use **Claude in Chrome** MCP tools to verify UI changes in the browser �
 **Ports by app:**
 - `orders-v1` → 5173
 - `previsit-customization` → 5174
-- `nurse-scribe` → 5175
 - `ds-preview` → 5175
-- `admin-macro-management` → 5176
+- `macros` → 5176
+- `recording` → 5177
+- `nurse-scribe` → 5178
+- `admin-macro-management` → 5179
 
 **ds-preview tab navigation:** Navigate directly to a tab via query param — e.g. `http://localhost:5175/?tab=menu`. Valid tab IDs: `buttons`, `form`, `chips`, `icons`, `menu`, `nav`. This avoids the click-to-tab step during verification.
 

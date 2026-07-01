@@ -61,11 +61,10 @@ export function ScribeLongField({
         "overflow-hidden",
         className,
       ].join(" ")}
-      style={{ fontFamily: "Lato, sans-serif" }}
     >
       {/* ── Header ── */}
       <div className="flex items-center justify-between gap-[8px] px-[12px] py-[8px] border-b border-[var(--surface-3,#f0f0f0)]">
-        <span className="text-[13px] font-bold tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] truncate min-w-0">
+        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate min-w-0">
           {sectionTitle}
         </span>
 
@@ -115,7 +114,7 @@ export function ScribeLongField({
                     className="text-[var(--accent,#1132ee)]"
                   />
                 )}
-                <span className="text-[13px] font-bold tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">
+                <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">
                   Dictate
                 </span>
               </span>
@@ -137,12 +136,11 @@ export function ScribeLongField({
             value={value}
             onChange={(e) => onChange?.(e.target.value)}
             placeholder={placeholder}
-            className="w-full min-h-[80px] outline-none resize-none text-[13px] leading-[1.5] tracking-[0.07px] text-[var(--foreground-primary,#1a1a1a)] placeholder-[#999] bg-transparent"
-            style={{ fontFamily: "Lato, sans-serif" }}
+            className="w-full min-h-[80px] outline-none resize-none t-body-sm leading-[1.5] text-[var(--foreground-primary,#1a1a1a)] placeholder-[#999] bg-transparent"
           />
         ) : (
           <p
-            className={`text-[13px] leading-[1.5] tracking-[0.07px] ${
+            className={`t-body-sm leading-[1.5] ${
               isEmpty
                 ? "text-[var(--foreground-tertiary,#999)]"
                 : "text-[var(--foreground-primary,#1a1a1a)]"

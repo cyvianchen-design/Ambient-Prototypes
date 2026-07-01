@@ -16,6 +16,7 @@ import {
   Tooltip,
   PINInput,
   Table, TableCell, TableFooter, BadgesCell, StatusCell,
+  Citation,
 } from "@ds/ui";
 import type { TimeValue, TableColumn } from "@ds/ui";
 import type { Tab } from "@ds/ui";
@@ -34,6 +35,8 @@ const tabs: Tab[] = [
   { id: "misc", label: "Misc" },
   { id: "lists", label: "Lists & Tables" },
   { id: "interactive", label: "Interactive" },
+  { id: "citation", label: "Citation" },
+  { id: "tokens", label: "Tokens" },
 ];
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
@@ -193,6 +196,7 @@ function FormTab() {
         <RadioButton checked={false} onChange={() => {}} />
         <RadioButton checked={true} onChange={() => {}} />
         <RadioButton checked={false} disabled onChange={() => {}} />
+        <RadioButton checked={true} disabled onChange={() => {}} />
       </Row>
       <Row label="Radio Group — Vertical">
         <RadioGroup
@@ -214,10 +218,12 @@ function FormTab() {
         />
       </Row>
       <Row label="Checkbox — States">
-        <Checkbox label="Unchecked" state="unchecked" onChange={() => {}} />
-        <Checkbox label="Checked" state="checked" onChange={() => {}} />
-        <Checkbox label="Indeterminate" state="indeterminate" onChange={() => {}} />
-        <Checkbox label="Disabled" state="unchecked" disabled onChange={() => {}} />
+        <Checkbox state="unselected" onChange={() => {}} />
+        <Checkbox state="selected" onChange={() => {}} />
+        <Checkbox state="indeterminate" onChange={() => {}} />
+        <Checkbox state="unselected" disabled onChange={() => {}} />
+        <Checkbox state="selected" disabled onChange={() => {}} />
+        <Checkbox state="indeterminate" disabled onChange={() => {}} />
       </Row>
       <Row label="Switch — Sizes & States">
         <Switch checked={false} onChange={() => {}} size="S" />
@@ -976,6 +982,235 @@ function InteractiveTab() {
   );
 }
 
+function CitationTab() {
+  return (
+    <div>
+      <Section title="Citation — Inline in body text">
+        <p className="t-body-md text-[var(--foreground-primary,#1a1a1a)] leading-[1.6] max-w-[640px]" style={{ fontFamily: "Lato, sans-serif" }}>
+          Patients with uncontrolled hypertension have a significantly higher risk of cardiovascular events
+          <Citation
+            n={1}
+            quote="In adults with hypertension, intensive blood pressure control significantly reduces the risk of cardiovascular disease events and all-cause mortality."
+            source="SPRINT Research Group — NEJM 2015"
+            href="#"
+          />
+          , and early intervention with lifestyle modification has been shown to reduce medication dependency
+          <Citation
+            n={2}
+            quote="Lifestyle modifications, including diet and exercise, reduced the need for antihypertensive medication in 40% of participants over 12 months."
+            source="Appel et al. — Annals of Internal Medicine"
+            href="#"
+          />
+          .
+        </p>
+      </Section>
+      <Section title="Citation — Multiple in a sentence">
+        <p className="t-body-sm text-[var(--foreground-primary,#1a1a1a)] leading-[1.6] max-w-[560px]" style={{ fontFamily: "Lato, sans-serif" }}>
+          This finding is supported by multiple studies
+          <Citation
+            n={3}
+            quote="Meta-analysis of 42 trials found consistent benefit of ACE inhibitors in reducing proteinuria in CKD patients."
+            source="Jafar et al. — Annals of Internal Medicine"
+            href="#"
+          />
+          <Citation
+            n={4}
+            quote="RAAS inhibition remains the cornerstone of nephroprotective therapy in diabetic kidney disease."
+            source="Kidney Disease: Improving Global Outcomes (KDIGO)"
+            href="#"
+          />
+          across diverse patient populations.
+        </p>
+      </Section>
+      <Section title="Citation — Badge only (anatomy)">
+        <div className="flex items-center gap-[16px]">
+          <Citation n={1} quote="Example citation text for the first reference." source="Author et al. — Journal Name" href="#" />
+          <Citation n={2} quote="Example citation text for the second reference." source="Author et al. — Journal Name" href="#" />
+          <Citation n={12} quote="Example citation text for a two-digit reference number." source="Author et al. — Journal Name" href="#" />
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+// ─── Tokens Tab ────────────────────────────────────────────────────────────
+
+const textTokens = [
+  { cls: "t-title-xl", label: "Title XL", size: "24px", weight: "700", tracking: "0px",    lh: "1.2" },
+  { cls: "t-title-lg", label: "Title LG", size: "17px", weight: "700", tracking: "0.3px",  lh: "1.2" },
+  { cls: "t-title-md", label: "Title MD", size: "15px", weight: "700", tracking: "0.1px",  lh: "1.2" },
+  { cls: "t-title-sm", label: "Title SM", size: "13px", weight: "700", tracking: "0.13px", lh: "1.2" },
+  { cls: "t-title-xs", label: "Title XS", size: "12px", weight: "700", tracking: "0.24px", lh: "1.2" },
+  { cls: "t-body-lg",  label: "Body LG",  size: "17px", weight: "400", tracking: "0.18px", lh: "1.4" },
+  { cls: "t-body-md",  label: "Body MD",  size: "15px", weight: "400", tracking: "0.15px", lh: "1.4" },
+  { cls: "t-body-sm",  label: "Body SM",  size: "13px", weight: "400", tracking: "0.07px", lh: "1.4" },
+  { cls: "t-body-xs",  label: "Body XS",  size: "12px", weight: "400", tracking: "0px",    lh: "1.2" },
+];
+
+const semanticColors = [
+  { group: "Foreground", tokens: [
+    { name: "--foreground-primary",          label: "primary" },
+    { name: "--foreground-secondary",        label: "secondary" },
+    { name: "--foreground-tertiary",         label: "tertiary" },
+    { name: "--foreground-disabled",         label: "disabled" },
+    { name: "--foreground-brand",            label: "brand" },
+    { name: "--foreground-oninverse",        label: "oninverse", dark: true },
+    { name: "--foreground-semantic-success", label: "semantic-success" },
+    { name: "--foreground-semantic-warning", label: "semantic-warning" },
+    { name: "--foreground-semantic-danger",  label: "semantic-danger" },
+    { name: "--foreground-semantic-info",    label: "semantic-info" },
+  ]},
+  { group: "Surface", tokens: [
+    { name: "--surface-base",    label: "base",    outline: true },
+    { name: "--surface-1",       label: "1",       outline: true },
+    { name: "--surface-2",       label: "2" },
+    { name: "--surface-3",       label: "3" },
+    { name: "--surface-inverse", label: "inverse", dark: true },
+    { name: "--surface-brand",   label: "brand",   dark: true },
+    { name: "--surface-semantic-success", label: "semantic-success" },
+    { name: "--surface-semantic-warning", label: "semantic-warning" },
+    { name: "--surface-semantic-danger",  label: "semantic-danger" },
+    { name: "--surface-semantic-info",    label: "semantic-info" },
+  ]},
+  { group: "Brand", tokens: [
+    { name: "--accent",      label: "accent",      dark: true },
+    { name: "--hover",       label: "hover",       dark: true },
+    { name: "--active",      label: "active",      dark: true },
+    { name: "--background",  label: "background" },
+    { name: "--background-2",label: "background-2" },
+    { name: "--background-3",label: "background-3" },
+  ]},
+];
+
+const primitiveScales = [
+  { name: "litmus",    steps: [25,50,100,200,300,400,500,550,600,700,800,900,950,975] },
+  { name: "neutral",   steps: [0,25,50,100,200,300,400,500,600,700,800,900,950,975,1000] },
+  { name: "green",     steps: [25,50,100,200,300,400,500,550,600,700,800,900,950,975] },
+  { name: "red",       steps: [25,50,100,200,300,400,500,550,600,700,800,900,950,975] },
+  { name: "orange",    steps: [25,50,100,200,300,400,500,550,600,700,800,900,950,975] },
+  { name: "blue",      steps: [25,50,100,200,300,400,500,550,600,700,800,900,950,975] },
+  { name: "cyan",      steps: [25,50,100,200,300,400,500,600,700,800,900,950,975] },
+  { name: "magenta",   steps: [25,50,100,200,300,400,500,600,700,800,900,950,975] },
+  { name: "yellow",    steps: [25,50,100,200,300,400,500,600,700,800,900,950,975] },
+  { name: "purple",    steps: [25,50,100,200,300,400,500,600,700,800,900,950,975] },
+  { name: "indigo",    steps: [25,50,100,200,300,400,500,550,600,700,800,900,950,975] },
+  { name: "blue-grey", steps: [25,50,100,200,300,400,500,600,700,800,900,950,975] },
+];
+
+const accentAlphas = [3,5,10,20,30,40,50,60,70,80,90];
+const blackAlphas  = [3,5,10,20,30,40,50,60,70,80,90,95,97];
+const whiteAlphas  = [3,5,10,20,30,40,50,60,70,80,90,95,97];
+
+function Swatch({ token, label, dark, outline }: { token: string; label: string; dark?: boolean; outline?: boolean }) {
+  const [copied, setCopied] = React.useState(false);
+  function copy() {
+    navigator.clipboard.writeText(`var(${token})`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  }
+  return (
+    <div className="flex flex-col items-center gap-[4px] cursor-pointer group" onClick={copy} title={`Copy var(${token})`}>
+      <div
+        className="w-[40px] h-[40px] rounded-[8px] transition-transform group-hover:scale-105"
+        style={{ background: `var(${token})`, boxShadow: outline ? "inset 0 0 0 1px #e6e6e6" : undefined }}
+      />
+      <span className="t-body-xs text-[var(--foreground-secondary)] text-center leading-tight max-w-[52px] break-words">
+        {copied ? "✓" : label}
+      </span>
+    </div>
+  );
+}
+
+function TokensTab() {
+  return (
+    <div className="space-y-12">
+
+      {/* ── Text tokens ── */}
+      <section>
+        <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-6">Typography</h2>
+        <div className="space-y-1">
+          {textTokens.map(t => (
+            <div key={t.cls} className="flex items-baseline gap-[16px] py-[10px] border-b border-[var(--surface-2)] group">
+              <span className={`${t.cls} text-[var(--foreground-primary)] w-[200px] shrink-0`}>
+                The quick brown fox
+              </span>
+              <code className="t-body-xs text-[var(--foreground-brand)] shrink-0 w-[100px]">.{t.cls}</code>
+              <span className="t-body-xs text-[var(--foreground-tertiary)] shrink-0">
+                {t.size} / {t.weight === "700" ? "Bold" : "Regular"} / lh {t.lh} / ls {t.tracking}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Semantic color tokens ── */}
+      <section>
+        <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-6">Semantic Colors</h2>
+        <div className="space-y-8">
+          {semanticColors.map(group => (
+            <div key={group.group}>
+              <p className="t-title-xs text-[var(--foreground-secondary)] mb-3">{group.group}</p>
+              <div className="flex flex-wrap gap-[12px]">
+                {group.tokens.map(t => (
+                  <Swatch key={t.name} token={t.name} label={t.label} dark={t.dark} outline={t.outline} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Accent alpha ── */}
+      <section>
+        <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-4">Accent Alpha (#1132ee)</h2>
+        <div className="flex flex-wrap gap-[8px]">
+          {accentAlphas.map(n => (
+            <Swatch key={n} token={`--accent-${n}`} label={`${n}`} outline={n < 20} />
+          ))}
+        </div>
+      </section>
+
+      {/* ── Black / White alpha ── */}
+      <div className="flex gap-[48px]">
+        <section className="flex-1">
+          <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-4">Black Alpha</h2>
+          <div className="flex flex-wrap gap-[8px]">
+            {blackAlphas.map(n => (
+              <Swatch key={n} token={`--black-${n}`} label={`${n}`} outline={n < 20} />
+            ))}
+          </div>
+        </section>
+        <section className="flex-1">
+          <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-4">White Alpha</h2>
+          <div className="flex flex-wrap gap-[8px] p-[12px] rounded-[8px] bg-[var(--surface-inverse)]">
+            {whiteAlphas.map(n => (
+              <Swatch key={n} token={`--white-${n}`} label={`${n}`} />
+            ))}
+          </div>
+        </section>
+      </div>
+
+      {/* ── Primitive scales ── */}
+      <section>
+        <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-6">Primitive Scales</h2>
+        <div className="space-y-6">
+          {primitiveScales.map(scale => (
+            <div key={scale.name}>
+              <p className="t-title-xs text-[var(--foreground-secondary)] mb-2 capitalize">{scale.name}</p>
+              <div className="flex flex-wrap gap-[6px]">
+                {scale.steps.map(step => (
+                  <Swatch key={step} token={`--${scale.name}-${step}`} label={`${step}`} outline={step < 50} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  );
+}
+
 export default function App() {
   const [activeTab, setActiveTab] = useState(() => new URLSearchParams(window.location.search).get("tab") || "buttons");
 
@@ -985,7 +1220,7 @@ export default function App() {
   }
   const tabComponents: Record<string, React.ComponentType> = {
     buttons: ButtonsTab, form: FormTab, chips: ChipsBadgesTab, icons: IconsTab,
-    menu: MenuTab, nav: NavigationTab, alerts: AlertsTab, audio: AudioTab, avatar: AvatarTab, datetime: DateTimeTab, misc: MiscTab, lists: ListsTab, interactive: InteractiveTab,
+    menu: MenuTab, nav: NavigationTab, alerts: AlertsTab, audio: AudioTab, avatar: AvatarTab, datetime: DateTimeTab, misc: MiscTab, lists: ListsTab, interactive: InteractiveTab, citation: CitationTab, tokens: TokensTab,
   };
   const ActiveComponent = tabComponents[activeTab];
 

@@ -1,0 +1,26 @@
+/* Token hover states — background/border must live here since inline styles can't be `:hover`-overridden */
+
+[data-token][data-tokenstyle="chip"] {
+  background: var(--litmus-25);
+  transition: background 150ms;
+}
+[data-token][data-tokenstyle="chip"]:hover {
+  background: var(--litmus-50);
+}
+
+[data-token][data-tokenstyle="field"] {
+  background: var(--litmus-25);
+  border: 1px solid var(--accent-10);
+  transition: background 150ms, border-color 150ms;
+}
+[data-token][data-tokenstyle="field"]:hover {
+  background: var(--litmus-50);
+  border-color: var(--accent-20);
+}
+
+[data-token][data-tokenstyle="link"] {
+  transition: color 150ms;
+}
+[data-token][data-tokenstyle="link"]:hover {
+  color: var(--green-700); /* follows Link component pattern: darken 1 step */
+}

@@ -94,7 +94,6 @@ export function TextArea({
   return (
     <div
       className={`inline-flex flex-col gap-[4px] ${className}`}
-      style={{ fontFamily: "Lato, sans-serif" }}
     >
       {/* Label */}
       {label && (
@@ -133,8 +132,7 @@ export function TextArea({
               setFocused(false);
               onBlur?.(e);
             }}
-            className="flex-1 min-w-0 bg-transparent outline-none text-[13px] leading-[1.5] tracking-[0.07px] text-[var(--foreground-primary,#1a1a1a)] placeholder-[#999] disabled:cursor-not-allowed resize-none overflow-hidden"
-            style={{ fontFamily: "Lato, sans-serif" }}
+            className="flex-1 min-w-0 bg-transparent outline-none t-body-sm leading-[1.5] text-[var(--foreground-primary,#1a1a1a)] placeholder-[#999] disabled:cursor-not-allowed resize-none overflow-hidden"
           />
         </div>
 

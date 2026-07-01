@@ -50,7 +50,7 @@ export function Tabs({
           <button
             key={tab.id}
             onClick={() => handleClick(tab.id)}
-            className={`group flex items-center shrink-0 transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--litmus-100,#cfd6fc)] font-['Lato',sans-serif]
+            className={`group flex items-center shrink-0 transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--litmus-100,#cfd6fc)]
               ${isPrimary
                 ? `gap-[4px] px-[4px] py-[6px] border-b-2 ${isActive ? "border-[var(--foreground-brand,#1132ee)]" : "border-transparent"}`
                 : `gap-[6px] h-[28px] px-[8px] rounded-[8px] ${isActive ? "bg-[var(--litmus-25,#f1f3fe)]" : "hover:bg-[var(--surface-1,#f7f7f7)]"}`
@@ -59,12 +59,12 @@ export function Tabs({
           >
             {tab.icon && <span className="flex items-center">{tab.icon}</span>}
             <span
-              className={`text-[13px] whitespace-nowrap
+              className={`whitespace-nowrap
                 ${isPrimary
-                  ? `font-bold tracking-[0.13px] leading-[1.2] ${isActive ? "text-[var(--foreground-brand,#1132ee)]" : "text-[var(--foreground-tertiary,#808080)] group-hover:text-[var(--foreground-brand,#1132ee)]"}`
+                  ? `t-title-sm ${isActive ? "text-[var(--foreground-brand,#1132ee)]" : "text-[var(--foreground-tertiary,#808080)] group-hover:text-[var(--foreground-brand,#1132ee)]"}`
                   : isActive
-                    ? "font-bold tracking-[0.13px] leading-[1.2] text-[var(--foreground-brand,#1132ee)]"
-                    : "font-normal tracking-[0.065px] leading-[1.4] text-[var(--foreground-secondary,#666)] group-hover:text-[var(--foreground-primary,#1a1a1a)]"
+                    ? "t-title-sm text-[var(--foreground-brand,#1132ee)]"
+                    : "t-body-sm text-[var(--foreground-secondary,#666)] group-hover:text-[var(--foreground-primary,#1a1a1a)]"
                 }`}
             >
               {tab.label}

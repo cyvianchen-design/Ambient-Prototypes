@@ -30,7 +30,7 @@ export function Loader({ size = "M", color = "accent", label, className = "" }: 
   const { track, spin } = colorMap[color];
 
   return (
-    <div className={`inline-flex flex-col items-center gap-[8px] font-['Lato',sans-serif] ${className}`}>
+    <div className={`inline-flex flex-col items-center gap-[8px] ${className}`}>
       <div
         className={`rounded-full border animate-spin ${track} ${spin}`}
         style={{ width: px, height: px, borderWidth }}
@@ -38,7 +38,7 @@ export function Loader({ size = "M", color = "accent", label, className = "" }: 
         aria-label={label ?? "Loading"}
       />
       {label && (
-        <span className="text-[12px] font-normal text-[var(--foreground-secondary,#666)]">{label}</span>
+        <span className="t-body-xs text-[var(--foreground-secondary,#666)]">{label}</span>
       )}
     </div>
   );

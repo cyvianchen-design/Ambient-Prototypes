@@ -37,7 +37,7 @@ export function MobileHeader({
 
   return (
     <div
-      className={`relative flex items-center h-[52px] px-[4px] bg-white font-['Lato',sans-serif] shrink-0 ${className}`}
+      className={`relative flex items-center h-[52px] px-[4px] bg-white shrink-0 ${className}`}
     >
       {/* Left slot — absolute so it doesn't push title off-center */}
       {leftSlot && (
@@ -48,11 +48,11 @@ export function MobileHeader({
 
       {/* Centered title */}
       <div className="flex-1 flex flex-col items-center justify-center px-[80px] min-w-0">
-        <p className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)] truncate w-full text-center">
+        <p className="t-title-lg text-[var(--foreground-primary,#1a1a1a)] truncate w-full text-center">
           {title}
         </p>
         {subtitle && (
-          <p className="text-[12px] font-normal leading-[1.3] text-[var(--foreground-secondary,#666)] truncate w-full text-center mt-[1px]">
+          <p className="t-body-xs leading-[1.3] text-[var(--foreground-secondary,#666)] truncate w-full text-center mt-[1px]">
             {subtitle}
           </p>
         )}

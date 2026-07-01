@@ -57,13 +57,13 @@ export function DatePicker({
 
   return (
     <div
-      className={`inline-block rounded-[12px] border border-[var(--surface-3,#eee)] bg-white shadow-sm p-[12px] font-['Lato',sans-serif] select-none ${className}`}
+      className={`inline-block rounded-[12px] border border-[var(--surface-3,#eee)] bg-white shadow-sm p-[12px] select-none ${className}`}
       style={{ width: 252 }}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-[8px]">
         <IconButton icon={<Icon name="chevron_left" size={16} />} variant="tertiary-neutral" size="small" onClick={prevMonth} aria-label="Previous month" />
-        <span className="text-[13px] font-bold tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">
+        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">
           {MONTHS[viewMonth]} {viewYear}
         </span>
         <IconButton icon={<Icon name="chevron_right" size={16} />} variant="tertiary-neutral" size="small" onClick={nextMonth} aria-label="Next month" />
@@ -157,7 +157,7 @@ export function TimePicker({
 
   return (
     <div
-      className={`inline-flex gap-[2px] rounded-[12px] border border-[var(--surface-3,#eee)] bg-white shadow-sm p-[8px] font-['Lato',sans-serif] ${className}`}
+      className={`inline-flex gap-[2px] rounded-[12px] border border-[var(--surface-3,#eee)] bg-white shadow-sm p-[8px] ${className}`}
     >
       {/* Hours */}
       <div className={colCls}>

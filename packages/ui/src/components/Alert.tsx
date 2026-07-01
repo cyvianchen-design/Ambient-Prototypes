@@ -87,7 +87,7 @@ export function Alert({
     <div
       role="alert"
       className={[
-        "flex items-start gap-[8px] rounded-[8px] border bg-white p-[8px] font-['Lato',sans-serif]",
+        "flex items-start gap-[8px] rounded-[8px] border bg-white p-[8px]",
         border,
         className,
       ].join(" ")}
@@ -95,11 +95,11 @@ export function Alert({
       <AlertIcon iconBg={iconBg} iconColor={iconColor} icon={icon} />
 
       <div className="flex-1 min-w-0 mt-[4px]">
-        <p className="text-[13px] font-bold leading-[1.3] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">
+        <p className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">
           {title}
         </p>
         {body && (
-          <p className="text-[12px] font-normal leading-[1.4] text-[var(--foreground-secondary,#666)] mt-[3px]">
+          <p className="t-body-xs text-[var(--foreground-secondary,#666)] mt-[3px]">
             {body}
           </p>
         )}
@@ -145,18 +145,18 @@ export function Notification({
     <div
       role="status"
       className={[
-        "flex items-center gap-[8px] rounded-[8px] border bg-white p-[8px] font-['Lato',sans-serif]",
+        "flex items-center gap-[8px] rounded-[8px] border bg-white p-[8px]",
         border,
         className,
       ].join(" ")}
     >
       {/* Text — fills remaining horizontal space */}
       <div className="flex-1 min-w-0">
-        <p className="text-[13px] font-bold leading-[1.3] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]">
+        <p className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">
           {title}
         </p>
         {body && (
-          <p className="text-[12px] font-normal leading-[1.4] text-[var(--foreground-secondary,#666)] mt-[3px]">
+          <p className="t-body-xs text-[var(--foreground-secondary,#666)] mt-[3px]">
             {body}
           </p>
         )}
@@ -168,7 +168,7 @@ export function Notification({
           {primaryAction && (
             <button
               onClick={primaryAction.onClick}
-              className="h-[28px] px-[12px] rounded-[6px] text-[13px] font-bold bg-[var(--foreground-primary,#1a1a1a)] text-white hover:bg-[var(--neutral-800,#333)] transition-colors whitespace-nowrap"
+              className="h-[28px] px-[12px] rounded-[6px] t-title-sm bg-[var(--foreground-primary,#1a1a1a)] text-white hover:bg-[var(--neutral-800,#333)] transition-colors whitespace-nowrap"
             >
               {primaryAction.label}
             </button>
@@ -176,7 +176,7 @@ export function Notification({
           {secondaryAction && (
             <button
               onClick={secondaryAction.onClick}
-              className="h-[28px] px-[12px] rounded-[6px] text-[13px] font-bold border border-[var(--foreground-primary,#1a1a1a)] text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors whitespace-nowrap"
+              className="h-[28px] px-[12px] rounded-[6px] t-title-sm border border-[var(--foreground-primary,#1a1a1a)] text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors whitespace-nowrap"
             >
               {secondaryAction.label}
             </button>
@@ -211,7 +211,7 @@ export function Snackbar({
       role="status"
       aria-live="polite"
       className={[
-        "inline-flex items-center gap-[8px] rounded-[8px] border bg-white p-[8px] font-['Lato',sans-serif]",
+        "inline-flex items-center gap-[8px] rounded-[8px] border bg-white p-[8px]",
         border,
         className,
       ].join(" ")}
@@ -229,14 +229,14 @@ export function Snackbar({
         </span>
       </div>
 
-      <span className="text-[13px] font-normal leading-[1.3] text-[var(--foreground-primary,#1a1a1a)] flex-1">
+      <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)] flex-1">
         {message}
       </span>
 
       {action && (
         <button
           onClick={action.onClick}
-          className="text-[13px] font-bold text-[var(--accent,#1132ee)] hover:underline shrink-0 ml-[4px]"
+          className="t-title-sm text-[var(--accent,#1132ee)] hover:underline shrink-0 ml-[4px]"
         >
           {action.label}
         </button>

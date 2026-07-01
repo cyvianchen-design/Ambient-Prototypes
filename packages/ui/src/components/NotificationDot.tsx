@@ -28,7 +28,7 @@ export function NotificationDot({ count, variant = "error", className = "" }: No
 
   return (
     <span
-      className={`inline-flex items-center justify-center rounded-full ${bg} text-white font-['Lato',sans-serif] font-bold leading-none ${className}`}
+      className={`inline-flex items-center justify-center rounded-full ${bg} text-white font-bold leading-none ${className}`}
       style={{
         minWidth: label.length > 1 ? 18 : 16,
         height: 16,

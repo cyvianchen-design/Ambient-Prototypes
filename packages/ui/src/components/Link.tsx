@@ -3,10 +3,10 @@ import React from "react";
 // ─── Size config ─────────────────────────────────────────────────────────────
 
 const sizeConfig = {
-  large:  { text: "text-[17px]", tracking: "tracking-[0.17px]",  iconSize: 20, gap: "gap-[4px]" },
-  medium: { text: "text-[15px]", tracking: "tracking-[0.15px]",  iconSize: 18, gap: "gap-[4px]" },
-  small:  { text: "text-[13px]", tracking: "tracking-[0.065px]", iconSize: 16, gap: "gap-[4px]" },
-  xsmall: { text: "text-[12px]", tracking: "tracking-[0px]",     iconSize: 14, gap: "gap-[2px]" },
+  large:  { text: "t-body-lg",  iconSize: 20, gap: "gap-[4px]" },
+  medium: { text: "t-body-md",  iconSize: 18, gap: "gap-[4px]" },
+  small:  { text: "t-body-sm",  iconSize: 16, gap: "gap-[4px]" },
+  xsmall: { text: "t-body-xs",  iconSize: 14, gap: "gap-[2px]" },
 };
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -47,7 +47,7 @@ export function Link({
   onClick,
   className = "",
 }: LinkProps) {
-  const { text, tracking, iconSize, gap } = sizeConfig[size];
+  const { text, iconSize, gap } = sizeConfig[size];
 
   const colorCls =
     intent === "default"
@@ -79,9 +79,7 @@ export function Link({
       className={[
         "inline-flex flex-wrap items-center",
         gap,
-        "font-['Lato',sans-serif] font-normal",
         text,
-        tracking,
         colorCls,
         "cursor-pointer transition-colors outline-none",
         "focus-visible:bg-[var(--litmus-25,#f1f3fe)] focus-visible:rounded-[4px] focus-visible:px-[2px] focus-visible:outline-none",

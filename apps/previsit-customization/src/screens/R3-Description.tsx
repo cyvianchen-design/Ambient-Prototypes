@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Icon, IconButton, Button, Checkbox, Tabs, Overlay, MagicEdit, Menu, MenuItem, Snackbar } from "@ds/ui";
+import { Icon, IconButton, Button, Checkbox, Tabs, Overlay, MagicEdit, Menu, MenuItem, Snackbar, Chip, Link } from "@ds/ui";
 import { VisitLayout } from "../components/VisitLayout";
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
@@ -9,7 +9,7 @@ function BulletList({ items }: { items: React.ReactNode[] }) {
     <ul className="list-disc">
       {items.map((item, i) => (
         <li key={i} className={`ms-[22.5px] ${i < items.length - 1 ? "mb-0" : ""}`}>
-          <span className="leading-[1.4]">{item}</span>
+          <span className="t-body-md">{item}</span>
         </li>
       ))}
     </ul>
@@ -26,9 +26,9 @@ function Citation({ n, quote, source }: { n: number; quote: string; source: stri
         {n}
       </span>
       <span className="absolute bottom-[calc(100%+6px)] left-0 z-[100] w-[260px] rounded-[8px] bg-white shadow-[0_4px_16px_rgba(0,0,0,0.12)] p-[12px] opacity-0 pointer-events-none group-hover/cit:opacity-100 transition-opacity duration-150 text-left">
-        <p className="text-[11px] font-bold leading-[1.2] tracking-[0.11px] text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Citation</p>
-        <p className="text-[13px] leading-[1.4] text-[var(--foreground-primary,#1a1a1a)] mb-[8px]" style={{ fontFamily: "Lato, sans-serif" }}>"{quote}"</p>
-        <p className="text-[11px] leading-[1.2] text-[var(--foreground-secondary,#666)]" style={{ fontFamily: "Lato, sans-serif" }}>{source}</p>
+        <p className="t-title-xs text-[var(--foreground-secondary,#666)] mb-[6px]">Citation</p>
+        <p className="t-body-sm text-[var(--foreground-primary,#1a1a1a)] mb-[8px]">"{quote}"</p>
+        <Link href="#">{source}</Link>
       </span>
     </span>
   );
@@ -36,7 +36,7 @@ function Citation({ n, quote, source }: { n: number; quote: string; source: stri
 
 function SubHeader({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] mb-[12px]" style={{ fontFeatureSettings: "'ss07' 1" }}>
+    <p className="t-title-sm text-[var(--foreground-secondary,#666)] mb-[12px]" style={{ fontFeatureSettings: "'ss07' 1" }}>
       {children}
     </p>
   );
@@ -52,14 +52,14 @@ function Section({ title, subtitle, children }: SectionProps) {
   return (
     <div className="flex flex-col gap-[4px] w-full">
       <div className="flex items-center gap-[4px]">
-        <span className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap" style={{ fontFeatureSettings: "'ss07' 1" }}>
+        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap" style={{ fontFeatureSettings: "'ss07' 1" }}>
           {title}
         </span>
         {subtitle && (
-          <span className="text-[12px] leading-[1.2] text-[var(--foreground-secondary,#666)]">{subtitle}</span>
+          <span className="t-body-xs text-[var(--foreground-secondary,#666)]">{subtitle}</span>
         )}
       </div>
-      <div className="text-[15px] leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]">
+      <div className="t-body-md text-[var(--foreground-primary,#1a1a1a)]">
         {children}
       </div>
     </div>
@@ -106,7 +106,7 @@ function getLastVisitData(source: string): { subtitle: string; content: React.Re
     return {
       subtitle: "Feb 6, 2025 · Office visit note",
       content: (
-        <p className="leading-[1.4]">
+        <p className="t-body-md">
           Post-discharge follow-up after Feb 2025 hyperkalemia admission (K+ 6.4 on admission, 3-day telemetry stay). Weight 219 lbs, down 4 lbs from admission peak; volume improved. Spironolactone and ACEi held; patiromer 8.4 g daily started. K+ 5.2 at time of visit — recheck BMP in 2 weeks. Carvedilol continued at 6.25 mg BID; uptitration deferred pending K+ stabilization. Patient counseled on dietary potassium restriction. HbA1c overdue — to be drawn at next lab visit. Mood flat; patient declined PHQ-9 screening today, goals of care conversation deferred.
         </p>
       ),
@@ -125,7 +125,7 @@ function getLastVisitData(source: string): { subtitle: string; content: React.Re
 function mkItems(rows: React.ReactNode[]) {
   return rows.map((item, i, arr) => (
     <li key={i} className={`ms-[22.5px] ${i < arr.length - 1 ? "mb-0" : ""}`}>
-      <span className="leading-[1.4] text-[15px]">{item}</span>
+      <span className="t-body-md">{item}</span>
     </li>
   ));
 }
@@ -138,7 +138,7 @@ function getLabResultsContent(recentTF: string, historyTF: string): React.ReactN
     recentNode = (
       <div>
         <SubHeader>Recent Labs (past 3 months)</SubHeader>
-        <p className="text-[13px] leading-[1.4] text-[var(--foreground-secondary,#666)] mb-[8px]" style={{ fontFamily: "Lato, sans-serif" }}>
+        <p className="t-body-sm text-[var(--foreground-secondary,#666)] mb-[8px]" style={{ fontFamily: "Lato, sans-serif" }}>
           One draw panel on May 11, 2026. No interim draws between Feb 11 and May 11.
         </p>
         <ul className="list-disc mb-[12px]">{mkItems([
@@ -156,20 +156,20 @@ function getLabResultsContent(recentTF: string, historyTF: string): React.ReactN
     recentNode = (
       <div>
         <SubHeader>Recent Labs (past 6 months)</SubHeader>
-        <p className="text-[12px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>May 11, 2026 (Today)</p>
+        <p className="t-title-xs text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>May 11, 2026 (Today)</p>
         <ul className="list-disc mb-[12px]">{mkItems([
           <>BNP: 810 pg/mL [H]<Citation n={1} quote="BNP 810 (May 11). Up from 740 (Jan 9)." source="May 11, 2026 · Lab Results" /></>,
           <>BMP: K+ 5.3 [H], Cr 3.5 [H], eGFR 17 (first below 18), Bicarb 19 [L]<Citation n={2} quote="eGFR 17 — first documented value below 18." source="May 11, 2026 · Lab Results" /></>,
           "CBC: Hgb 9.4 [L], WBC 7.2 nl, Plts 188 nl",
           <>HbA1c: 9.1% [H]; TSH: 5.9 [H]; uACR: 680 mg/g [H]</>,
         ])}</ul>
-        <p className="text-[12px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Jan 9, 2026</p>
+        <p className="t-title-xs text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Jan 9, 2026</p>
         <ul className="list-disc mb-[12px]">{mkItems([
           "BNP: 740 pg/mL [H]",
           "BMP: K+ 5.6 [H], Cr 3.4, eGFR 18, Bicarb 21",
           "CBC: Hgb 9.8 [L]; HbA1c: 8.9% [H]",
         ])}</ul>
-        <p className="text-[12px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Oct 2025 (Admission)</p>
+        <p className="t-title-xs text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Oct 2025 (Admission)</p>
         <ul className="list-disc mb-[12px]">{mkItems([
           "BNP: 1,240 pg/mL [H] (admission peak)",
           "BMP: K+ 6.2 on admission → 4.9 at discharge; Cr 3.6, eGFR 16",
@@ -182,28 +182,28 @@ function getLabResultsContent(recentTF: string, historyTF: string): React.ReactN
     recentNode = (
       <div>
         <SubHeader>Recent Labs (past year)</SubHeader>
-        <p className="text-[12px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>May 11, 2026 (Today)</p>
+        <p className="t-title-xs text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>May 11, 2026 (Today)</p>
         <ul className="list-disc mb-[12px]">{mkItems([
           <>BNP: 810 pg/mL [H]<Citation n={1} quote="BNP 810 (May 11). Up from 740 (Jan 9)." source="May 11, 2026 · Lab Results" /></>,
           <>BMP: K+ 5.3 [H], Cr 3.5 [H], eGFR 17 (first below 18), Bicarb 19 [L]</>,
           "CBC: Hgb 9.4 [L]; HbA1c: 9.1% [H]; TSH: 5.9 [H]; uACR: 680 mg/g [H]",
         ])}</ul>
-        <p className="text-[12px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Jan 9, 2026</p>
+        <p className="t-title-xs text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Jan 9, 2026</p>
         <ul className="list-disc mb-[12px]">{mkItems([
           "BNP: 740 [H]; BMP: K+ 5.6 [H], Cr 3.4, eGFR 18, Bicarb 21",
           "CBC: Hgb 9.8 [L]; HbA1c: 8.9% [H]",
         ])}</ul>
-        <p className="text-[12px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Oct 2025 (Admission)</p>
+        <p className="t-title-xs text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Oct 2025 (Admission)</p>
         <ul className="list-disc mb-[12px]">{mkItems([
           "BNP: 1,240 [H] (peak); BMP: K+ 6.2→4.9, Cr 3.6, eGFR 16",
           <>Ferritin 68, TSAT 16% — suboptimal for ESA<Citation n={2} quote="Ferritin 68, TSAT 16% (Oct 2025)." source="Oct 2025 · Lab Results" />; CBC: Hgb 9.2 [L]</>,
         ])}</ul>
-        <p className="text-[12px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Jul 2025</p>
+        <p className="t-title-xs text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Jul 2025</p>
         <ul className="list-disc mb-[12px]">{mkItems([
           "HbA1c: 8.6% [H]; BMP: K+ 5.0, eGFR 19, Bicarb 22",
           "Uric acid: 8.4 mg/dL [H]; CBC: Hgb 9.8 [L]; uACR: 610 mg/g [H]",
         ])}</ul>
-        <p className="text-[12px] font-bold leading-[1.2] text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Mar 2025</p>
+        <p className="t-title-xs text-[var(--foreground-secondary,#666)] mb-[6px]" style={{ fontFamily: "Lato, sans-serif" }}>Mar 2025</p>
         <ul className="list-disc mb-[12px]">{mkItems([
           "BNP: 880 pg/mL [H]",
           "BMP: K+ 4.8, Cr 3.1, eGFR 21, Bicarb 22",
@@ -310,7 +310,7 @@ function getImagingContent(recentTF: string, historyTF: string): React.ReactNode
       <div>
         <SubHeader>Recent Imaging (past 3 months)</SubHeader>
         <ul className="list-disc mb-[12px]">
-          <li className="ms-[22.5px]"><span className="leading-[1.4] text-[15px]">No new imaging in the past 3 months.</span></li>
+          <li className="ms-[22.5px]"><span className="t-body-md">No new imaging in the past 3 months.</span></li>
         </ul>
       </div>
     );
@@ -341,7 +341,7 @@ function getImagingContent(recentTF: string, historyTF: string): React.ReactNode
       <div>
         <SubHeader>Recent Imaging Results (since last visit, Jan 9, 2026)</SubHeader>
         <ul className="list-disc mb-[12px]">
-          <li className="ms-[22.5px]"><span className="leading-[1.4] text-[15px]">No new imaging since last visit.</span></li>
+          <li className="ms-[22.5px]"><span className="t-body-md">No new imaging since last visit.</span></li>
         </ul>
       </div>
     );
@@ -479,14 +479,7 @@ function TimeFrameDropdown({ value, options, onChange }: { value: string; option
   const [open, setOpen] = useState(false);
   return (
     <div className="relative shrink-0">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex items-center h-[24px] px-[8px] bg-[var(--surface-2,#f2f2f2)] rounded-[4px] text-[11px] text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-3,#ebebeb)] transition-colors whitespace-nowrap"
-        style={{ fontFamily: "Lato, sans-serif" }}
-      >
-        {value}
-        <Icon name="arrow_drop_down" size={16} />
-      </button>
+      <Chip label={value} color="neutral" size="XS" onClick={() => setOpen((v) => !v)} />
       {open && (
         <>
           <div className="fixed inset-0 z-[399]" onClick={() => setOpen(false)} />
@@ -509,14 +502,7 @@ function TimeFrameDropdown({ value, options, onChange }: { value: string; option
 }
 
 function DisabledChip({ label }: { label: string }) {
-  return (
-    <span
-      className="inline-flex items-center h-[24px] px-[8px] rounded-[4px] bg-[var(--surface-2,#f2f2f2)] text-[11px] text-[var(--foreground-secondary,#666)] cursor-default select-none whitespace-nowrap shrink-0"
-      style={{ fontFamily: "Lato, sans-serif" }}
-    >
-      {label}
-    </span>
-  );
+  return <Chip label={label} color="neutral" size="XS" disabled />;
 }
 
 function DragDivider() {
@@ -739,7 +725,22 @@ export default function R3Description() {
 
   const [deleted, setDeleted] = useState<Set<string>>(new Set());
   const [menuOpen, setMenuOpen] = useState(false);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(
+    () => new URLSearchParams(window.location.search).get("drawer") === "open"
+  );
+
+  function openDrawer() {
+    const p = new URLSearchParams(window.location.search);
+    p.set("drawer", "open");
+    window.history.replaceState(null, "", "?" + p.toString());
+    setDrawerOpen(true);
+  }
+  function closeDrawer() {
+    const p = new URLSearchParams(window.location.search);
+    p.delete("drawer");
+    window.history.replaceState(null, "", "?" + p.toString());
+    setDrawerOpen(false);
+  }
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [deletedChildren, setDeletedChildren] = useState<Set<string>>(new Set());
@@ -836,10 +837,26 @@ export default function R3Description() {
     setDeleted((prev) => { const next = new Set(prev); next.delete(id); return next; });
   }
   function deleteChild(id: string) {
-    setDeletedChildren((prev) => new Set([...prev, id]));
+    setDeletedChildren((prev) => {
+      const next = new Set([...prev, id]);
+      const parentGroup = drawerGroups.find((g) => g.children?.some((c) => c.id === id));
+      if (parentGroup && parentGroup.children?.every((c) => next.has(c.id))) {
+        setDeleted((prevDeleted) => new Set([...prevDeleted, parentGroup.id]));
+        parentGroup.children!.forEach((c) => next.delete(c.id));
+      }
+      return next;
+    });
   }
   function restoreChild(id: string) {
     setDeletedChildren((prev) => { const next = new Set(prev); next.delete(id); return next; });
+  }
+  function restoreChildFromDeletedSection(sectionId: string, childId: string) {
+    setDeleted((prev) => { const next = new Set(prev); next.delete(sectionId); return next; });
+    const group = drawerGroups.find((g) => g.id === sectionId);
+    if (group?.children) {
+      const others = group.children.filter((c) => c.id !== childId).map((c) => c.id);
+      setDeletedChildren((prev) => new Set([...prev, ...others]));
+    }
   }
 
   // Returns visible children in their custom order
@@ -864,15 +881,15 @@ export default function R3Description() {
           {/* Patient header */}
           <div className="flex items-end h-[60px] shrink-0 px-[20px] pb-[8px] pt-[12px] gap-[16px]">
             <div className="flex items-end gap-[16px] flex-1 min-w-0">
-              <p className="text-[24px] font-bold leading-[1.2] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">Robert Mackenzie</p>
-              <div className="flex items-center gap-[4px] text-[13px] leading-[1.4] tracking-[0.065px] text-[var(--foreground-secondary,#666)] pb-[2px] whitespace-nowrap">
+              <p className="t-title-xl text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap">Robert Mackenzie</p>
+              <div className="flex items-center gap-[4px] t-body-sm text-[var(--foreground-secondary,#666)] pb-[2px] whitespace-nowrap">
                 <span>74</span><span>·</span><span>M</span><span>·</span><span>Medication review</span>
               </div>
             </div>
             <div className="flex items-center gap-[16px] shrink-0">
               <div className="flex items-center gap-[4px]">
                 <IconButton icon={<Icon name="refresh" size={16} />} size="small" aria-label="Refresh" />
-                <span className="text-[13px] leading-[1.4] tracking-[0.065px] text-[var(--foreground-secondary,#666)] whitespace-nowrap">Updated May 11, 9:42am</span>
+                <span className="t-body-sm text-[var(--foreground-secondary,#666)] whitespace-nowrap">Updated May 11, 9:42am</span>
               </div>
               <div className="flex items-center gap-[4px]">
                 <IconButton icon={<Icon name="thumb_up" size={16} />} size="small" aria-label="Thumbs up" />
@@ -889,7 +906,7 @@ export default function R3Description() {
                 {menuOpen && (
                   <div className="absolute right-0 top-[32px] z-[200]">
                     <Menu className="w-[220px]">
-                      <MenuItem icon={<MagicEdit className="w-[16px] h-[16px]" />} label="Customize Previsit" onClick={() => { setMenuOpen(false); setDrawerOpen(true); }} />
+                      <MenuItem icon={<MagicEdit className="w-[16px] h-[16px]" />} label="Customize Previsit" onClick={() => { setMenuOpen(false); openDrawer(); }} />
                       <MenuItem icon={<Icon name="print" size={16} />} label="Print Previsit" />
                     </Menu>
                   </div>
@@ -930,20 +947,20 @@ export default function R3Description() {
           {/* Bottom bar */}
           <div className="shrink-0 bg-white border-t border-[var(--shape-outline,rgba(0,0,0,0.1))] flex items-center gap-[16px] px-[20px] pt-[8px] pb-[24px]">
             <div className="flex flex-1 items-center gap-[8px] min-w-0">
-              <button className="flex items-center gap-[4px] h-[28px] px-[8px] border border-[var(--neutral-200,#ccc)] rounded-[6px] text-[13px] leading-[1.4] tracking-[0.065px] text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors min-w-0" style={{ fontFamily: "Lato, sans-serif" }}>
+              <button className="flex items-center gap-[4px] h-[28px] px-[8px] border border-[var(--neutral-200,#ccc)] rounded-[6px] t-body-sm text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors min-w-0" style={{ fontFamily: "Lato, sans-serif" }}>
                 <span className="truncate">Adult Annual Visit</span>
                 <Icon name="arrow_drop_down" size={20} />
               </button>
-              <button className="flex items-center gap-[4px] h-[28px] px-[8px] bg-[var(--surface-2,#f2f2f2)] rounded-[6px] text-[13px] leading-[1.4] tracking-[0.065px] text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-3,#ebebeb)] transition-colors shrink-0" style={{ fontFamily: "Lato, sans-serif" }}>
+              <button className="flex items-center gap-[4px] h-[28px] px-[8px] bg-[var(--surface-2,#f2f2f2)] rounded-[6px] t-body-sm text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-3,#ebebeb)] transition-colors shrink-0" style={{ fontFamily: "Lato, sans-serif" }}>
                 In Person<Icon name="arrow_drop_down" size={16} />
               </button>
-              <button className="flex items-center gap-[4px] h-[28px] px-[8px] bg-[var(--surface-2,#f2f2f2)] rounded-[6px] text-[13px] leading-[1.4] tracking-[0.065px] text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-3,#ebebeb)] transition-colors shrink-0" style={{ fontFamily: "Lato, sans-serif" }}>
+              <button className="flex items-center gap-[4px] h-[28px] px-[8px] bg-[var(--surface-2,#f2f2f2)] rounded-[6px] t-body-sm text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--surface-3,#ebebeb)] transition-colors shrink-0" style={{ fontFamily: "Lato, sans-serif" }}>
                 <Icon name="check" size={16} />Carry Forward<Icon name="arrow_drop_down" size={16} />
               </button>
             </div>
             <div className="flex items-center gap-[4px] shrink-0">
               <Checkbox state={consentChecked ? "selected" : "unselected"} onChange={(v) => setConsentChecked(v)} />
-              <span className="text-[13px] leading-[1.4] tracking-[0.065px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap" style={{ fontFamily: "Lato, sans-serif" }}>Patient consent</span>
+              <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap" style={{ fontFamily: "Lato, sans-serif" }}>Patient consent</span>
             </div>
             <Button variant="primary" size="large" prefix={<Icon name="mic" size={20} filled />}>Start Recording</Button>
           </div>
@@ -955,19 +972,19 @@ export default function R3Description() {
             <Tabs variant="secondary" tabs={[{ id: "assistant", label: "Assistant" }, { id: "sources", label: "Sources" }]} defaultTab="assistant" />
           </div>
           <div className="flex-1 overflow-y-auto px-[20px] py-[8px]">
-            <p className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] mb-[12px]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}>Get Started</p>
+            <p className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] mb-[12px]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}>Get Started</p>
             <div className="flex flex-col gap-[12px]">
               {suggestions.map((s, i) => (
                 <button key={i} className="flex items-center gap-[8px] h-[28px] px-[8px] bg-[var(--surface-2,#f2f2f2)] rounded-[8px] shrink-0 text-left hover:bg-[var(--surface-3,#ebebeb)] transition-colors">
                   <Icon name={s.icon} size={16} />
-                  <span className="text-[13px] leading-[1.4] tracking-[0.065px] text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap" style={{ fontFamily: "Lato, sans-serif" }}>{s.text}</span>
+                  <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap" style={{ fontFamily: "Lato, sans-serif" }}>{s.text}</span>
                 </button>
               ))}
             </div>
           </div>
           <div className="shrink-0 px-[20px] pt-[8px] pb-[24px]">
             <div className="flex items-center h-[48px] px-[12px] border border-[#8044ff] rounded-[6px]">
-              <span className="flex-1 text-[15px] leading-[1.4] tracking-[0.15px] text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>Ask assistant</span>
+              <span className="flex-1 t-body-md text-[var(--foreground-tertiary,#808080)]" style={{ fontFamily: "Lato, sans-serif" }}>Ask assistant</span>
               <IconButton icon={<Icon name="mic" size={20} filled />} size="medium" aria-label="Voice input" />
               <IconButton icon={<Icon name="send" size={20} filled />} size="medium" aria-label="Send" />
             </div>
@@ -977,15 +994,15 @@ export default function R3Description() {
         {/* ── Customize drawer ── */}
         {drawerOpen && (
           <>
-            <Overlay variant="blur" fixed className="z-[150] cursor-default" onClick={() => setDrawerOpen(false)} />
+            <Overlay variant="blur" fixed className="z-[150] cursor-default" onClick={() => closeDrawer()} />
 
             <div className="fixed right-0 top-0 h-full w-full md:w-[640px] z-[160] bg-white shadow-[-4px_0_24px_rgba(0,0,0,0.1)] flex flex-col">
               {/* Header */}
               <div className="flex items-center h-[52px] px-[16px] shrink-0">
-                <p className="flex-1 text-[15px] font-bold leading-[1.2] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}>
+                <p className="flex-1 t-title-md text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}>
                   Previsit Summary
                 </p>
-                <IconButton icon={<Icon name="close" size={16} />} variant="tertiary-neutral" size="small" aria-label="Close" onClick={() => setDrawerOpen(false)} />
+                <IconButton icon={<Icon name="close" size={16} />} variant="tertiary-neutral" size="small" aria-label="Close" onClick={() => closeDrawer()} />
               </div>
 
               {/* Section list */}
@@ -1057,13 +1074,13 @@ export default function R3Description() {
                           </div>
                           <div className="flex-1 flex flex-col gap-[2px] min-w-0">
                             <span
-                              className="text-[13px] font-bold tracking-[0.13px] leading-[1.2] text-[var(--foreground-primary,#1a1a1a)] truncate"
+                              className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate"
                               style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
                             >
                               {group.label}
                             </span>
                             {group.description && (
-                              <span className="text-[12px] font-normal leading-[1.3] text-[var(--foreground-secondary,#666)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                              <span className="t-body-xs leading-[1.3] text-[var(--foreground-secondary,#666)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
                                 {group.description}
                               </span>
                             )}
@@ -1167,13 +1184,13 @@ export default function R3Description() {
                                     </div>
                                     <div className="flex-1 flex flex-col gap-[2px] min-w-0">
                                       <span
-                                        className="text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] truncate"
+                                        className="t-title-sm text-[var(--foreground-secondary,#666)] truncate"
                                         style={{ fontFamily: "Lato, sans-serif" }}
                                       >
                                         {child.label}
                                       </span>
                                       {child.description && (
-                                        <span className="text-[12px] font-normal leading-[1.3] text-[var(--foreground-secondary,#666)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                                        <span className="t-body-xs leading-[1.3] text-[var(--foreground-secondary,#666)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
                                           {child.description}
                                         </span>
                                       )}
@@ -1216,8 +1233,8 @@ export default function R3Description() {
                   <>
                     <div className="flex items-center gap-[8px] py-[4px]">
                       <div className="flex-1 h-px bg-[var(--shape-outline,rgba(0,0,0,0.1))]" />
-                      <span className="text-[11px] leading-[1.2] text-[var(--foreground-secondary,#666)] whitespace-nowrap" style={{ fontFamily: "Lato, sans-serif" }}>
-                        Not included
+                      <span className="t-body-xs text-[var(--foreground-secondary,#666)] whitespace-nowrap">
+                        Deactivated sections
                       </span>
                       <div className="flex-1 h-px bg-[var(--shape-outline,rgba(0,0,0,0.1))]" />
                     </div>
@@ -1226,34 +1243,53 @@ export default function R3Description() {
                       const group = drawerGroups.find((g) => g.id === id);
                       if (!group) return null;
                       return (
-                        <div key={id} className="shrink-0 bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] p-[4px] flex flex-col gap-[8px] opacity-60">
-                          <div className="flex items-center gap-[8px] h-[28px] px-[4px]">
-                            <span
-                              className="flex-1 text-[13px] font-bold tracking-[0.13px] leading-[1.2] text-[var(--foreground-secondary,#666)] truncate"
-                              style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
-                            >
-                              {group.label}
-                            </span>
-                            {group.timeFrameKey && group.options ? (
-                              <DisabledChip label={pendingTimeFrames[group.timeFrameKey] ?? group.options[0]} />
-                            ) : group.fixedLabel ? (
-                              <DisabledChip label={group.fixedLabel} />
-                            ) : null}
-                            <Button variant="tertiary" size="small" onClick={() => restoreSection(id)}>Add</Button>
+                        <div key={id} className="shrink-0 bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] p-[4px] flex flex-col gap-[8px]">
+                          <div className="flex items-center gap-[8px] min-h-[28px] px-[4px] py-[5px]">
+                            <div className="flex-1 flex flex-col gap-[2px] min-w-0">
+                              <span
+                                className="t-title-sm text-[var(--foreground-tertiary,#808080)] truncate"
+                                style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
+                              >
+                                {group.label}
+                              </span>
+                              {group.description && (
+                                <span className="t-body-xs leading-[1.3] text-[var(--foreground-tertiary,#808080)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                                  {group.description}
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-start gap-[4px] shrink-0 self-start">
+                              {group.timeFrameKey && group.options ? (
+                                <DisabledChip label={pendingTimeFrames[group.timeFrameKey] ?? group.options[0]} />
+                              ) : group.fixedLabel ? (
+                                <DisabledChip label={group.fixedLabel} />
+                              ) : null}
+                              <Button variant="tertiary" size="small" onClick={() => restoreSection(id)}>Add</Button>
+                            </div>
                           </div>
                           {group.children?.map((child) => (
-                            <div key={child.id} className="flex items-center gap-[8px] h-[28px] pl-[20px] pr-[4px]">
-                              <span
-                                className="flex-1 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] truncate"
-                                style={{ fontFamily: "Lato, sans-serif" }}
-                              >
-                                {child.label}
-                              </span>
-                              {child.timeFrameKey && child.options ? (
-                                <DisabledChip label={pendingTimeFrames[child.timeFrameKey] ?? child.options[0]} />
-                              ) : child.fixedLabel ? (
-                                <DisabledChip label={child.fixedLabel} />
-                              ) : null}
+                            <div key={child.id} className="group/deleted-child flex items-center gap-[8px] min-h-[28px] pl-[28px] pr-[4px] py-[4px]">
+                              <div className="flex-1 flex flex-col gap-[2px] min-w-0">
+                                <span
+                                  className="t-title-sm text-[var(--foreground-tertiary,#808080)] truncate"
+                                  style={{ fontFamily: "Lato, sans-serif" }}
+                                >
+                                  {child.label}
+                                </span>
+                                {child.description && (
+                                  <span className="t-body-xs leading-[1.3] text-[var(--foreground-tertiary,#808080)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                                    {child.description}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-start gap-[4px] shrink-0 self-start">
+                                {child.timeFrameKey && child.options ? (
+                                  <DisabledChip label={pendingTimeFrames[child.timeFrameKey] ?? child.options[0]} />
+                                ) : child.fixedLabel ? (
+                                  <DisabledChip label={child.fixedLabel} />
+                                ) : null}
+                                <Button variant="tertiary" size="small" className="opacity-0 group-hover/deleted-child:opacity-100 transition-opacity" onClick={() => restoreChildFromDeletedSection(id, child.id)}>Add</Button>
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -1266,10 +1302,10 @@ export default function R3Description() {
                       const removedKids = group.children.filter((c) => deletedChildren.has(c.id));
                       if (removedKids.length === 0) return null;
                       return (
-                        <div key={id} className="shrink-0 bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] p-[4px] flex flex-col gap-[8px] opacity-60">
+                        <div key={id} className="shrink-0 bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] p-[4px] flex flex-col gap-[8px]">
                           <div className="flex items-center h-[28px] px-[4px]">
                             <span
-                              className="flex-1 text-[13px] font-bold tracking-[0.13px] leading-[1.2] text-[var(--foreground-secondary,#666)] truncate"
+                              className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
                               style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
                             >
                               {group.label}
@@ -1278,7 +1314,7 @@ export default function R3Description() {
                           {removedKids.map((child) => (
                             <div key={child.id} className="flex items-center gap-[8px] h-[28px] pl-[20px] pr-[4px]">
                               <span
-                                className="flex-1 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] truncate"
+                                className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
                                 style={{ fontFamily: "Lato, sans-serif" }}
                               >
                                 {child.label}
@@ -1309,7 +1345,7 @@ export default function R3Description() {
                     <div className="shrink-0 leading-[0] text-[var(--foreground-secondary,#666)]">
                       <Icon name="drag_indicator" size={16} />
                     </div>
-                    <span className="flex-1 text-[13px] font-bold tracking-[0.13px] leading-[1.2] text-[var(--foreground-primary,#1a1a1a)] truncate"
+                    <span className="flex-1 t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate"
                       style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}>
                       {sectionGhost.label}
                     </span>
@@ -1326,7 +1362,7 @@ export default function R3Description() {
                     <div className="shrink-0 leading-[0] text-[var(--foreground-secondary,#666)]">
                       <Icon name="drag_indicator" size={16} />
                     </div>
-                    <span className="flex-1 text-[13px] font-bold leading-[1.2] tracking-[0.13px] text-[var(--foreground-secondary,#666)] truncate"
+                    <span className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
                       style={{ fontFamily: "Lato, sans-serif" }}>
                       {subGhost.label}
                     </span>

@@ -43,7 +43,7 @@ export function PopUp({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center font-['Lato',sans-serif]">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/30"
@@ -83,7 +83,7 @@ export function PopUp({
         {title && (
           <p
             id="popup-title"
-            className="text-[17px] font-bold leading-[1.2] tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)] w-full"
+            className="t-title-lg text-[var(--foreground-primary,#1a1a1a)] w-full"
           >
             {title}
           </p>

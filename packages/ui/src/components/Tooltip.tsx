@@ -58,7 +58,7 @@ export function Tooltip({ content, children, position = "top", delay = 300, disa
           role="tooltip"
           className={`absolute z-[300] pointer-events-none ${posStyles[position].container}`}
         >
-          <span className="block px-[8px] py-[5px] rounded-[6px] bg-[var(--foreground-primary,#1a1a1a)] text-white text-[12px] font-normal leading-[1.4] whitespace-nowrap font-['Lato',sans-serif] shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+          <span className="block px-[8px] py-[5px] rounded-[6px] bg-[var(--foreground-primary,#1a1a1a)] text-white t-body-xs whitespace-nowrap shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
             {content}
           </span>
           <span

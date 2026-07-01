@@ -59,8 +59,7 @@ export function Sidebar({
           <NavButton key={item.id} item={item} onClick={() => onItemClick?.(item.id)} />
         ))}
         <div className="flex items-center justify-center py-[8px]">
-          <div className={`w-[36px] h-[36px] rounded-full ${bg} flex items-center justify-center text-[17px] font-bold tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)]`}
-            style={{ fontFamily: "Lato, sans-serif" }}>
+          <div className={`w-[36px] h-[36px] rounded-full ${bg} flex items-center justify-center t-title-lg text-[var(--foreground-primary,#1a1a1a)]`}>
             {userInitial}
           </div>
         </div>
@@ -75,7 +74,7 @@ function NavButton({ item, onClick }: { item: NavItem; onClick: () => void }) {
       onClick={onClick}
       className={`group w-full flex flex-col items-center gap-[2px] py-[6px] transition-colors relative outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--litmus-100,#cfd6fc)]
         ${item.isActive ? "text-[var(--accent,#1132ee)]" : "text-[var(--foreground-secondary,#666)]"}`}
-      style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}
+      style={{ fontFeatureSettings: "'ss07'" }}
     >
       {/* Icon container */}
       <div className={`w-[36px] h-[36px] rounded-[6px] flex items-center justify-center relative shrink-0 transition-colors

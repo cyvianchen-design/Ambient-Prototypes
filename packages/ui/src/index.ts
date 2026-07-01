@@ -64,6 +64,8 @@ export { PINInput } from "./components/PINInput";
 export type { PINInputProps } from "./components/PINInput";
 export { Table, TableCell, TableFooter, BadgesCell, StatusCell } from "./components/Table";
 export type { TableProps, TableColumn, TableCellProps, TableFooterProps, BadgesCellProps, StatusCellProps, StatusCellColor, SortDirection, TableDensity } from "./components/Table";
+export { Citation } from "./components/Citation";
+export type { CitationProps } from "./components/Citation";
 
 export { VersionSwitcher } from "./proto/VersionSwitcher";
 export type { ScreenDef } from "./proto/VersionSwitcher";

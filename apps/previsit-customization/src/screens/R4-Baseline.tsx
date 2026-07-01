@@ -50,7 +50,7 @@ type SectionProps = {
 
 function Section({ title, subtitle, children }: SectionProps) {
   return (
-    <div className="flex flex-col gap-[4px] w-full">
+    <div className="flex flex-col gap-[8px] w-full">
       <div className="flex items-center gap-[4px]">
         <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap" style={{ fontFeatureSettings: "'ss07' 1" }}>
           {title}
@@ -716,7 +716,7 @@ const suggestions = [
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
-export default function R3InlineDescription() {
+export default function R4Baseline() {
   const [consentChecked, setConsentChecked] = useState(false);
   const [order, setOrder] = useState(() => sectionDefs.map((s) => s.id));
   const [pointerDragId, setPointerDragId] = useState<string | null>(null);
@@ -1121,67 +1121,10 @@ export default function R3InlineDescription() {
                                   <div
                                     data-child-id={child.id}
                                     className={[
-                                      "group/child-row flex items-center gap-[8px] h-[28px] px-[4px] transition-opacity",
+                                      "group/child-row flex items-center gap-[8px] h-[28px] pl-[28px] pr-[4px] transition-opacity",
                                       isSubDragging ? "opacity-40" : "opacity-100",
                                     ].join(" ")}
                                   >
-                                    <div
-                                      className="shrink-0 leading-[0] text-[var(--foreground-secondary,#666)] cursor-grab touch-none select-none opacity-0 group-hover/child-row:opacity-100 transition-opacity"
-                                      onPointerDown={(e) => {
-                                        e.currentTarget.setPointerCapture(e.pointerId);
-                                        const row = e.currentTarget.closest('[data-child-id]') as HTMLElement;
-                                        if (row) {
-                                          const r = row.getBoundingClientRect();
-                                          subOffsetRef.current = { x: e.clientX - r.left, y: e.clientY - r.top };
-                                          setSubGhost({ label: child.label, w: r.width, x: r.left, y: r.top });
-                                        }
-                                        setSubDragChildId(child.id);
-                                        setSubDragParentId(id);
-                                        setSubDropIndex(ci);
-                                      }}
-                                      onPointerMove={(e) => {
-                                        if (subDragChildId !== child.id) return;
-                                        if (subGhostRef.current) {
-                                          subGhostRef.current.style.transform = `translate(${e.clientX - subOffsetRef.current.x}px, ${e.clientY - subOffsetRef.current.y}px)`;
-                                        }
-                                        const container = drawerListRef.current?.querySelector(`[data-children-of="${id}"]`);
-                                        if (!container) return;
-                                        const childEls = Array.from(container.querySelectorAll('[data-child-id]')) as HTMLElement[];
-                                        let newIdx = childEls.length;
-                                        for (let i = 0; i < childEls.length; i++) {
-                                          const rect = childEls[i].getBoundingClientRect();
-                                          if (e.clientY < rect.top + rect.height / 2) { newIdx = i; break; }
-                                        }
-                                        setSubDropIndex(newIdx);
-                                      }}
-                                      onPointerUp={() => {
-                                        setSubGhost(null);
-                                        if (subDragChildId !== child.id || subDropIndex === null) {
-                                          setSubDragChildId(null); setSubDragParentId(null); setSubDropIndex(null); return;
-                                        }
-                                        setChildOrder((prev) => {
-                                          const g = drawerGroups.find((g) => g.id === id);
-                                          if (!g?.children) return prev;
-                                          const current = prev[id] ?? g.children.map((c) => c.id);
-                                          const activeIds = current.filter((cid) => !deletedChildren.has(cid));
-                                          const from = activeIds.indexOf(child.id);
-                                          if (from === -1) return prev;
-                                          const newActive = [...activeIds];
-                                          newActive.splice(from, 1);
-                                          const to = subDropIndex > from ? subDropIndex - 1 : subDropIndex;
-                                          newActive.splice(to, 0, child.id);
-                                          let activeIdx = 0;
-                                          const result = current.map((cid) =>
-                                            deletedChildren.has(cid) ? cid : newActive[activeIdx++]
-                                          );
-                                          return { ...prev, [id]: result };
-                                        });
-                                        setSubDragChildId(null); setSubDragParentId(null); setSubDropIndex(null);
-                                      }}
-                                      onPointerCancel={() => { setSubGhost(null); setSubDragChildId(null); setSubDragParentId(null); setSubDropIndex(null); }}
-                                    >
-                                      <Icon name="drag_indicator" size={16} />
-                                    </div>
                                     <div className="flex-1 flex items-baseline gap-[6px] min-w-0 overflow-hidden">
                                       <span
                                         className="t-title-sm text-[var(--foreground-secondary,#666)] shrink-0"

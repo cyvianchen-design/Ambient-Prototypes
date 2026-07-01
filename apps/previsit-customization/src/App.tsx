@@ -15,6 +15,8 @@ import R2HoverHandles from "./screens/R2-HoverHandles";
 import R3Baseline from "./screens/R3-Baseline";
 import R3Description from "./screens/R3-Description";
 import R3InlineDescription from "./screens/R3-InlineDescription";
+import R3InlineTitleM from "./screens/R3-InlineTitleM";
+import R4Baseline from "./screens/R4-Baseline";
 
 const screens: ScreenDef[] = [
   { round: "R1", direction: "Baseline", component: R1Baseline },
@@ -30,6 +32,8 @@ const screens: ScreenDef[] = [
   { round: "R3", direction: "Baseline", component: R3Baseline },
   { round: "R3", direction: "Description", component: R3Description },
   { round: "R3", direction: "Inline Description", component: R3InlineDescription },
+  { round: "R3", direction: "Inline Title M", component: R3InlineTitleM },
+  { round: "R4", direction: "Baseline", component: R4Baseline },
 ];
 
 export default function App() {

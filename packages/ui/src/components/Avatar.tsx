@@ -4,11 +4,11 @@ export type AvatarSize = "XS" | "S" | "M" | "L" | "XL";
 export type AvatarStatus = "online" | "busy" | "away" | "offline";
 
 const sizeConfig: Record<AvatarSize, { px: number; text: string; statusPx: number }> = {
-  XS: { px: 20, text: "text-[9px]",  statusPx: 6  },
-  S:  { px: 24, text: "text-[10px]", statusPx: 7  },
-  M:  { px: 32, text: "text-[13px]", statusPx: 9  },
-  L:  { px: 40, text: "text-[15px]", statusPx: 10 },
-  XL: { px: 48, text: "text-[17px]", statusPx: 12 },
+  XS: { px: 20, text: "text-[9px]",    statusPx: 6  },
+  S:  { px: 24, text: "text-[10px]",   statusPx: 7  },
+  M:  { px: 32, text: "t-title-sm",    statusPx: 9  },
+  L:  { px: 40, text: "t-title-md",    statusPx: 10 },
+  XL: { px: 48, text: "t-title-lg",    statusPx: 12 },
 };
 
 const statusColor: Record<AvatarStatus, string> = {
@@ -73,7 +73,7 @@ export function Avatar({
         />
       ) : (
         <div
-          className={`w-full h-full rounded-full flex items-center justify-center font-['Lato',sans-serif] font-bold leading-none select-none text-[var(--foreground-primary,#1a1a1a)] ${color} ${text}`}
+          className={`w-full h-full rounded-full flex items-center justify-center leading-none select-none text-[var(--foreground-primary,#1a1a1a)] ${color} ${text}`}
         >
           {initials(name)}
         </div>

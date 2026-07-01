@@ -26,7 +26,7 @@ export function Divider({
   if (label) {
     return (
       <div
-        className={`flex items-center gap-[8px] font-['Lato',sans-serif] ${className}`}
+        className={`flex items-center gap-[8px] ${className}`}
         role="separator"
       >
         <div className="flex-1 h-[1px] bg-[var(--surface-3,#eee)]" />

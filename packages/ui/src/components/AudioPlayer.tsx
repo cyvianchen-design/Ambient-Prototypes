@@ -51,7 +51,7 @@ export function AudioPlayer({
 
   return (
     <div
-      className={`flex items-center gap-[8px] rounded-[10px] bg-[var(--surface-1,#f7f7f7)] px-[12px] py-[8px] font-['Lato',sans-serif] ${className}`}
+      className={`flex items-center gap-[8px] rounded-[10px] bg-[var(--surface-1,#f7f7f7)] px-[12px] py-[8px] ${className}`}
     >
       {/* Skip back */}
       {showSkip && (
@@ -85,7 +85,7 @@ export function AudioPlayer({
       )}
 
       {/* Current time */}
-      <span className="text-[12px] font-normal text-[var(--foreground-secondary,#666)] tabular-nums shrink-0 w-[32px] text-right">
+      <span className="t-body-xs text-[var(--foreground-secondary,#666)] tabular-nums shrink-0 w-[32px] text-right">
         {formatTime(currentTime)}
       </span>
 
@@ -112,7 +112,7 @@ export function AudioPlayer({
       </div>
 
       {/* Duration */}
-      <span className="text-[12px] font-normal text-[var(--foreground-secondary,#666)] tabular-nums shrink-0 w-[32px]">
+      <span className="t-body-xs text-[var(--foreground-secondary,#666)] tabular-nums shrink-0 w-[32px]">
         {formatTime(duration)}
       </span>
 
@@ -121,7 +121,7 @@ export function AudioPlayer({
         <button
           onClick={cyclePlaybackRate}
           aria-label={`Playback speed: ${rateLabel}`}
-          className="shrink-0 text-[12px] font-bold text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-primary,#1a1a1a)] transition-colors w-[28px] text-center"
+          className="shrink-0 t-title-xs text-[var(--foreground-secondary,#666)] hover:text-[var(--foreground-primary,#1a1a1a)] transition-colors w-[28px] text-center"
         >
           {rateLabel}
         </button>

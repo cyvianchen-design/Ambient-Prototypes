@@ -48,14 +48,14 @@ export function ListItem({
       )}
       <div className="flex-1 min-w-0">
         <p
-          className={`text-[13px] font-bold leading-[1.3] tracking-[0.13px] truncate ${
+          className={`t-title-sm truncate ${
             selected ? "text-[var(--accent,#1132ee)]" : "text-[var(--foreground-primary,#1a1a1a)]"
           }`}
         >
           {title}
         </p>
         {description && (
-          <p className="text-[12px] font-normal leading-[1.4] text-[var(--foreground-secondary,#666)] truncate mt-[1px]">
+          <p className="t-body-xs text-[var(--foreground-secondary,#666)] truncate mt-[1px]">
             {description}
           </p>
         )}

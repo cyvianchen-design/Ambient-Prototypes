@@ -39,9 +39,9 @@ export type TextFieldProps = {
 
 // [height, h-padding, icon-size, input-text-class, label-text-class]
 const SIZES: Record<TextFieldSize, [string, string, number, string, string]> = {
-  S: ["h-[28px]",  "px-[8px]",  12, "text-[13px] leading-[1.4]", "text-[11px]"],
-  M: ["h-[36px]",  "px-[10px]", 14, "text-[13px] leading-[1.4]", "text-[12px]"],
-  L: ["h-[44px]",  "px-[12px]", 16, "text-[15px] leading-[1.4]", "text-[13px]"],
+  S: ["h-[28px]",  "px-[8px]",  12, "t-body-sm", "text-[11px]"],
+  M: ["h-[36px]",  "px-[10px]", 14, "t-body-sm", "text-[12px]"],
+  L: ["h-[44px]",  "px-[12px]", 16, "t-body-md", "text-[13px]"],
 };
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -104,7 +104,6 @@ export function TextField({
   return (
     <div
       className={`inline-flex flex-col gap-[4px] ${className}`}
-      style={{ fontFamily: "Lato, sans-serif" }}
     >
       {/* Label */}
       {label && (
@@ -124,7 +123,7 @@ export function TextField({
           "rounded-[6px] border",
           borderCls,
           "bg-white transition-colors",
-          disabled ? "opacity-40 cursor-not-allowed" : "cursor-text",
+          disabled ? "opacity-40 cursor-not-allowed" : readOnly ? "cursor-pointer" : "cursor-text",
         ].join(" ")}
         onClick={onClick}
         onMouseEnter={() => !disabled && setHovered(true)}
@@ -154,12 +153,11 @@ export function TextField({
           className={[
             "flex-1 min-w-0 bg-transparent outline-none",
             inputTextCls,
-            "tracking-[0.07px]",
             "text-[var(--foreground-primary,#1a1a1a)]",
             "placeholder-[#999]",
             "disabled:cursor-not-allowed",
+            "read-only:cursor-pointer",
           ].join(" ")}
-          style={{ fontFamily: "Lato, sans-serif" }}
         />
         {trailNode && (
           <span className="shrink-0 flex items-center">{trailNode}</span>

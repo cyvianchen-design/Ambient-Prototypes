@@ -101,14 +101,14 @@ export function Table<T>({
   const tdBase = [
     "px-[12px]",
     tdPy,
-    "text-[13px] font-normal leading-[1.4]",
+    "t-body-sm",
     "text-[var(--foreground-primary,#1a1a1a)]",
     "border-b border-[var(--surface-3,#eee)]",
   ].join(" ");
 
   return (
     <div
-      className={`w-full overflow-x-auto font-['Lato',sans-serif] ${className}`}
+      className={`w-full overflow-x-auto ${className}`}
     >
       <table className="w-full border-collapse">
         <thead className={stickyHeader ? "sticky top-0 z-[10]" : ""}>
@@ -178,7 +178,7 @@ export function Table<T>({
             <tr>
               <td
                 colSpan={columns.length + (selectable ? 1 : 0)}
-                className="px-[16px] py-[40px] text-center text-[13px] text-[var(--foreground-secondary,#666)]"
+                className="px-[16px] py-[40px] text-center t-body-sm text-[var(--foreground-secondary,#666)]"
               >
                 {emptyState ?? "No results"}
               </td>
@@ -281,9 +281,8 @@ export function TableFooter({
         "flex items-center justify-between",
         "px-[12px] py-[10px]",
         "bg-[var(--surface-2,#f2f2f2)]",
-        "text-[12px] font-normal leading-[1.3]",
+        "t-body-xs leading-[1.3]",
         "text-[var(--foreground-secondary,#666)]",
-        "font-['Lato',sans-serif]",
         className,
       ]
         .filter(Boolean)
@@ -299,8 +298,7 @@ export function TableFooter({
           <select
             value={rowsPerPage}
             onChange={(e) => onRowsPerPageChange?.(Number(e.target.value))}
-            className="bg-transparent outline-none cursor-pointer text-[12px] text-[var(--foreground-secondary,#666)] font-['Lato',sans-serif] appearance-none"
-            style={{ fontFamily: "Lato, sans-serif" }}
+            className="bg-transparent outline-none cursor-pointer t-body-xs text-[var(--foreground-secondary,#666)] appearance-none"
           >
             {rowsPerPageOptions.map((n) => (
               <option key={n} value={n}>
@@ -369,11 +367,11 @@ export function TableCell({ primary, secondary, leading }: TableCellProps) {
     <div className="flex items-center gap-[8px]">
       {leading && <div className="shrink-0">{leading}</div>}
       <div className="min-w-0">
-        <p className="text-[13px] font-bold leading-[1.3] tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)] truncate">
+        <p className="t-title-sm leading-[1.3] text-[var(--foreground-primary,#1a1a1a)] truncate">
           {primary}
         </p>
         {secondary && (
-          <p className="text-[12px] font-normal leading-[1.3] text-[var(--foreground-secondary,#666)] truncate mt-[1px]">
+          <p className="t-body-xs leading-[1.3] text-[var(--foreground-secondary,#666)] truncate mt-[1px]">
             {secondary}
           </p>
         )}
@@ -428,7 +426,7 @@ export function StatusCell({ label, color = "neutral" }: StatusCellProps) {
   return (
     <div className="flex items-center gap-[6px]">
       <div className={`w-[6px] h-[6px] rounded-full shrink-0 ${dotCls}`} />
-      <span className={`text-[13px] font-normal leading-[1.3] ${textCls}`}>
+      <span className={`t-body-sm leading-[1.3] ${textCls}`}>
         {label}
       </span>
     </div>

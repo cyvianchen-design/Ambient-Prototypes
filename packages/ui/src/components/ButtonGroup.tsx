@@ -12,9 +12,9 @@ type GroupItem = {
 };
 
 const groupSizeTokens: Record<ButtonGroupSize, { h: string; text: string; px: string; gap: string; radius: string; p: string }> = {
-  small:  { h: "h-[24px]", text: "text-[13px] tracking-[0.13px]", px: "px-[8px]",  gap: "gap-[4px]",  radius: "rounded-[4px]", p: "p-[2px]" },
-  medium: { h: "h-[32px]", text: "text-[13px] tracking-[0.13px]", px: "px-[12px]", gap: "gap-[6px]",  radius: "rounded-[6px]", p: "p-[3px]" },
-  large:  { h: "h-[40px]", text: "text-[15px] tracking-[0.15px]", px: "px-[16px]", gap: "gap-[8px]",  radius: "rounded-[8px]", p: "p-[4px]" },
+  small:  { h: "h-[24px]", text: "t-title-sm", px: "px-[8px]",  gap: "gap-[4px]",  radius: "rounded-[4px]", p: "p-[2px]" },
+  medium: { h: "h-[32px]", text: "t-title-sm", px: "px-[12px]", gap: "gap-[6px]",  radius: "rounded-[6px]", p: "p-[3px]" },
+  large:  { h: "h-[40px]", text: "t-title-md", px: "px-[16px]", gap: "gap-[8px]",  radius: "rounded-[8px]", p: "p-[4px]" },
 };
 
 export type ButtonGroupTheme = "default" | "inverse";
@@ -50,7 +50,7 @@ export function ButtonGroup({
     const inverse = theme === "inverse";
     return (
       <div
-        className={`inline-flex gap-[8px] font-['Lato',sans-serif] font-bold leading-[1.2] flex-wrap ${className}`}
+        className={`inline-flex gap-[8px] flex-wrap ${className}`}
         role="group"
       >
         {items.map((item) => {
@@ -98,7 +98,7 @@ export function ButtonGroup({
   // Single-select: pill container, white elevated card for the selected option.
   return (
     <div
-      className={`inline-flex ${p} ${radius} bg-[var(--surface-2,#f2f2f2)] font-['Lato',sans-serif] font-bold leading-[1.2] gap-[2px] ${className}`}
+      className={`inline-flex ${p} ${radius} bg-[var(--surface-2,#f2f2f2)] gap-[2px] ${className}`}
       role="radiogroup"
     >
       {items.map((item) => {
@@ -159,9 +159,9 @@ const splitVariants: Record<SplitButtonVariant, { wrapper: string; label: string
 };
 
 const splitSizeTokens: Record<ButtonGroupSize, { h: string; text: string; px: string; chevronW: string }> = {
-  small:  { h: "h-[28px]", text: "text-[13px] tracking-[0.13px]", px: "px-[10px]", chevronW: "w-[28px]" },
-  medium: { h: "h-[36px]", text: "text-[15px] tracking-[0.15px]", px: "px-[16px]", chevronW: "w-[32px]" },
-  large:  { h: "h-[48px]", text: "text-[17px] tracking-[0.34px]", px: "px-[20px]", chevronW: "w-[40px]" },
+  small:  { h: "h-[28px]", text: "t-title-sm", px: "px-[10px]", chevronW: "w-[28px]" },
+  medium: { h: "h-[36px]", text: "t-title-md", px: "px-[16px]", chevronW: "w-[32px]" },
+  large:  { h: "h-[48px]", text: "t-title-lg", px: "px-[20px]", chevronW: "w-[40px]" },
 };
 
 export type SplitButtonProps = {
@@ -191,7 +191,7 @@ export function SplitButton({
   return (
     <div
       className={[
-        "inline-flex rounded-[6px] overflow-hidden font-['Lato',sans-serif] font-bold leading-[1.2]",
+        "inline-flex rounded-[6px] overflow-hidden",
         wrapper,
         disabled ? "opacity-40" : "",
         className,

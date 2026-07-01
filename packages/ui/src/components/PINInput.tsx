@@ -76,7 +76,7 @@ export function PINInput({
 
   return (
     <div
-      className={`flex items-center gap-[8px] font-['Lato',sans-serif] ${className}`}
+      className={`flex items-center gap-[8px] ${className}`}
       onPaste={handlePaste}
     >
       {Array.from({ length }, (_, i) => {

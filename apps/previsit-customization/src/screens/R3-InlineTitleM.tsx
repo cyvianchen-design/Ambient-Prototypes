@@ -50,7 +50,7 @@ type SectionProps = {
 
 function Section({ title, subtitle, children }: SectionProps) {
   return (
-    <div className="flex flex-col gap-[4px] w-full">
+    <div className="flex flex-col gap-[8px] w-full">
       <div className="flex items-center gap-[4px]">
         <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] whitespace-nowrap" style={{ fontFeatureSettings: "'ss07' 1" }}>
           {title}
@@ -716,7 +716,7 @@ const suggestions = [
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
-export default function R3InlineDescription() {
+export default function R3InlineTitleM() {
   const [consentChecked, setConsentChecked] = useState(false);
   const [order, setOrder] = useState(() => sectionDefs.map((s) => s.id));
   const [pointerDragId, setPointerDragId] = useState<string | null>(null);
@@ -1074,7 +1074,7 @@ export default function R3InlineDescription() {
                           </div>
                           <div className="flex-1 flex items-baseline gap-[6px] min-w-0 overflow-hidden">
                             <span
-                              className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] shrink-0"
+                              className="t-title-md text-[var(--foreground-primary,#1a1a1a)] shrink-0"
                               style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
                             >
                               {group.label}
@@ -1184,7 +1184,7 @@ export default function R3InlineDescription() {
                                     </div>
                                     <div className="flex-1 flex items-baseline gap-[6px] min-w-0 overflow-hidden">
                                       <span
-                                        className="t-title-sm text-[var(--foreground-secondary,#666)] shrink-0"
+                                        className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] shrink-0"
                                         style={{ fontFamily: "Lato, sans-serif" }}
                                       >
                                         {child.label}
@@ -1327,7 +1327,7 @@ export default function R3InlineDescription() {
                     <div className="shrink-0 leading-[0] text-[var(--foreground-secondary,#666)]">
                       <Icon name="drag_indicator" size={16} />
                     </div>
-                    <span className="flex-1 t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate"
+                    <span className="flex-1 t-title-md text-[var(--foreground-primary,#1a1a1a)] truncate"
                       style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}>
                       {sectionGhost.label}
                     </span>
@@ -1344,7 +1344,7 @@ export default function R3InlineDescription() {
                     <div className="shrink-0 leading-[0] text-[var(--foreground-secondary,#666)]">
                       <Icon name="drag_indicator" size={16} />
                     </div>
-                    <span className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
+                    <span className="flex-1 t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate"
                       style={{ fontFamily: "Lato, sans-serif" }}>
                       {subGhost.label}
                     </span>

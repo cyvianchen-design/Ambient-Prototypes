@@ -12,6 +12,8 @@ type Props = {
   initialRound?: string;
   /** Default to this direction on first load. Defaults to first direction in the round. URL param ?direction= takes precedence. */
   initialDirection?: string;
+  /** Called whenever the active round or direction changes. */
+  onDirectionChange?: (round: string, direction: string) => void;
 };
 
 function getInitialState(
@@ -38,7 +40,7 @@ function getInitialState(
   return { round, direction };
 }
 
-export function VersionSwitcher({ screens, initialRound, initialDirection }: Props) {
+export function VersionSwitcher({ screens, initialRound, initialDirection, onDirectionChange }: Props) {
   const rounds = [...new Set(screens.map((s) => s.round))];
   const init = getInitialState(screens, initialRound, initialDirection);
   const [activeRound, setActiveRound] = useState(init.round);
@@ -57,7 +59,14 @@ export function VersionSwitcher({ screens, initialRound, initialDirection }: Pro
   const handleRoundClick = (round: string) => {
     setActiveRound(round);
     const first = screens.find((s) => s.round === round);
-    setActiveDirection(first?.direction ?? "");
+    const dir = first?.direction ?? "";
+    setActiveDirection(dir);
+    onDirectionChange?.(round, dir);
+  };
+
+  const handleDirectionClick = (direction: string) => {
+    setActiveDirection(direction);
+    onDirectionChange?.(activeRound, direction);
   };
 
   const active = screens.find(
@@ -99,7 +108,7 @@ export function VersionSwitcher({ screens, initialRound, initialDirection }: Pro
       <div
         onMouseDown={onMouseDown}
         style={floatStyle}
-        className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-[6px] bg-white border border-[rgba(0,0,0,0.1)] rounded-[12px] shadow-lg px-[10px] py-[8px] select-none cursor-grab active:cursor-grabbing"
+        className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] flex flex-col gap-[6px] bg-white border border-[rgba(0,0,0,0.1)] rounded-[12px] shadow-lg px-[10px] py-[8px] select-none cursor-grab active:cursor-grabbing"
       >
         {/* Rounds */}
         <div className="flex items-center gap-[4px]">
@@ -126,7 +135,7 @@ export function VersionSwitcher({ screens, initialRound, initialDirection }: Pro
           {directionsForRound.map((s) => (
             <button
               key={s.direction}
-              onClick={() => setActiveDirection(s.direction)}
+              onClick={() => handleDirectionClick(s.direction)}
               className={`h-[24px] px-[8px] rounded-[6px] text-[12px] font-bold tracking-[0.12px] transition-colors outline-none
                 ${activeDirection === s.direction
                   ? "bg-[#1132ee] text-white"

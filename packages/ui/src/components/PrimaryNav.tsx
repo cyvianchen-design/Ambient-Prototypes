@@ -112,8 +112,7 @@ export function PrimaryNav({
         {/* Avatar — 40px touch target, 36px visual */}
         <button className="w-[40px] h-[40px] flex items-center justify-center rounded-[6px] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--litmus-100,#cfd6fc)]">
           <div
-            className={`w-[36px] h-[36px] shrink-0 rounded-full ${bg} flex items-center justify-center text-[17px] font-bold tracking-[0.34px] text-[var(--foreground-primary,#1a1a1a)] overflow-hidden`}
-            style={{ fontFamily: "Lato, sans-serif" }}
+            className={`w-[36px] h-[36px] shrink-0 rounded-full ${bg} flex items-center justify-center t-title-lg text-[var(--foreground-primary,#1a1a1a)] overflow-hidden`}
           >
             {userInitial}
           </div>
@@ -130,7 +129,7 @@ function PrimaryNavButton({ item, onClick }: { item: NavItem; onClick: () => voi
       onClick={onClick}
       className={`group w-full flex flex-col items-center gap-[2px] transition-colors relative outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--litmus-100,#cfd6fc)]
         ${item.isActive ? "text-[var(--accent,#1132ee)]" : "text-[var(--foreground-secondary,#666)]"}`}
-      style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}
+      style={{ fontFeatureSettings: "'ss07'" }}
     >
       <div className={`w-[36px] h-[36px] rounded-[6px] flex items-center justify-center relative shrink-0 transition-colors
         ${item.isActive ? "bg-[rgba(17,50,238,0.12)]" : "group-hover:bg-[rgba(0,0,0,0.05)]"}`}>

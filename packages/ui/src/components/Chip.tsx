@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "./Icon";
 
-export type ChipColor = "accent" | "neutral";
+export type ChipColor = "accent" | "neutral" | "success";
 export type ChipSize = "S" | "XS";
 
 export type ChipProps = {
@@ -31,17 +31,17 @@ export function Chip({
   disabled = false,
   className = "",
 }: ChipProps) {
-  const bg        = color === "accent" ? "bg-[var(--accent-10,#1132ee1a)]" : "bg-[var(--black-5,#0000000d)]";
-  const bgHover   = color === "accent" ? "hover:bg-[#e7eafd]" : "hover:bg-[#e6e6e6]";
-  const textColor = color === "accent" ? "text-[#1132ee]" : "text-[#1a1a1a]";
+  const bg        = color === "accent" ? "bg-[var(--accent-10,#1132ee1a)]" : color === "success" ? "bg-[var(--green-50,#edf7ee)]" : "bg-[var(--black-5,#0000000d)]";
+  const bgHover   = color === "accent" ? "hover:bg-[#e7eafd]" : color === "success" ? "hover:bg-[#d6efd8]" : "hover:bg-[#e6e6e6]";
+  const textColor = color === "accent" ? "text-[#1132ee]" : color === "success" ? "text-[var(--green-600,#3f8d43)]" : "text-[#1a1a1a]";
 
   const colors = disabled ? "bg-[#f7f7f7] text-[#999]" : `${bg} ${textColor}`;
   const hover  = !disabled ? bgHover : "";
 
   const labelEl = (
     <span
-      className="text-[13px] font-normal leading-none tracking-[0.065px] whitespace-nowrap"
-      style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}
+      className="t-body-sm leading-none whitespace-nowrap"
+      style={{ fontFeatureSettings: "'ss07'" }}
     >
       {label}
     </span>
