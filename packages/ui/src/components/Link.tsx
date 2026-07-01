@@ -92,8 +92,7 @@ export function Link({
       {prefix && (
         <span className="flex items-center shrink-0">{prefix}</span>
       )}
-      {/* Underline only on text, not trailing icon */}
-      <span className="underline underline-offset-[2px]">{children}</span>
+      <span>{children}</span>
       {trailingIcon && (
         <span className="flex items-center shrink-0 no-underline">{trailingIcon}</span>
       )}

@@ -356,7 +356,15 @@ npx vercel build --yes --prod
 npx vercel deploy --prebuilt --prod --no-wait
 ```
 
+**ds-preview** → run from the app directory:
+```bash
+cd "/Users/cyvianchen/Desktop/Ambient Prototypes/apps/ds-preview"
+npx vercel build --yes --prod
+npx vercel deploy --prebuilt --prod
+```
+
 - **orders-v1**: `cyvian-chens-projects/ambient-prototypes-orders-v1` → `ambient-prototypes-orders-v1.vercel.app`
 - **previsit-customization**: `cyvian-chens-projects/ambient-prototypes-previsit` → `ambient-prototypes-previsit.vercel.app`
+- **ds-preview**: `cyvian-chens-projects/ambient-prototypes-ds-preview` → `ambient-prototypes-ds-preview.vercel.app`
 
 The user controls when to deploy — do not commit or push unless explicitly asked.
