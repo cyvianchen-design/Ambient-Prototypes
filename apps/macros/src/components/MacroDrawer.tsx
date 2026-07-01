@@ -331,6 +331,7 @@ export function MacroDrawer({
                       size="small"
                       suffix={<Icon name={optionalExpanded ? "keyboard_arrow_up" : "keyboard_arrow_down"} size={16} />}
                       onClick={() => setOptionalExpanded((v) => !v)}
+                      className="self-start"
                     >
                       Optional Settings
                     </Button>

@@ -1234,7 +1234,7 @@ export default function R3InlineTitleM() {
                     <div className="flex items-center gap-[8px] py-[4px]">
                       <div className="flex-1 h-px bg-[var(--shape-outline,rgba(0,0,0,0.1))]" />
                       <span className="t-body-xs text-[var(--foreground-secondary,#666)] whitespace-nowrap">
-                        Not included
+                        Deactivated sections
                       </span>
                       <div className="flex-1 h-px bg-[var(--shape-outline,rgba(0,0,0,0.1))]" />
                     </div>
@@ -1245,33 +1245,51 @@ export default function R3InlineTitleM() {
                       return (
                         <div key={id} className="shrink-0 bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] p-[4px] flex flex-col gap-[8px]">
                           <div className="flex items-center gap-[8px] h-[28px] px-[4px]">
-                            <span
-                              className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
-                              style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
-                            >
-                              {group.label}
-                            </span>
-                            {group.timeFrameKey && group.options ? (
-                              <DisabledChip label={pendingTimeFrames[group.timeFrameKey] ?? group.options[0]} />
-                            ) : group.fixedLabel ? (
-                              <DisabledChip label={group.fixedLabel} />
-                            ) : null}
-                            <Button variant="tertiary" size="small" onClick={() => restoreSection(id)}>Add</Button>
+                            <div className="flex-1 flex items-baseline gap-[6px] min-w-0 overflow-hidden">
+                              <span
+                                className="t-title-md text-[var(--foreground-tertiary,#808080)] shrink-0"
+                                style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
+                              >
+                                {group.label}
+                              </span>
+                              {group.description && (
+                                <span className="t-body-xs leading-[1.3] text-[var(--foreground-tertiary,#808080)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                                  {group.description}
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-[4px] shrink-0">
+                              {group.timeFrameKey && group.options ? (
+                                <DisabledChip label={pendingTimeFrames[group.timeFrameKey] ?? group.options[0]} />
+                              ) : group.fixedLabel ? (
+                                <DisabledChip label={group.fixedLabel} />
+                              ) : null}
+                              <Button variant="tertiary" size="small" onClick={() => restoreSection(id)}>Add</Button>
+                            </div>
                           </div>
                           {group.children?.map((child) => (
-                            <div key={child.id} className="group/deleted-child flex items-center gap-[8px] h-[28px] pl-[20px] pr-[4px]">
-                              <span
-                                className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
-                                style={{ fontFamily: "Lato, sans-serif" }}
-                              >
-                                {child.label}
-                              </span>
-                              {child.timeFrameKey && child.options ? (
-                                <DisabledChip label={pendingTimeFrames[child.timeFrameKey] ?? child.options[0]} />
-                              ) : child.fixedLabel ? (
-                                <DisabledChip label={child.fixedLabel} />
-                              ) : null}
-                              <Button variant="tertiary" size="small" className="opacity-0 group-hover/deleted-child:opacity-100 transition-opacity" onClick={() => restoreChildFromDeletedSection(id, child.id)}>Add</Button>
+                            <div key={child.id} className="group/deleted-child flex items-center gap-[8px] h-[28px] pl-[28px] pr-[4px]">
+                              <div className="flex-1 flex items-baseline gap-[6px] min-w-0 overflow-hidden">
+                                <span
+                                  className="t-title-sm text-[var(--foreground-tertiary,#808080)] shrink-0"
+                                  style={{ fontFamily: "Lato, sans-serif" }}
+                                >
+                                  {child.label}
+                                </span>
+                                {child.description && (
+                                  <span className="t-body-xs leading-[1.3] text-[var(--foreground-tertiary,#808080)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                                    {child.description}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-[4px] shrink-0">
+                                {child.timeFrameKey && child.options ? (
+                                  <DisabledChip label={pendingTimeFrames[child.timeFrameKey] ?? child.options[0]} />
+                                ) : child.fixedLabel ? (
+                                  <DisabledChip label={child.fixedLabel} />
+                                ) : null}
+                                <Button variant="tertiary" size="small" className="opacity-0 group-hover/deleted-child:opacity-100 transition-opacity" onClick={() => restoreChildFromDeletedSection(id, child.id)}>Add</Button>
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -1285,28 +1303,44 @@ export default function R3InlineTitleM() {
                       if (removedKids.length === 0) return null;
                       return (
                         <div key={id} className="shrink-0 bg-white border border-[var(--shape-outline,rgba(0,0,0,0.1))] rounded-[6px] p-[4px] flex flex-col gap-[8px]">
-                          <div className="flex items-center h-[28px] px-[4px]">
-                            <span
-                              className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
-                              style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
-                            >
-                              {group.label}
-                            </span>
+                          <div className="flex items-center gap-[8px] h-[28px] px-[4px]">
+                            <div className="flex-1 flex items-baseline gap-[6px] min-w-0 overflow-hidden">
+                              <span
+                                className="t-title-md text-[var(--foreground-tertiary,#808080)] shrink-0"
+                                style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07' 1" }}
+                              >
+                                {group.label}
+                              </span>
+                              {group.description && (
+                                <span className="t-body-xs leading-[1.3] text-[var(--foreground-tertiary,#808080)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                                  {group.description}
+                                </span>
+                              )}
+                            </div>
                           </div>
                           {removedKids.map((child) => (
-                            <div key={child.id} className="flex items-center gap-[8px] h-[28px] pl-[20px] pr-[4px]">
-                              <span
-                                className="flex-1 t-title-sm text-[var(--foreground-secondary,#666)] truncate"
-                                style={{ fontFamily: "Lato, sans-serif" }}
-                              >
-                                {child.label}
-                              </span>
-                              {child.timeFrameKey && child.options ? (
-                                <DisabledChip label={pendingTimeFrames[child.timeFrameKey] ?? child.options[0]} />
-                              ) : child.fixedLabel ? (
-                                <DisabledChip label={child.fixedLabel} />
-                              ) : null}
-                              <Button variant="tertiary" size="small" onClick={() => restoreChild(child.id)}>Add</Button>
+                            <div key={child.id} className="flex items-center gap-[8px] h-[28px] pl-[28px] pr-[4px]">
+                              <div className="flex-1 flex items-baseline gap-[6px] min-w-0 overflow-hidden">
+                                <span
+                                  className="t-title-sm text-[var(--foreground-tertiary,#808080)] shrink-0"
+                                  style={{ fontFamily: "Lato, sans-serif" }}
+                                >
+                                  {child.label}
+                                </span>
+                                {child.description && (
+                                  <span className="t-body-xs leading-[1.3] text-[var(--foreground-tertiary,#808080)] truncate" style={{ fontFamily: "Lato, sans-serif" }}>
+                                    {child.description}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-[4px] shrink-0">
+                                {child.timeFrameKey && child.options ? (
+                                  <DisabledChip label={pendingTimeFrames[child.timeFrameKey] ?? child.options[0]} />
+                                ) : child.fixedLabel ? (
+                                  <DisabledChip label={child.fixedLabel} />
+                                ) : null}
+                                <Button variant="tertiary" size="small" onClick={() => restoreChild(child.id)}>Add</Button>
+                              </div>
                             </div>
                           ))}
                         </div>
