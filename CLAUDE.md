@@ -337,6 +337,8 @@ Always use **Claude in Chrome** MCP tools to verify UI changes in the browser �
 
 **ds-preview tab navigation:** Navigate directly to a tab via query param — e.g. `http://localhost:5175/?tab=menu`. Valid tab IDs: `buttons`, `form`, `chips`, `icons`, `menu`, `nav`. This avoids the click-to-tab step during verification.
 
+**ds-preview Navigation tab — secondary nav patterns:** Each mode of the app gets its own secondary nav panel shown side by side (flex-wrap, as many as fit per row). Always order panels to match the primary nav tab order: Visits → Scribes → Customize → Assistant → Admin. When adding a new secondary nav pattern, append it in this order.
+
 ---
 
 ## Deploy
