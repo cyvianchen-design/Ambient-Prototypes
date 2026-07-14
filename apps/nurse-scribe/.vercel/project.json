@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_Gt2m62Xd8lTSUAZ5zeAt0webxjKF",
+  "orgId": "team_vDM3QsvGudjMsf1NTOjGINCA",
+  "projectName": "ambient-prototypes-nurse-scribe",
+  "settings": {
+    "createdAt": 1784012992839,
+    "framework": "vite",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
