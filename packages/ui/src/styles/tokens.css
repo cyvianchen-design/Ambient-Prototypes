@@ -424,6 +424,9 @@
     --shadow-default: 0 4px 16px 2px rgba(0, 0, 0, 0.07);
     --shadow-s: 0 4px 8px rgba(0, 0, 0, 0.14);
     --shadow-drawer: 0 -4px 16px 2px rgba(0, 0, 0, 0.07);
+
+    /* Gradients */
+    --gradient-brand: linear-gradient(-89deg, #8044ff 2%, #4554e5 50%, #2670ff 98%);
   }
 }
 
@@ -437,4 +440,16 @@
   .t-body-md  { font-size: var(--t-body-md-size);  font-weight: var(--t-body-md-weight);  line-height: var(--t-body-md-lh);  letter-spacing: var(--t-body-md-tracking);  }
   .t-body-sm  { font-size: var(--t-body-sm-size);  font-weight: var(--t-body-sm-weight);  line-height: var(--t-body-sm-lh);  letter-spacing: var(--t-body-sm-tracking);  }
   .t-body-xs  { font-size: var(--t-body-xs-size);  font-weight: var(--t-body-xs-weight);  line-height: var(--t-body-xs-lh);  letter-spacing: var(--t-body-xs-tracking);  }
+
+  /* Brand gradient outline — 2px gradient border over a white interior.
+     Use for the assistant chat input, preview containers, and other
+     brand-outlined surfaces. Override --gradient-border-fill for a
+     non-white interior (e.g. var(--surface-1)). */
+  .border-gradient-brand {
+    --gradient-border-fill: #ffffff;
+    border: 2px solid transparent;
+    background:
+      linear-gradient(var(--gradient-border-fill), var(--gradient-border-fill)) padding-box,
+      var(--gradient-brand) border-box;
+  }
 }

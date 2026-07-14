@@ -122,7 +122,7 @@ export function IconButton({
       disabled={disabled}
       aria-label={ariaLabel}
       className={`flex items-center justify-center rounded-[6px] transition-all cursor-pointer outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--litmus-100,#cfd6fc)] disabled:opacity-40 disabled:cursor-not-allowed ${iconSizes[size]} ${iconVariants[variant]} ${className}`}
-      style={variant === "magic" ? { backgroundImage: "linear-gradient(-89deg, #8044ff 2%, #4554e5 50%, #2670ff 98%)" } : undefined}
+      style={variant === "magic" ? { backgroundImage: "var(--gradient-brand)" } : undefined}
     >
       {icon}
     </button>

@@ -15,6 +15,8 @@ export { TextArea } from "./components/TextArea";
 export type { TextAreaProps, TextAreaFeedback } from "./components/TextArea";
 export { ScribeLongField } from "./components/ScribeLongField";
 export type { ScribeLongFieldProps, ScribeLongFieldMode } from "./components/ScribeLongField";
+export { ScribeShortField } from "./components/ScribeShortField";
+export type { ScribeShortFieldProps, ScribeShortFieldInput, ScribeShortFieldState } from "./components/ScribeShortField";
 export { Switch } from "./components/Switch";
 export type { SwitchProps, SwitchSize } from "./components/Switch";
 export { Chip } from "./components/Chip";

@@ -1,12 +1,15 @@
 import React from "react";
 
 export type CheckboxState = "unselected" | "selected" | "indeterminate";
+export type CheckboxSize = "M" | "S";
 
 export type CheckboxProps = {
   state?: CheckboxState;
   disabled?: boolean;
   onChange?: (next: boolean) => void;
   className?: string;
+  /** M = 18px box (default); S = 16px box, tighter padding. */
+  size?: CheckboxSize;
 };
 
 export function Checkbox({
@@ -14,8 +17,11 @@ export function Checkbox({
   disabled = false,
   onChange,
   className = "",
+  size = "M",
 }: CheckboxProps) {
   const filled = state === "selected" || state === "indeterminate";
+  const wrap = size === "S" ? "p-[3px]" : "p-[5px]";
+  const box = size === "S" ? "size-[16px]" : "size-[18px]";
 
   function handleClick() {
     if (disabled || !onChange) return;
@@ -36,10 +42,10 @@ export function Checkbox({
   return (
     <div
       onClick={handleClick}
-      className={`p-[5px] flex items-center justify-center shrink-0 ${disabled ? "cursor-not-allowed" : "cursor-pointer"} ${className}`}
+      className={`${wrap} flex items-center justify-center shrink-0 ${disabled ? "cursor-not-allowed" : "cursor-pointer"} ${className}`}
     >
       <div
-        className={`relative size-[18px] rounded-[2px] flex items-center justify-center transition-colors ${boxBg} ${boxBorder}`}
+        className={`relative ${box} rounded-[2px] flex items-center justify-center transition-colors ${boxBg} ${boxBorder}`}
       >
         {state === "selected" && (
           <svg width="10" height="8" viewBox="0 0 11 9" fill="none">

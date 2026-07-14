@@ -9,6 +9,8 @@ export type SecondaryNavItemProps = {
   duration?: string;
   time?: string;
   status?: VisitStatusValue;
+  /** Custom badge in the top-right slot (e.g. a clinical patient-status badge). Overrides `status`. */
+  statusSlot?: React.ReactNode;
   isSelected?: boolean;
   onClick?: () => void;
   className?: string;
@@ -22,18 +24,21 @@ export function SecondaryNavItem({
   duration,
   time,
   status,
+  statusSlot,
   isSelected = false,
   onClick,
   className = "",
 }: SecondaryNavItemProps) {
   // When `time` is provided (visits/previsit mode):
-  //   left  = age · gender · duration
-  //   right = appointment time
+  //   left  = age · gender · chiefComplaint (chiefComplaint appended when provided)
+  //   right = appointment time (or bed/room)
   // When `time` is NOT provided (scribes mode, legacy behavior):
   //   left  = chiefComplaint · age/gender
   //   right = duration
   const meta = time
-    ? (age != null && gender ? `${age} · ${gender}` : undefined) ?? ""
+    ? [age != null && gender ? `${age} · ${gender}` : undefined, chiefComplaint]
+        .filter(Boolean)
+        .join(" · ")
     : [chiefComplaint, age != null && gender ? `${age} · ${gender}` : undefined]
         .filter(Boolean)
         .join(" · ");
@@ -54,7 +59,7 @@ export function SecondaryNavItem({
         <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)] truncate">
           {name}
         </span>
-        {status && <VisitStatus status={status} />}
+        {statusSlot ?? (status && <VisitStatus status={status} />)}
       </div>
       <div className="flex items-center justify-between gap-[8px]">
         <span className="t-body-sm text-[var(--foreground-secondary,#666)] truncate">
