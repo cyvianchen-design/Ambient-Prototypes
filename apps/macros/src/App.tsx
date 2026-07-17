@@ -4,6 +4,7 @@ import type { ScreenDef } from "@ds/ui";
 import R1Link from "./screens/R1-Link";
 import R1Chip from "./screens/R1-Chip";
 import R1Token from "./screens/R1-Token";
+import R2Baseline from "./screens/R2-Baseline";
 import { MacroDrawer } from "./components/MacroDrawer";
 import { MacroDrawerCtx, OpenMacroState } from "./macroContext";
 import type { TokenStyle } from "./components/MacroContentEditor";
@@ -12,17 +13,22 @@ const screens: ScreenDef[] = [
   { round: "R1", direction: "Link",  component: R1Link },
   { round: "R1", direction: "Chip",  component: R1Chip },
   { round: "R1", direction: "Token", component: R1Token },
+  { round: "R2", direction: "Baseline", component: R2Baseline },
 ];
 
 const DIRECTION_TOKEN_STYLE: Record<string, TokenStyle> = {
-  Link:  "link",
-  Chip:  "chip",
-  Token: "field",
+  Link:     "link",
+  Chip:     "chip",
+  Token:    "field",
+  Baseline: "field",
 };
 
 export default function App() {
   const [openMacro, setOpenMacro] = useState<OpenMacroState>(null);
-  const [activeDirection, setActiveDirection] = useState("Link");
+  const [activeDirection, setActiveDirection] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("direction") ?? "Link";
+  });
 
   const tokenStyle = DIRECTION_TOKEN_STYLE[activeDirection] ?? "link";
 

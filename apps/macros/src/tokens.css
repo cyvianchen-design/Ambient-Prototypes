@@ -11,6 +11,8 @@
 [data-token][data-tokenstyle="field"] {
   background: var(--litmus-25);
   border: 1px solid var(--accent-10);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
   transition: background 150ms, border-color 150ms;
 }
 [data-token][data-tokenstyle="field"]:hover {

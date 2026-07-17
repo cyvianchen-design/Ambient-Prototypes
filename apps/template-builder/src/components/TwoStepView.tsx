@@ -75,22 +75,16 @@ function MacrosBlock({ mode, initialCount, trailingAction }: { mode: Mode; initi
 
   return (
     <div className="flex flex-col gap-[8px]">
-      {macros.length === 0 ? (
-        mode !== "my" && <p className="t-body-sm text-[var(--foreground-secondary,#666)]">No macros attached.</p>
-      ) : (
-        macros.map((m) => (
-          <div key={m.id} className="border border-[rgba(0,0,0,0.1)] rounded-[6px] h-[32px] flex items-center gap-[16px] px-[8px] hover:bg-[#f7f7f7] transition-colors">
-            <span className="flex-1 min-w-0 truncate t-body-sm text-[var(--foreground-primary,#1a1a1a)]">{m.name}</span>
-            <Switch size="XS" checked={m.enabled} onChange={() => toggle(m.id)} />
-          </div>
-        ))
-      )}
+      {macros.map((m) => (
+        <div key={m.id} className="border border-[rgba(0,0,0,0.1)] rounded-[6px] h-[32px] flex items-center gap-[16px] px-[8px] hover:bg-[#f7f7f7] transition-colors">
+          <span className="flex-1 min-w-0 truncate t-body-sm text-[var(--foreground-primary,#1a1a1a)]">{m.name}</span>
+          <Switch size="XS" checked={m.enabled} onChange={() => toggle(m.id)} />
+        </div>
+      ))}
       <div className="flex items-center justify-between">
-        {mode === "my" ? (
-          <Button variant="tertiary" size="small" prefix={<Icon name="add" size={14} />} onClick={addMacro}>
-            Add Macro
-          </Button>
-        ) : <div />}
+        <Button variant="tertiary" size="small" prefix={<Icon name="add" size={14} />} onClick={addMacro}>
+          Add Macro
+        </Button>
         {trailingAction}
       </div>
     </div>
@@ -101,15 +95,24 @@ function MacrosBlock({ mode, initialCount, trailingAction }: { mode: Mode; initi
 
 const NOTE_TYPES = ["H&P", "Progress note", "Discharge summary", "Consult note", "Operative note"];
 
-const NOTE_SECTIONS: Record<string, string[]> = {
-  "H&P": ["Chief complaint", "HPI", "Past medical history", "Medications", "Allergies", "Family history", "Social history", "Review of systems", "Physical exam", "Assessment & plan"],
-  "Progress note": ["Subjective", "Objective", "Assessment", "Plan"],
-  "Discharge summary": ["Admission diagnosis", "Hospital course", "Discharge condition", "Follow-up instructions"],
-  "Consult note": ["Reason for consult", "History", "Examination", "Assessment", "Recommendations"],
-  "Operative note": ["Preoperative diagnosis", "Procedure performed", "Intraoperative findings", "Postoperative diagnosis"],
+const NOTE_SUBSECTIONS: Record<string, string[]> = {
+  "H&P": ["Chief complaint", "HPI", "Past medical history", "Surgical history", "Medications", "Allergies", "Family history", "Social history", "Review of systems", "Physical exam", "Assessment & plan"],
+  "Progress note": ["HPI update", "Vitals", "Review of systems", "Physical exam", "Active problems", "Assessment & plan", "Medication changes", "Orders & referrals", "Follow-up plan"],
+  "Discharge summary": ["Admission diagnosis", "Hospital course", "Procedures performed", "Discharge medications", "Discharge condition", "Pending results", "Follow-up instructions"],
+  "Consult note": ["Reason for consult", "History of present illness", "Past medical history", "Medications", "Examination", "Assessment", "Recommendations"],
+  "Operative note": ["Preoperative diagnosis", "Postoperative diagnosis", "Procedure performed", "Anesthesia", "Intraoperative findings", "Specimens", "Complications", "Disposition"],
 };
 
 const OTHER_DATA_SOURCES = ["Lab results", "Vitals", "Imaging", "Orders", "Referral letters"];
+
+const TIME_RANGE_OPTIONS = ["Since last visit", "Last 24 hrs", "Last 7 days", "Last 30 days", "All time"];
+const TIME_RANGE_ABBREV: Record<string, string> = {
+  "Since last visit": "since last visit",
+  "Last 24 hrs": "24h",
+  "Last 7 days": "7d",
+  "Last 30 days": "30d",
+  "All time": "all time",
+};
 
 const FROM_OPTIONS = ["Me", "Same specialty", "Any provider"];
 const WITHIN_OPTIONS = ["Most recent", "Last 24 hrs", "Last 7 days", "Last 30 days"];
@@ -117,25 +120,43 @@ const WITHIN_OPTIONS = ["Most recent", "Last 24 hrs", "Last 7 days", "Last 30 da
 const FROM_ABBREV: Record<string, string> = { "Me": "me", "Same specialty": "same specialty", "Any provider": "any" };
 const WITHIN_ABBREV: Record<string, string> = { "Most recent": "", "Last 24 hrs": "24h", "Last 7 days": "7d", "Last 30 days": "30d" };
 
-type DataItem = { kind: "data"; type: string };
+type DataItem = { kind: "data"; type: string; timeRange: string };
 type NoteItem = { kind: "note"; noteType: string; from: string; within: string; sections: string[] };
 type IncludeItem = DataItem | NoteItem;
 
 function includeChipLabel(item: IncludeItem): string {
-  if (item.kind === "data") return item.type;
+  if (item.kind === "data") {
+    const abbrev = TIME_RANGE_ABBREV[item.timeRange] ?? item.timeRange;
+    return `${item.type} · ${abbrev}`;
+  }
   const meta = [FROM_ABBREV[item.from] ?? item.from, WITHIN_ABBREV[item.within] ?? item.within].filter(Boolean).join(" · ");
   if (item.sections.length === 0) return `${item.noteType}${meta ? " · " + meta : ""}`;
   const preview = item.sections.slice(0, 2).join(", ") + (item.sections.length > 2 ? ` +${item.sections.length - 2}` : "");
   return `${item.noteType} — ${preview}${meta ? " · " + meta : ""}`;
 }
 
-function IncludeDataField() {
+const SHARED_INCLUDE_SOURCES = ["Last note", "Patient profile", "Scheduler's note"];
+
+function IncludeDataField({ mode }: { mode: Mode }) {
+  if (mode === "shared") {
+    return (
+      <div className="flex flex-wrap gap-[6px] items-center">
+        <span className="shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">Include data from</span>
+        {SHARED_INCLUDE_SOURCES.map((s) => (
+          <Chip key={s} label={s} color="neutral" size="XS" />
+        ))}
+      </div>
+    );
+  }
+
   const [selected, setSelected] = useState<IncludeItem[]>([]);
   const [open, setOpen] = useState(false);
   const [modalNote, setModalNote] = useState<string | null>(null);
+  const [modalData, setModalData] = useState<string | null>(null);
   const [pendingFrom, setPendingFrom] = useState("Me");
   const [pendingWithin, setPendingWithin] = useState("Most recent");
   const [pendingSections, setPendingSections] = useState<Set<string>>(new Set());
+  const [pendingTimeRange, setPendingTimeRange] = useState("Since last visit");
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -164,9 +185,16 @@ function IncludeDataField() {
     setModalNote(null);
   }
 
-  function addData(type: string) {
-    setSelected((p) => [...p, { kind: "data", type }]);
+  function openDataModal(type: string) {
     setOpen(false);
+    setModalData(type);
+    setPendingTimeRange("Since last visit");
+  }
+
+  function confirmDataModal() {
+    if (!modalData) return;
+    setSelected((p) => [...p, { kind: "data", type: modalData, timeRange: pendingTimeRange }]);
+    setModalData(null);
   }
 
   function toggleSection(sec: string) {
@@ -204,7 +232,7 @@ function IncludeDataField() {
                     <div className="px-[6px] pb-[6px]">
                       <MenuHeader>Other data</MenuHeader>
                       {availableData.map((d) => (
-                        <MenuItem key={d} label={d} onClick={() => addData(d)} />
+                        <MenuItem key={d} label={d} trailing={<Icon name="arrow_forward" size={14} />} onClick={() => openDataModal(d)} />
                       ))}
                     </div>
                   )}
@@ -233,10 +261,10 @@ function IncludeDataField() {
                 <span className="w-[56px] shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">Within</span>
                 <SelectDropdown value={pendingWithin} options={WITHIN_OPTIONS} onChange={setPendingWithin} width="w-[200px]" />
               </div>
-              {/* Sections */}
+              {/* Subsections */}
               <div className="flex flex-col gap-[10px]">
-                <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Sections</span>
-                {(NOTE_SECTIONS[modalNote] || []).map((sec) => (
+                <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Subsections</span>
+                {(NOTE_SUBSECTIONS[modalNote] || []).map((sec) => (
                   <label key={sec} className="flex items-center gap-[10px] cursor-pointer select-none">
                     <Checkbox state={pendingSections.has(sec) ? "selected" : "unselected"} onChange={() => toggleSection(sec)} />
                     <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)]">{sec}</span>
@@ -251,14 +279,31 @@ function IncludeDataField() {
           </div>
         </div>
       )}
+
+      {/* Data time range modal */}
+      {modalData && (
+        <div className="fixed inset-0 z-[150] flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/20" onClick={() => setModalData(null)} />
+          <div className="relative z-[160] bg-white rounded-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.16)] w-[360px] flex flex-col overflow-hidden">
+            <div className="shrink-0 px-[24px] pt-[20px] pb-[16px]">
+              <span className="t-title-lg text-[var(--foreground-primary,#1a1a1a)]">Add {modalData}</span>
+            </div>
+            <div className="px-[24px] pb-[8px] flex flex-col gap-[16px]">
+              <div className="flex items-center gap-[12px]">
+                <span className="w-[80px] shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">Time range</span>
+                <SelectDropdown value={pendingTimeRange} options={TIME_RANGE_OPTIONS} onChange={setPendingTimeRange} width="w-[200px]" />
+              </div>
+            </div>
+            <div className="shrink-0 px-[24px] py-[16px] flex justify-end gap-[8px]">
+              <Button variant="secondary" size="medium" onClick={() => setModalData(null)}>Cancel</Button>
+              <Button variant="primary" size="medium" onClick={confirmDataModal}>Add</Button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
-
-const WHEN_EMPTY_OPTIONS = [
-  { value: "hide", label: "Hide subsection" },
-  { value: "show", label: "Show empty state" },
-];
 
 // ── Subsection card (all settings visible) ───────────────────────────────────
 
@@ -275,7 +320,7 @@ function SubsectionCard({
   onDelete: () => void;
   registerRef: (el: HTMLDivElement | null) => void;
 }) {
-  const [showInstructions, setShowInstructions] = useState(mode === "my");
+  const [showInstructions, setShowInstructions] = useState(false);
   function update(p: Partial<Subsection>) { onChange({ ...sub, ...p }); }
   const whenEmpty = sub.generateWhen ?? "hide";
   const enabled = sub.status !== "disabled";
@@ -299,23 +344,27 @@ function SubsectionCard({
 
       {/* ── Template instruction (what to capture + section behavior) ── */}
       <div className="flex flex-col gap-[10px] -mt-[8px]">
-        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">Template instruction</span>
-
-        <IncludeDataField />
-
-        {mode === "shared" && !showInstructions ? (
-          <Button variant="tertiary" size="small" suffix={<Icon name="keyboard_arrow_down" size={16} />} className="self-start" onClick={() => setShowInstructions(true)}>
-            Show template instruction
-          </Button>
-        ) : mode === "shared" ? (
-          <div className="flex flex-col gap-[8px]">
-            <p className="t-body-sm text-[var(--foreground-secondary,#666)] italic leading-[1.5]">{sub.templateInstruction || "No template instruction provided."}</p>
-            <Button variant="tertiary" size="small" suffix={<Icon name="keyboard_arrow_up" size={16} />} className="self-start" onClick={() => setShowInstructions(false)}>
-              Hide template instruction
+        <div className="flex items-center justify-between">
+          <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">Template instruction</span>
+          {mode === "shared" && (
+            <Button variant="tertiary" size="small" suffix={<Icon name={showInstructions ? "keyboard_arrow_up" : "keyboard_arrow_down"} size={14} />} onClick={() => setShowInstructions((v) => !v)}>
+              {showInstructions ? "Hide" : "Show"}
             </Button>
-          </div>
+          )}
+        </div>
+
+        {mode === "shared" ? (
+          showInstructions && (
+            <>
+              <IncludeDataField mode={mode} />
+              <p className="t-body-sm text-[var(--foreground-secondary,#666)] leading-[1.5]">{sub.templateInstruction || "No template instruction provided."}</p>
+            </>
+          )
         ) : (
-          <TextArea value={sub.templateInstruction} onChange={(v) => update({ templateInstruction: v })} rows={4} placeholder="Describe what this subsection should capture…" />
+          <>
+            <IncludeDataField mode={mode} />
+            <TextArea value={sub.templateInstruction} onChange={(v) => update({ templateInstruction: v })} rows={4} placeholder="Describe what this subsection should capture…" />
+          </>
         )}
       </div>
 
@@ -326,7 +375,7 @@ function SubsectionCard({
 
         <div className="flex items-center gap-[12px]">
           <span className="w-[64px] shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">Title</span>
-          <Switch checked={sub.showTitle} onChange={(v) => update({ showTitle: v })} />
+          <Switch size="XS" checked={sub.showTitle} onChange={(v) => update({ showTitle: v })} />
           <span className="t-body-sm text-[var(--foreground-secondary,#666)]">{sub.showTitle ? "Show" : "Hide"}</span>
         </div>
         <div className="flex items-center gap-[12px]">
@@ -338,16 +387,10 @@ function SubsectionCard({
           <SelectDropdown value={sub.length} options={LENGTH_OPTIONS} onChange={(v) => update({ length: v })} width="w-[200px]" />
         </div>
 
-        {/* Custom formatting — supplementary */}
-        <div className="flex flex-col gap-[6px] pt-[4px]">
-          <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Custom formatting</span>
-          <p className="t-body-xs text-[var(--foreground-secondary,#666)]">Anything the settings above don't cover — supplementary formatting instructions.</p>
-          <TextArea value={sub.customFormatting} onChange={(v) => update({ customFormatting: v })} rows={3} maxRows={6} placeholder="e.g. bold abnormal values, group by laterality…" />
-        </div>
-
         <div className="flex items-center gap-[12px]">
           <span className="shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">When empty</span>
-          <ButtonGroup size="small" items={WHEN_EMPTY_OPTIONS} value={whenEmpty} onChange={(v) => update({ generateWhen: v as GenerateWhen })} />
+          <Switch size="XS" checked={whenEmpty === "show"} onChange={(v) => update({ generateWhen: v ? "show" : "hide" })} />
+          <span className="t-body-sm text-[var(--foreground-secondary,#666)]">{whenEmpty === "show" ? "Show empty state" : "Hide subsection"}</span>
         </div>
         {whenEmpty === "show" && mode === "my" && (
           <div className="flex flex-col gap-[6px]">
@@ -356,6 +399,13 @@ function SubsectionCard({
             <TextArea value={sub.emptyState ?? ""} onChange={(v) => update({ emptyState: v })} rows={2} maxRows={4} placeholder="e.g. No significant findings documented." />
           </div>
         )}
+
+        {/* Custom formatting — supplementary */}
+        <div className="flex flex-col gap-[6px] pt-[4px]">
+          <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Custom formatting</span>
+          <p className="t-body-xs text-[var(--foreground-secondary,#666)]">Anything the settings above don't cover — supplementary formatting instructions.</p>
+          <TextArea value={sub.customFormatting} onChange={(v) => update({ customFormatting: v })} rows={3} maxRows={6} placeholder="e.g. bold abnormal values, group by laterality…" />
+        </div>
       </div>
 
       {/* ── Macros + delete ── */}

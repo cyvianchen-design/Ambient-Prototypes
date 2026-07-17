@@ -11,10 +11,12 @@ type GroupItem = {
   disabled?: boolean;
 };
 
-const groupSizeTokens: Record<ButtonGroupSize, { h: string; text: string; px: string; gap: string; radius: string; p: string }> = {
-  small:  { h: "h-[24px]", text: "t-title-sm", px: "px-[8px]",  gap: "gap-[4px]",  radius: "rounded-[4px]", p: "p-[2px]" },
-  medium: { h: "h-[32px]", text: "t-title-sm", px: "px-[12px]", gap: "gap-[6px]",  radius: "rounded-[6px]", p: "p-[3px]" },
-  large:  { h: "h-[40px]", text: "t-title-md", px: "px-[16px]", gap: "gap-[8px]",  radius: "rounded-[8px]", p: "p-[4px]" },
+// `radius` is the inner (button) radius; `outerRadius` is the container radius.
+// For concentric corners the container radius = button radius + container padding.
+const groupSizeTokens: Record<ButtonGroupSize, { h: string; text: string; px: string; gap: string; radius: string; outerRadius: string; p: string }> = {
+  small:  { h: "h-[24px]", text: "t-title-sm", px: "px-[8px]",  gap: "gap-[4px]",  radius: "rounded-[4px]", outerRadius: "rounded-[6px]",  p: "p-[2px]" },
+  medium: { h: "h-[32px]", text: "t-title-sm", px: "px-[12px]", gap: "gap-[6px]",  radius: "rounded-[6px]", outerRadius: "rounded-[8px]",  p: "p-[2px]" },
+  large:  { h: "h-[40px]", text: "t-title-md", px: "px-[16px]", gap: "gap-[8px]",  radius: "rounded-[8px]", outerRadius: "rounded-[12px]", p: "p-[4px]" },
 };
 
 export type ButtonGroupTheme = "default" | "inverse";
@@ -39,7 +41,7 @@ export function ButtonGroup({
   theme = "default",
   className = "",
 }: ButtonGroupProps) {
-  const { h, text, px, gap, radius, p } = groupSizeTokens[size];
+  const { h, text, px, gap, radius, outerRadius, p } = groupSizeTokens[size];
   const selectedValues = Array.isArray(value) ? value : [value];
 
   if (multiSelect) {
@@ -98,7 +100,7 @@ export function ButtonGroup({
   // Single-select: pill container, white elevated card for the selected option.
   return (
     <div
-      className={`inline-flex ${p} ${radius} bg-[var(--surface-2,#f2f2f2)] gap-[2px] ${className}`}
+      className={`inline-flex ${p} ${outerRadius} bg-[var(--surface-2,#f2f2f2)] gap-[2px] ${className}`}
       role="radiogroup"
     >
       {items.map((item) => {

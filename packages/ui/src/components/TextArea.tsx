@@ -23,6 +23,8 @@ export type TextAreaProps = {
   suffix?: React.ReactNode;
   /** Minimum visible rows before auto-expand kicks in (default 3) */
   rows?: number;
+  /** Cap auto-expand at this many rows; beyond it the field scrolls */
+  maxRows?: number;
   /** Show character counter "N / max" below the field */
   maxLength?: number;
   className?: string;
@@ -42,6 +44,7 @@ export function TextArea({
   caption,
   suffix,
   rows = 3,
+  maxRows,
   maxLength,
   className = "",
   onFocus,
@@ -56,8 +59,16 @@ export function TextArea({
     const el = textareaRef.current;
     if (!el) return;
     el.style.height = "auto";
-    el.style.height = `${el.scrollHeight}px`;
-  }, [value]);
+    let h = el.scrollHeight;
+    if (maxRows) {
+      const cs = getComputedStyle(el);
+      const lh = parseFloat(cs.lineHeight) || 20;
+      const max = lh * maxRows;
+      if (h > max) { h = max; el.style.overflowY = "auto"; }
+      else { el.style.overflowY = "hidden"; }
+    }
+    el.style.height = `${h}px`;
+  }, [value, maxRows]);
 
   const ftype = feedback?.type;
 

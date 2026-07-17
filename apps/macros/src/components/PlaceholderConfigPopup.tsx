@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Badge, Button, ButtonGroup, Checkbox, Chip, Icon, Overlay, TextArea, TextField } from "@ds/ui";
+import { Badge, Button, Checkbox, Chip, Icon, Menu, MenuItem, Overlay, TextArea, TextField } from "@ds/ui";
 import { SelectDropdown } from "./SelectDropdown";
 
 export type PlaceholderType = "text" | "dropdown" | "number";
@@ -19,10 +19,10 @@ type Props = {
   onConvertToPlainText?: () => void;
 };
 
-const TYPE_META: Record<PlaceholderType, { subtitle: string; icon: string }> = {
-  text:     { subtitle: "Free-form text input",          icon: "text_fields" },
-  dropdown: { subtitle: "Select from predefined options", icon: "arrow_drop_down_circle" },
-  number:   { subtitle: "Numeric value input",            icon: "tag" },
+const TYPE_META: Record<PlaceholderType, { label: string; subtitle: string; icon: string }> = {
+  text:     { label: "Text Input",  subtitle: "Free-form text input",           icon: "text_fields" },
+  dropdown: { label: "Dropdown",    subtitle: "Select from predefined options",  icon: "arrow_drop_down_circle" },
+  number:   { label: "Number",      subtitle: "Numeric value input",             icon: "tag" },
 };
 
 export function PlaceholderConfigPopup({
@@ -34,10 +34,10 @@ export function PlaceholderConfigPopup({
   initialAiInstructions = "",
   initialRequired = true,
   initialOptions = [],
-  onDelete,
   onConvertToPlainText,
 }: Props) {
   const [localType, setLocalType] = useState<PlaceholderType>(initialType);
+  const [typePickerOpen, setTypePickerOpen] = useState(false);
   const [defaultValue, setDefaultValue] = useState(initialDefaultValue);
   const [aiInstructions, setAiInstructions] = useState(initialAiInstructions);
   const [required, setRequired] = useState(initialRequired);
@@ -46,6 +46,41 @@ export function PlaceholderConfigPopup({
   const [selectedDefault, setSelectedDefault] = useState(initialDefaultValue);
 
   const meta = TYPE_META[localType];
+  const defaultValueTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const el = defaultValueTextareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
+  }, [defaultValue]);
+
+  function isValidNumber(v: string) {
+    return v.trim() !== "" && !isNaN(Number(v.trim()));
+  }
+
+  function switchType(next: PlaceholderType) {
+    if (next === localType) return;
+    if (next === "dropdown") {
+      // Carry existing text/number default in as the first dropdown option
+      if (defaultValue.trim() && !options.includes(defaultValue.trim())) {
+        const seed = defaultValue.trim();
+        setOptions([seed]);
+        setSelectedDefault(seed);
+      }
+      setDefaultValue("");
+    } else if (localType === "dropdown") {
+      const candidate = selectedDefault || options[0] || "";
+      setDefaultValue(next === "number" && !isValidNumber(candidate) ? "" : candidate);
+      setOptions([]);
+      setSelectedDefault("");
+    } else if (next === "number" && localType === "text") {
+      // Only keep text default if it's actually numeric
+      if (!isValidNumber(defaultValue)) setDefaultValue("");
+    }
+    // number → text: any numeric string is a valid text value, transfer as-is
+    setLocalType(next);
+  }
 
   function addOption() {
     const trimmed = newOption.trim();
@@ -81,24 +116,49 @@ export function PlaceholderConfigPopup({
       >
         <div className="bg-white rounded-[16px] shadow-[0px_8px_32px_4px_rgba(0,0,0,0.16)] w-[480px] max-h-[80vh] flex flex-col pointer-events-auto">
 
-          {/* Header */}
-          <div className="flex items-start gap-[16px] px-[24px] pt-[24px] pb-[16px]">
-            <div className="w-[52px] h-[52px] rounded-[12px] bg-[var(--litmus-25)] flex items-center justify-center shrink-0 text-[var(--accent)]">
-              <Icon name={meta.icon} size={24} />
+          {/* Header — pl reduced by button px so net position is unchanged */}
+          <div className="flex items-center justify-between pl-[16px] pr-[24px] pt-[16px] pb-[8px]">
+
+            {/* Trigger button + popover anchor — min-w sized to longest option */}
+            <div className="relative min-w-[280px]">
+              <button
+                className="flex items-center gap-[12px] text-left rounded-[10px] hover:bg-[var(--surface-1)] transition-colors cursor-pointer pl-[8px] pr-[12px] py-[8px] outline-none"
+                onClick={() => setTypePickerOpen((v) => !v)}
+              >
+                <div className="w-[40px] h-[40px] rounded-[10px] bg-[var(--accent-10)] flex items-center justify-center shrink-0 text-[var(--accent)]">
+                  <Icon name={meta.icon} size={20} />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-[4px]">
+                    <p className="t-title-md text-[var(--foreground-primary)]">{meta.label}</p>
+                    <span className="text-[var(--foreground-secondary)] flex items-center shrink-0">
+                      <Icon name={typePickerOpen ? "keyboard_arrow_up" : "keyboard_arrow_down"} size={16} />
+                    </span>
+                  </div>
+                  <p className="t-body-sm text-[var(--foreground-secondary)] mt-[2px] whitespace-nowrap">{meta.subtitle}</p>
+                </div>
+              </button>
+
+              {/* Type picker — DS Menu popover */}
+              {typePickerOpen && (
+                <Menu className="absolute left-[0] right-[0] top-[calc(100%+6px)] z-[20]">
+                  {(["text", "dropdown", "number"] as PlaceholderType[]).map((t) => (
+                    <MenuItem
+                      key={t}
+                      icon={<Icon name={TYPE_META[t].icon} size={16} />}
+                      label={TYPE_META[t].label}
+                      description={TYPE_META[t].subtitle}
+                      selected={localType === t}
+                      onClick={() => { switchType(t); setTypePickerOpen(false); }}
+                    />
+                  ))}
+                </Menu>
+              )}
             </div>
-            <div className="flex-1 min-w-0 pt-[4px]">
-              <p className="t-title-md text-[var(--foreground-primary)]">
-                {isEditing
-                  ? "Edit Smart Field"
-                  : `Configure ${localType === "text" ? "Text" : localType === "dropdown" ? "Dropdown" : "Number"} Placeholder`}
-              </p>
-              <p className="t-body-sm text-[var(--foreground-secondary)] mt-[2px]">
-                {meta.subtitle}
-              </p>
-            </div>
+
             <button
               onClick={onClose}
-              className="w-[28px] h-[28px] flex items-center justify-center rounded-[6px] hover:bg-[var(--surface-1)] transition-colors text-[var(--foreground-secondary)] shrink-0 mt-[2px]"
+              className="w-[28px] h-[28px] flex items-center justify-center rounded-[6px] hover:bg-[var(--surface-1)] transition-colors text-[var(--foreground-secondary)] shrink-0"
             >
               <Icon name="close" size={18} />
             </button>
@@ -106,25 +166,6 @@ export function PlaceholderConfigPopup({
 
           {/* Body */}
           <div className="flex-1 min-h-0 overflow-y-auto px-[24px] py-[16px] flex flex-col gap-[16px]">
-
-            {/* Type selector — edit mode only */}
-            {isEditing && (
-              <div className="flex flex-col gap-[8px]">
-                <p className="t-title-sm text-[var(--foreground-primary)]">
-                  Field Type
-                </p>
-                <ButtonGroup
-                  items={[
-                    { label: "Text", value: "text" },
-                    { label: "Dropdown", value: "dropdown" },
-                    { label: "Number", value: "number" },
-                  ]}
-                  value={localType}
-                  onChange={(v) => setLocalType(v as PlaceholderType)}
-                  size="medium"
-                />
-              </div>
-            )}
 
             {/* Dropdown options */}
             {localType === "dropdown" && (
@@ -170,12 +211,14 @@ export function PlaceholderConfigPopup({
                   width="w-full"
                 />
               ) : (
-                <TextField
+                <textarea
+                  ref={defaultValueTextareaRef}
                   value={defaultValue}
-                  onChange={setDefaultValue}
+                  onChange={(e) => setDefaultValue(e.target.value)}
                   placeholder={localType === "number" ? 'e.g., "0"' : 'e.g., "No abnormalities noted"'}
-                  size="M"
-                  className="w-full"
+                  rows={1}
+                  className="w-full rounded-[8px] border border-[var(--border-default)] px-[12px] py-[8px] t-body-md text-[var(--foreground-primary)] placeholder:text-[var(--foreground-tertiary)] outline-none focus:border-[var(--accent)] resize-none overflow-hidden transition-colors"
+                  style={{ fontFamily: "Lato, sans-serif" }}
                 />
               )}
               <p className="t-body-xs text-[var(--foreground-secondary)]">
@@ -214,21 +257,11 @@ export function PlaceholderConfigPopup({
 
           {/* Footer */}
           <div className="shrink-0 flex items-center justify-between px-[24px] py-[16px]">
-            <div className="flex items-center gap-[8px]">
+            <div>
               {isEditing && (
-                <>
-                  <Button variant="tertiary-neutral" size="small" onClick={onConvertToPlainText}>
-                    Plain text
-                  </Button>
-                  <Button
-                    variant="tertiary-danger"
-                    size="small"
-                    prefix={<Icon name="delete" size={14} />}
-                    onClick={onDelete}
-                  >
-                    Delete
-                  </Button>
-                </>
+                <Button variant="tertiary-danger" size="small" onClick={onConvertToPlainText}>
+                  Convert to plain text
+                </Button>
               )}
             </div>
             <div className="flex items-center gap-[8px]">

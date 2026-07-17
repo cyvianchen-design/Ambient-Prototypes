@@ -17,6 +17,7 @@ import {
   PINInput,
   Table, TableCell, TableFooter, BadgesCell, StatusCell,
   Citation,
+  ScribeShortField, ScribeLongField,
 } from "@ds/ui";
 import type { TimeValue, TableColumn } from "@ds/ui";
 import type { Tab } from "@ds/ui";
@@ -36,6 +37,7 @@ const tabs: Tab[] = [
   { id: "lists", label: "Lists & Tables" },
   { id: "interactive", label: "Interactive" },
   { id: "citation", label: "Citation" },
+  { id: "scribefields", label: "Scribe Fields" },
   { id: "tokens", label: "Tokens" },
 ];
 
@@ -1252,6 +1254,23 @@ function TokensTab() {
         </div>
       </section>
 
+      {/* ── Gradients ── */}
+      <section>
+        <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-4">Gradients</h2>
+        <div className="flex flex-wrap gap-[24px] items-start">
+          <div className="flex flex-col gap-[6px]">
+            <div className="w-[240px] h-[64px] rounded-[8px]" style={{ background: "var(--gradient-brand)" }} />
+            <code className="t-body-xs text-[var(--foreground-brand)]">--gradient-brand</code>
+            <span className="t-body-xs text-[var(--foreground-tertiary)]">Fill · 8044FF → 4554E5 → 2670FF</span>
+          </div>
+          <div className="flex flex-col gap-[6px]">
+            <div className="border-gradient-brand w-[240px] h-[64px] rounded-[8px]" />
+            <code className="t-body-xs text-[var(--foreground-brand)]">.border-gradient-brand</code>
+            <span className="t-body-xs text-[var(--foreground-tertiary)]">2px gradient outline over white</span>
+          </div>
+        </div>
+      </section>
+
       {/* ── Accent alpha ── */}
       <section>
         <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-4">Accent Alpha (#1132ee)</h2>
@@ -1303,6 +1322,44 @@ function TokensTab() {
   );
 }
 
+function ScribeFieldsTab() {
+  const [text, setText] = useState("Tolerated PT, pain improving");
+  const [single, setSingle] = useState("Stable");
+  const [chips, setChips] = useState(["Hypertension", "Osteoporosis"]);
+  const [note, setNote] = useState("Patient is a 72-year-old female, post-op day 1 from ORIF, tolerating PT with pain controlled on scheduled analgesics.");
+  return (
+    <div className="space-y-8 max-w-[560px]">
+      <div>
+        <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-4">Scribe short field — short text</h2>
+        <div className="space-y-4">
+          <ScribeShortField title="Key update this shift" inputType="text" mode="view" value={text} />
+          <ScribeShortField title="Key update this shift" inputType="text" mode="edit" value={text} onChange={setText} />
+          <ScribeShortField title="Immediate action needed" inputType="text" mode="view" value="" required state="alert" helpText="Required — tap to fill" />
+        </div>
+      </div>
+      <div>
+        <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-4">Scribe short field — single select</h2>
+        <ScribeShortField title="Overall status" inputType="single" value={single} options={["Stable", "Guarded", "Critical", "Improving"]} onSelect={setSingle} />
+      </div>
+      <div>
+        <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-4">Scribe short field — multiselect</h2>
+        <ScribeShortField
+          title="Medical history"
+          inputType="multi"
+          mode="edit"
+          chips={chips}
+          onRemoveChip={(c) => setChips((prev) => prev.filter((x) => x !== c))}
+          onAdd={() => setChips((prev) => [...prev, `Item ${prev.length + 1}`])}
+        />
+      </div>
+      <div>
+        <h2 className="t-title-xs text-[var(--foreground-secondary)] uppercase tracking-[0.8px] mb-4">Scribe long field</h2>
+        <ScribeLongField sectionTitle="Assessment" value={note} onChange={setNote} />
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [activeTab, setActiveTab] = useState(() => new URLSearchParams(window.location.search).get("tab") || "buttons");
 
@@ -1312,7 +1369,7 @@ export default function App() {
   }
   const tabComponents: Record<string, React.ComponentType> = {
     buttons: ButtonsTab, form: FormTab, chips: ChipsBadgesTab, icons: IconsTab,
-    menu: MenuTab, nav: NavigationTab, alerts: AlertsTab, audio: AudioTab, avatar: AvatarTab, datetime: DateTimeTab, misc: MiscTab, lists: ListsTab, interactive: InteractiveTab, citation: CitationTab, tokens: TokensTab,
+    menu: MenuTab, nav: NavigationTab, alerts: AlertsTab, audio: AudioTab, avatar: AvatarTab, datetime: DateTimeTab, misc: MiscTab, lists: ListsTab, interactive: InteractiveTab, citation: CitationTab, scribefields: ScribeFieldsTab, tokens: TokensTab,
   };
   const ActiveComponent = tabComponents[activeTab];
 

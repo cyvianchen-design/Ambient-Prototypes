@@ -136,13 +136,14 @@ export function SectionCard({ title, format: initialFormat = "Bullet by Diagnosi
           >
             {totalMacros} macros added
           </span>
-          <button
-            className="ml-auto t-title-sm text-[var(--accent)] flex items-center gap-[2px] hover:opacity-80 transition-opacity"
-            style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}
+          <Button
+            variant="tertiary"
+            size="small"
+            prefix={<Icon name="add" size={14} />}
+            className="ml-auto"
           >
-            <Icon name="add" size={14} />
             Add Macro
-          </button>
+          </Button>
         </div>
 
         {/* Macro list */}
@@ -211,13 +212,14 @@ export function SectionCard({ title, format: initialFormat = "Bullet by Diagnosi
         >
           {learnExamples} examples
         </span>
-        <button
-          className="ml-auto t-title-sm text-[var(--accent)] flex items-center gap-[2px] hover:opacity-80 transition-opacity"
-          style={{ fontFamily: "Lato, sans-serif", fontFeatureSettings: "'ss07'" }}
+        <Button
+          variant="tertiary"
+          size="small"
+          suffix={<Icon name="arrow_forward" size={14} />}
+          className="ml-auto"
         >
           View
-          <Icon name="arrow_forward" size={14} />
-        </button>
+        </Button>
       </div>
     </div>
 

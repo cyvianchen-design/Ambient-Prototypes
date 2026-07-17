@@ -75,22 +75,16 @@ function MacrosBlock({ mode, initialCount, trailingAction }: { mode: Mode; initi
 
   return (
     <div className="flex flex-col gap-[8px]">
-      {macros.length === 0 ? (
-        mode !== "my" && <p className="t-body-sm text-[var(--foreground-secondary,#666)]">No macros attached.</p>
-      ) : (
-        macros.map((m) => (
-          <div key={m.id} className="border border-[rgba(0,0,0,0.1)] rounded-[6px] h-[32px] flex items-center gap-[16px] px-[8px] hover:bg-[#f7f7f7] transition-colors">
-            <span className="flex-1 min-w-0 truncate t-body-sm text-[var(--foreground-primary,#1a1a1a)]">{m.name}</span>
-            <Switch size="XS" checked={m.enabled} onChange={() => toggle(m.id)} />
-          </div>
-        ))
-      )}
+      {macros.map((m) => (
+        <div key={m.id} className="border border-[rgba(0,0,0,0.1)] rounded-[6px] h-[32px] flex items-center gap-[16px] px-[8px] hover:bg-[#f7f7f7] transition-colors">
+          <span className="flex-1 min-w-0 truncate t-body-sm text-[var(--foreground-primary,#1a1a1a)]">{m.name}</span>
+          <Switch size="XS" checked={m.enabled} onChange={() => toggle(m.id)} />
+        </div>
+      ))}
       <div className="flex items-center justify-between">
-        {mode === "my" ? (
-          <Button variant="tertiary" size="small" prefix={<Icon name="add" size={14} />} onClick={addMacro}>
-            Add Macro
-          </Button>
-        ) : <div />}
+        <Button variant="tertiary" size="small" prefix={<Icon name="add" size={14} />} onClick={addMacro}>
+          Add Macro
+        </Button>
         {trailingAction}
       </div>
     </div>
@@ -110,7 +104,19 @@ const DATA_SOURCES = [
   "Orders",
 ];
 
-function IncludeDataField({ initialSelected = [] }: { initialSelected?: string[] }) {
+const SHARED_INCLUDE_SOURCES = ["Last note", "Patient profile", "Scheduler's note"];
+
+function IncludeDataField({ mode, initialSelected = [] }: { mode: Mode; initialSelected?: string[] }) {
+  if (mode === "shared") {
+    return (
+      <div className="flex flex-wrap gap-[6px] items-center">
+        <span className="shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">Include data from</span>
+        {SHARED_INCLUDE_SOURCES.map((s) => (
+          <Chip key={s} label={s} color="neutral" size="XS" />
+        ))}
+      </div>
+    );
+  }
   const [selected, setSelected] = useState<string[]>(initialSelected);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -154,11 +160,6 @@ function IncludeDataField({ initialSelected = [] }: { initialSelected?: string[]
   );
 }
 
-const WHEN_EMPTY_OPTIONS = [
-  { value: "hide", label: "Hide subsection" },
-  { value: "show", label: "Show empty state" },
-];
-
 // ── Subsection card (all settings visible) ───────────────────────────────────
 
 function SubsectionCard({
@@ -174,7 +175,7 @@ function SubsectionCard({
   onDelete: () => void;
   registerRef: (el: HTMLDivElement | null) => void;
 }) {
-  const [showInstructions, setShowInstructions] = useState(mode === "my");
+  const [showInstructions, setShowInstructions] = useState(false);
   function update(p: Partial<Subsection>) { onChange({ ...sub, ...p }); }
   const whenEmpty = sub.generateWhen ?? "hide";
   const enabled = sub.status !== "disabled";
@@ -198,23 +199,27 @@ function SubsectionCard({
 
       {/* ── Template instruction (what to capture + section behavior) ── */}
       <div className="flex flex-col gap-[10px] -mt-[8px]">
-        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">Template instruction</span>
-
-        <IncludeDataField />
-
-        {mode === "shared" && !showInstructions ? (
-          <Button variant="tertiary" size="small" suffix={<Icon name="keyboard_arrow_down" size={16} />} className="self-start" onClick={() => setShowInstructions(true)}>
-            Show template instruction
-          </Button>
-        ) : mode === "shared" ? (
-          <div className="flex flex-col gap-[8px]">
-            <p className="t-body-sm text-[var(--foreground-secondary,#666)] italic leading-[1.5]">{sub.templateInstruction || "No template instruction provided."}</p>
-            <Button variant="tertiary" size="small" suffix={<Icon name="keyboard_arrow_up" size={16} />} className="self-start" onClick={() => setShowInstructions(false)}>
-              Hide template instruction
+        <div className="flex items-center justify-between">
+          <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">Template instruction</span>
+          {mode === "shared" && (
+            <Button variant="tertiary" size="small" suffix={<Icon name={showInstructions ? "keyboard_arrow_up" : "keyboard_arrow_down"} size={14} />} onClick={() => setShowInstructions((v) => !v)}>
+              {showInstructions ? "Hide" : "Show"}
             </Button>
-          </div>
+          )}
+        </div>
+
+        {mode === "shared" ? (
+          showInstructions && (
+            <>
+              <IncludeDataField mode={mode} />
+              <p className="t-body-sm text-[var(--foreground-secondary,#666)] leading-[1.5]">{sub.templateInstruction || "No template instruction provided."}</p>
+            </>
+          )
         ) : (
-          <TextArea value={sub.templateInstruction} onChange={(v) => update({ templateInstruction: v })} rows={4} placeholder="Describe what this subsection should capture…" />
+          <>
+            <IncludeDataField mode={mode} />
+            <TextArea value={sub.templateInstruction} onChange={(v) => update({ templateInstruction: v })} rows={4} placeholder="Describe what this subsection should capture…" />
+          </>
         )}
       </div>
 
@@ -225,7 +230,7 @@ function SubsectionCard({
 
         <div className="flex items-center gap-[12px]">
           <span className="w-[64px] shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">Title</span>
-          <Switch checked={sub.showTitle} onChange={(v) => update({ showTitle: v })} />
+          <Switch size="XS" checked={sub.showTitle} onChange={(v) => update({ showTitle: v })} />
           <span className="t-body-sm text-[var(--foreground-secondary,#666)]">{sub.showTitle ? "Show" : "Hide"}</span>
         </div>
         <div className="flex items-center gap-[12px]">
@@ -237,16 +242,10 @@ function SubsectionCard({
           <SelectDropdown value={sub.length} options={LENGTH_OPTIONS} onChange={(v) => update({ length: v })} width="w-[200px]" />
         </div>
 
-        {/* Custom formatting — supplementary */}
-        <div className="flex flex-col gap-[6px] pt-[4px]">
-          <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Custom formatting</span>
-          <p className="t-body-xs text-[var(--foreground-secondary,#666)]">Anything the settings above don't cover — supplementary formatting instructions.</p>
-          <TextArea value={sub.customFormatting} onChange={(v) => update({ customFormatting: v })} rows={3} maxRows={6} placeholder="e.g. bold abnormal values, group by laterality…" />
-        </div>
-
         <div className="flex items-center gap-[12px]">
           <span className="shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">When empty</span>
-          <ButtonGroup size="small" items={WHEN_EMPTY_OPTIONS} value={whenEmpty} onChange={(v) => update({ generateWhen: v as GenerateWhen })} />
+          <Switch size="XS" checked={whenEmpty === "show"} onChange={(v) => update({ generateWhen: v ? "show" : "hide" })} />
+          <span className="t-body-sm text-[var(--foreground-secondary,#666)]">{whenEmpty === "show" ? "Show empty state" : "Hide subsection"}</span>
         </div>
         {whenEmpty === "show" && mode === "my" && (
           <div className="flex flex-col gap-[6px]">
@@ -255,6 +254,13 @@ function SubsectionCard({
             <TextArea value={sub.emptyState ?? ""} onChange={(v) => update({ emptyState: v })} rows={2} maxRows={4} placeholder="e.g. No significant findings documented." />
           </div>
         )}
+
+        {/* Custom formatting — supplementary */}
+        <div className="flex flex-col gap-[6px] pt-[4px]">
+          <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Custom formatting</span>
+          <p className="t-body-xs text-[var(--foreground-secondary,#666)]">Anything the settings above don't cover — supplementary formatting instructions.</p>
+          <TextArea value={sub.customFormatting} onChange={(v) => update({ customFormatting: v })} rows={3} maxRows={6} placeholder="e.g. bold abnormal values, group by laterality…" />
+        </div>
       </div>
 
       {/* ── Macros + delete ── */}

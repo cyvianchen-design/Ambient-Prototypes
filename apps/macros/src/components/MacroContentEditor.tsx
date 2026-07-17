@@ -15,7 +15,7 @@ export type TokenType = "text" | "dropdown" | "number";
 const TOKEN_CSS: Record<TokenStyle, string> = {
   link: "color:var(--foreground-semantic-success);text-decoration:underline;text-decoration-color:var(--foreground-semantic-success);cursor:pointer;",
   chip: "display:inline-block;color:var(--accent);border-radius:6px;padding:0 5px 1px;margin:0 1px;line-height:20px;cursor:pointer;user-select:none;vertical-align:middle;",
-  field: "display:inline-block;color:var(--accent);border-radius:6px;padding:0 5px 1px;margin:0 1px;line-height:20px;cursor:pointer;user-select:none;vertical-align:middle;",
+  field: "display:inline;line-height:1;position:relative;top:-2px;box-decoration-break:clone;-webkit-box-decoration-break:clone;color:var(--accent);border-radius:6px;padding:0 5px 1px;margin:0 1px;cursor:pointer;user-select:none;",
 };
 
 // For dropdown tokens stored as "opt1/opt2/opt3", show "opt1 + N more" when > 2 options.
@@ -180,7 +180,7 @@ export const MacroContentEditor = forwardRef<MacroContentEditorHandle, Props>(
             onInput={handleInput}
             onClick={handleClick}
             onKeyDown={onKeyDown}
-            className="w-full px-[12px] py-[8px] t-body-md leading-[1.6] text-[var(--foreground-primary)] bg-transparent outline-none"
+            className="w-full px-[12px] py-[8px] t-body-md leading-[28px] text-[var(--foreground-primary)] bg-transparent outline-none"
             style={{ fontFamily: "Lato, sans-serif", minHeight: "105px", wordBreak: "break-word" }}
           />
           {isEmpty && (
