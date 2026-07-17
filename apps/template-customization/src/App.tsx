@@ -26,5 +26,5 @@ const screens: ScreenDef[] = [
 ];
 
 export default function App() {
-  return <VersionSwitcher screens={screens} initialRound="R1" />;
+  return <VersionSwitcher screens={screens} initialRound="R2" />;
 }

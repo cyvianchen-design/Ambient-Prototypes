@@ -267,7 +267,7 @@ importers:
         specifier: ^5.4.8
         version: 5.4.21
 
-  apps/template-builder:
+  apps/template-customization:
     dependencies:
       '@ds/ui':
         specifier: workspace:*
