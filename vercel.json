@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm --filter nurse-scribe build",
-  "outputDirectory": "apps/nurse-scribe/dist",
+  "buildCommand": "pnpm --filter orders-v1 build",
+  "outputDirectory": "apps/orders-v1/dist",
   "installCommand": "pnpm install"
 }
