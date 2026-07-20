@@ -1,5 +1,5 @@
 {
   "buildCommand": "pnpm --filter orders-v1 build",
-  "outputDirectory": "apps/orders-v1/dist",
+  "outputDirectory": "dist",
   "installCommand": "pnpm install"
 }
