@@ -369,7 +369,7 @@ npx vercel deploy --prebuilt --prod
 - **orders-v1**: `cyvian-chens-projects/ambient-prototypes-orders-v1` → `ambient-prototypes-orders-v1.vercel.app`
 - **previsit-customization**: `cyvian-chens-projects/ambient-prototypes-previsit` → `ambient-prototypes-previsit.vercel.app`
 - **ds-preview**: `cyvian-chens-projects/ambient-prototypes-ds-preview` → `ambient-prototypes-ds-preview.vercel.app`
-- **template-customization**: `cyvian-chens-projects/ambient-prototypes-template-customization` → `ambient-prototypes-template-customization.vercel.app`
+- **template-customization**: `cyvian-chens-projects/ambient-prototypes-template-v2` → `ambient-prototypes-template-v2.vercel.app`
 
 **template-customization** → run from the app directory (has its own `.vercel/project.json`):
 ```bash

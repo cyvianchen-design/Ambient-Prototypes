@@ -984,15 +984,21 @@ function InteractiveTab() {
 
   return (
     <div>
-      <Section title="Tooltip — Positions">
-        <Tooltip content="Top tooltip" position="top"><Button variant="secondary">Top</Button></Tooltip>
-        <Tooltip content="Bottom tooltip" position="bottom"><Button variant="secondary">Bottom</Button></Tooltip>
-        <Tooltip content="Left tooltip" position="left"><Button variant="secondary">Left</Button></Tooltip>
-        <Tooltip content="Right tooltip" position="right"><Button variant="secondary">Right</Button></Tooltip>
+      <Section title="Tooltip — Neutral (positions)">
+        <Tooltip content="Top tooltip" position="top" variant="neutral"><Button variant="secondary">Top</Button></Tooltip>
+        <Tooltip content="Bottom tooltip" position="bottom" variant="neutral"><Button variant="secondary">Bottom</Button></Tooltip>
+        <Tooltip content="Left tooltip" position="left" variant="neutral"><Button variant="secondary">Left</Button></Tooltip>
+        <Tooltip content="Right tooltip" position="right" variant="neutral"><Button variant="secondary">Right</Button></Tooltip>
+      </Section>
+      <Section title="Tooltip — Info (positions)">
+        <Tooltip content="Top tooltip" position="top" variant="info"><Button variant="secondary">Top</Button></Tooltip>
+        <Tooltip content="Bottom tooltip" position="bottom" variant="info"><Button variant="secondary">Bottom</Button></Tooltip>
+        <Tooltip content="Left tooltip" position="left" variant="info"><Button variant="secondary">Left</Button></Tooltip>
+        <Tooltip content="Right tooltip" position="right" variant="info"><Button variant="secondary">Right</Button></Tooltip>
       </Section>
       <Section title="Tooltip — On icon">
-        <Tooltip content="Refresh data"><IconButton icon={<Icon name="refresh" size={20} />} variant="tertiary" aria-label="Refresh" /></Tooltip>
-        <Tooltip content="Delete permanently"><IconButton icon={<Icon name="delete" size={20} />} variant="tertiary" aria-label="Delete" /></Tooltip>
+        <Tooltip content="Refresh data" variant="neutral"><IconButton icon={<Icon name="refresh" size={20} />} variant="tertiary" aria-label="Refresh" /></Tooltip>
+        <Tooltip content="Already in EHR" variant="info"><IconButton icon={<Icon name="info" size={20} />} variant="tertiary" aria-label="Info" /></Tooltip>
       </Section>
       <Section title="Page Indicator">
         <div className="flex flex-col gap-[16px]">

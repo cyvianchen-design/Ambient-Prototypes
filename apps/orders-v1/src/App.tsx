@@ -16,6 +16,7 @@ import R3GroupByDx  from "./screens/R3-GroupByDx";
 import R3Merge      from "./screens/R3-Merge";
 import R3DxA        from "./screens/R3-DxA";
 import R3DxC        from "./screens/R3-DxC";
+import R4Baseline   from "./screens/R4-Baseline";
 
 const screens: ScreenDef[] = [
   { round: "R1", direction: "Baseline",   component: R1Baseline },
@@ -33,8 +34,9 @@ const screens: ScreenDef[] = [
   { round: "R3", direction: "Merge",        component: R3Merge },
   { round: "R3", direction: "Two zones",    component: R3DxA },
   { round: "R3", direction: "Conf. tiers",  component: R3DxC },
+  { round: "R4", direction: "Baseline",     component: R4Baseline },
 ];
 
 export default function App() {
-  return <VersionSwitcher screens={screens} initialDirection="Conf. tiers" />;
+  return <VersionSwitcher screens={screens} initialRound="R4" switcherPosition="left" />;
 }

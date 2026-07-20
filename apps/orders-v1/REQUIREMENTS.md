@@ -62,6 +62,7 @@ Hard requirements that must survive any layout iteration. Add when functionality
 
 ## Group by Dx / Confidence Tiers Direction
 - User can see codes each with sub-sections: "Confident" orders, "Suggested" orders, "In EHR" orders — no dividers, no indentation
-- User can use "Select all" and "Select confident" as checkbox items (not buttons), with checkbox hover states
+- User can use "Select all" as a checkbox item (not button) with checkbox hover state in the codes section
+- User can use "Select all" and "Select confident" as checkbox items (not buttons), with checkbox hover states in the orders section
 - User can reorder codes via drag-and-drop within the grouped view; drop commits the new order
 - User can reassign which ICD code an order is associated with (must be present in Group by Dx directions)

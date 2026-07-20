@@ -164,6 +164,76 @@ export const ordersPool: Array<{ id: string; label: string; baseLabel?: string; 
   // Ankle MRI (no contrast) — for ligament/tendon evaluation
   { id: "ankle-mri-radnet",        baseLabel: "Ankle MRI, without contrast",      company: "RadNet",    label: "Ankle MRI, without contrast (RadNet)",              detail: "RadNet Imaging",       relatedIcd: "S93.401" },
   { id: "ankle-mri-simonmed",      baseLabel: "Ankle MRI, without contrast",      company: "SimonMed",  label: "Ankle MRI, without contrast (SimonMed)",            detail: "SimonMed Imaging",     relatedIcd: "S93.401" },
+
+  // Cardiac
+  { id: "holter-inhouse",          baseLabel: "Holter Monitor, 24-hr",            company: "In-house",  label: "Holter Monitor, 24-hr",                             detail: "In-office",            relatedIcd: "R07.9" },
+  { id: "event-monitor-inhouse",   baseLabel: "Event Monitor, 30-day",            company: "In-house",  label: "Event Monitor, 30-day",                             detail: "In-office",            relatedIcd: "R00.0" },
+  { id: "ct-coronary-radnet",      baseLabel: "CT Coronary Angiography",          company: "RadNet",    label: "CT Coronary Angiography (RadNet)",                  detail: "RadNet Imaging",       relatedIcd: "I25.10" },
+  { id: "nuclear-stress-cardiology", baseLabel: "Nuclear Stress Test",            company: "Cardiology", label: "Nuclear Stress Test (Cardiology)",                 detail: "Cardiology referral",  relatedIcd: "I25.10" },
+  { id: "cardiac-mri-radnet",      baseLabel: "Cardiac MRI",                      company: "RadNet",    label: "Cardiac MRI (RadNet)",                              detail: "RadNet Imaging",       relatedIcd: "I25.10" },
+  { id: "tee-cardiology",          baseLabel: "Transesophageal Echo (TEE)",        company: "Cardiology", label: "Transesophageal Echo (TEE)",                       detail: "Cardiology referral",  relatedIcd: "I34.0" },
+
+  // Labs — respiratory / pulmonary
+  { id: "bnp-quest",               baseLabel: "BNP",                              company: "Quest",     label: "BNP (Quest)",                                       detail: "Quest Diagnostics",    relatedIcd: "I50.9" },
+  { id: "bnp-labcorp",             baseLabel: "BNP",                              company: "Labcorp",   label: "BNP (Labcorp)",                                     detail: "Labcorp",              relatedIcd: "I50.9" },
+  { id: "procalcitonin-quest",     baseLabel: "Procalcitonin",                    company: "Quest",     label: "Procalcitonin (Quest)",                             detail: "Quest Diagnostics",    relatedIcd: "J18.9" },
+  { id: "dimer-fibrinogen-quest",  baseLabel: "Fibrinogen",                       company: "Quest",     label: "Fibrinogen (Quest)",                                detail: "Quest Diagnostics",    relatedIcd: "R07.9" },
+  { id: "pt-inr-quest",            baseLabel: "PT / INR",                         company: "Quest",     label: "PT / INR (Quest)",                                  detail: "Quest Diagnostics",    relatedIcd: "Z79.01" },
+  { id: "pt-inr-labcorp",          baseLabel: "PT / INR",                         company: "Labcorp",   label: "PT / INR (Labcorp)",                                detail: "Labcorp",              relatedIcd: "Z79.01" },
+  { id: "aptt-quest",              baseLabel: "aPTT",                             company: "Quest",     label: "aPTT (Quest)",                                      detail: "Quest Diagnostics" },
+  { id: "tsh-quest",               baseLabel: "TSH",                              company: "Quest",     label: "TSH (Quest)",                                       detail: "Quest Diagnostics",    relatedIcd: "E03.9" },
+  { id: "tsh-labcorp",             baseLabel: "TSH",                              company: "Labcorp",   label: "TSH (Labcorp)",                                     detail: "Labcorp",              relatedIcd: "E03.9" },
+  { id: "free-t4-quest",           baseLabel: "Free T4",                          company: "Quest",     label: "Free T4 (Quest)",                                   detail: "Quest Diagnostics",    relatedIcd: "E03.9" },
+  { id: "urine-culture-quest",     baseLabel: "Urine Culture",                    company: "Quest",     label: "Urine Culture (Quest)",                             detail: "Quest Diagnostics",    relatedIcd: "N39.0" },
+  { id: "urinalysis-quest",        baseLabel: "Urinalysis",                       company: "Quest",     label: "Urinalysis (Quest)",                                detail: "Quest Diagnostics",    relatedIcd: "N39.0" },
+  { id: "urinalysis-labcorp",      baseLabel: "Urinalysis",                       company: "Labcorp",   label: "Urinalysis (Labcorp)",                              detail: "Labcorp",              relatedIcd: "N39.0" },
+  { id: "ferritin-quest",          baseLabel: "Ferritin",                         company: "Quest",     label: "Ferritin (Quest)",                                  detail: "Quest Diagnostics",    relatedIcd: "D50.9" },
+  { id: "iron-panel-quest",        baseLabel: "Iron Panel",                       company: "Quest",     label: "Iron Panel (Quest)",                                detail: "Quest Diagnostics",    relatedIcd: "D50.9" },
+  { id: "b12-folate-quest",        baseLabel: "Vitamin B12 & Folate",             company: "Quest",     label: "Vitamin B12 & Folate (Quest)",                      detail: "Quest Diagnostics",    relatedIcd: "D51.9" },
+  { id: "vitamin-d-quest",         baseLabel: "Vitamin D, 25-OH",                 company: "Quest",     label: "Vitamin D, 25-OH (Quest)",                          detail: "Quest Diagnostics",    relatedIcd: "E55.9" },
+  { id: "uric-acid-quest",         baseLabel: "Uric Acid",                        company: "Quest",     label: "Uric Acid (Quest)",                                 detail: "Quest Diagnostics",    relatedIcd: "M10.9" },
+  { id: "crp-quest",               baseLabel: "CRP, High-Sensitivity",            company: "Quest",     label: "CRP, High-Sensitivity (Quest)",                     detail: "Quest Diagnostics",    relatedIcd: "I25.10" },
+  { id: "esr-quest",               baseLabel: "ESR",                              company: "Quest",     label: "ESR (Quest)",                                       detail: "Quest Diagnostics" },
+  { id: "psa-quest",               baseLabel: "PSA",                              company: "Quest",     label: "PSA (Quest)",                                       detail: "Quest Diagnostics",    relatedIcd: "Z12.5" },
+  { id: "hba1c-quest",             baseLabel: "Hemoglobin A1c",                   company: "Quest",     label: "Hemoglobin A1c (Quest)",                            detail: "Quest Diagnostics",    relatedIcd: "E11.9" },
+
+  // Imaging — CT
+  { id: "ct-chest-radnet",         baseLabel: "CT Chest, without contrast",       company: "RadNet",    label: "CT Chest, without contrast (RadNet)",               detail: "RadNet Imaging",       relatedIcd: "R07.9" },
+  { id: "ct-pa-radnet",            baseLabel: "CT Pulmonary Angiography",         company: "RadNet",    label: "CT Pulmonary Angiography (RadNet)",                 detail: "RadNet Imaging",       relatedIcd: "I26.99" },
+  { id: "ct-abdomen-radnet",       baseLabel: "CT Abdomen & Pelvis, w contrast",  company: "RadNet",    label: "CT Abdomen & Pelvis, w contrast (RadNet)",          detail: "RadNet Imaging",       relatedIcd: "R10.9" },
+  { id: "ct-head-radnet",          baseLabel: "CT Head, without contrast",        company: "RadNet",    label: "CT Head, without contrast (RadNet)",                detail: "RadNet Imaging",       relatedIcd: "G43.909" },
+  { id: "ct-sinus-radnet",         baseLabel: "CT Sinuses",                       company: "RadNet",    label: "CT Sinuses (RadNet)",                               detail: "RadNet Imaging",       relatedIcd: "J32.9" },
+
+  // Imaging — MRI
+  { id: "mri-brain-radnet",        baseLabel: "MRI Brain, without contrast",      company: "RadNet",    label: "MRI Brain, without contrast (RadNet)",              detail: "RadNet Imaging",       relatedIcd: "G43.909" },
+  { id: "mri-knee-radnet",         baseLabel: "MRI Knee, without contrast",       company: "RadNet",    label: "MRI Knee, without contrast (RadNet)",               detail: "RadNet Imaging",       relatedIcd: "M23.200" },
+  { id: "mri-spine-radnet",        baseLabel: "MRI Lumbar Spine, w/o contrast",   company: "RadNet",    label: "MRI Lumbar Spine, w/o contrast (RadNet)",           detail: "RadNet Imaging",       relatedIcd: "M54.5" },
+  { id: "mri-shoulder-radnet",     baseLabel: "MRI Shoulder, without contrast",   company: "RadNet",    label: "MRI Shoulder, without contrast (RadNet)",           detail: "RadNet Imaging",       relatedIcd: "M75.1" },
+
+  // Ultrasound
+  { id: "us-carotid-radnet",       baseLabel: "Carotid Duplex Ultrasound",        company: "RadNet",    label: "Carotid Duplex Ultrasound (RadNet)",                detail: "RadNet Imaging",       relatedIcd: "I65.29" },
+  { id: "us-dvt-radnet",           baseLabel: "Lower Extremity Venous Duplex",    company: "RadNet",    label: "Lower Extremity Venous Duplex (RadNet)",            detail: "RadNet Imaging",       relatedIcd: "I82.401" },
+  { id: "us-abdomen-radnet",       baseLabel: "Abdominal Ultrasound",             company: "RadNet",    label: "Abdominal Ultrasound (RadNet)",                     detail: "RadNet Imaging",       relatedIcd: "R10.9" },
+  { id: "us-renal-radnet",         baseLabel: "Renal Ultrasound",                 company: "RadNet",    label: "Renal Ultrasound (RadNet)",                         detail: "RadNet Imaging",       relatedIcd: "N18.9" },
+  { id: "us-thyroid-radnet",       baseLabel: "Thyroid Ultrasound",               company: "RadNet",    label: "Thyroid Ultrasound (RadNet)",                       detail: "RadNet Imaging",       relatedIcd: "E04.9" },
+
+  // Referrals
+  { id: "ref-cardiology",          baseLabel: "Cardiology referral",              company: "Cardiology", label: "Cardiology referral",                              detail: "Specialist referral" },
+  { id: "ref-pulmonology",         baseLabel: "Pulmonology referral",             company: "Pulmonology", label: "Pulmonology referral",                           detail: "Specialist referral",  relatedIcd: "J45.50" },
+  { id: "ref-endocrinology",       baseLabel: "Endocrinology referral",           company: "Endo",      label: "Endocrinology referral",                            detail: "Specialist referral",  relatedIcd: "E11.9" },
+  { id: "ref-nephrology",          baseLabel: "Nephrology referral",              company: "Nephrology", label: "Nephrology referral",                             detail: "Specialist referral",  relatedIcd: "N18.9" },
+  { id: "ref-orthopedics",         baseLabel: "Orthopedics referral",             company: "Ortho",     label: "Orthopedics referral",                              detail: "Specialist referral",  relatedIcd: "S93.401" },
+  { id: "ref-hematology",          baseLabel: "Hematology referral",              company: "Hematology", label: "Hematology referral",                            detail: "Specialist referral",  relatedIcd: "D50.9" },
+  { id: "ref-neurology",           baseLabel: "Neurology referral",               company: "Neurology", label: "Neurology referral",                                detail: "Specialist referral",  relatedIcd: "G43.909" },
+
+  // Pulmonary function
+  { id: "pfts-inhouse",            baseLabel: "Pulmonary Function Tests",         company: "In-house",  label: "Pulmonary Function Tests",                          detail: "In-office",            relatedIcd: "J45.50" },
+  { id: "sleep-study-inhouse",     baseLabel: "Polysomnography (Sleep Study)",    company: "In-house",  label: "Polysomnography (Sleep Study)",                     detail: "Sleep lab",            relatedIcd: "G47.33" },
+
+  // Preventive / screening
+  { id: "mammogram-radnet",        baseLabel: "Mammogram, screening",             company: "RadNet",    label: "Mammogram, screening (RadNet)",                     detail: "RadNet Imaging",       relatedIcd: "Z12.31" },
+  { id: "dexa-radnet",             baseLabel: "DEXA Scan",                        company: "RadNet",    label: "DEXA Scan (RadNet)",                                detail: "RadNet Imaging",       relatedIcd: "M81.0" },
+  { id: "colonoscopy-gi",          baseLabel: "Colonoscopy",                      company: "GI",        label: "Colonoscopy",                                       detail: "GI referral",          relatedIcd: "Z12.11" },
 ];
 
 export const ordersAdjacent: Record<string, string[]> = {

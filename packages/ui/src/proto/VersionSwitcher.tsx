@@ -14,6 +14,8 @@ type Props = {
   initialDirection?: string;
   /** Called whenever the active round or direction changes. */
   onDirectionChange?: (round: string, direction: string) => void;
+  /** Position of the floating switcher. Defaults to "center". */
+  switcherPosition?: "center" | "left";
 };
 
 function getInitialState(
@@ -40,7 +42,7 @@ function getInitialState(
   return { round, direction };
 }
 
-export function VersionSwitcher({ screens, initialRound, initialDirection, onDirectionChange }: Props) {
+export function VersionSwitcher({ screens, initialRound, initialDirection, onDirectionChange, switcherPosition = "center" }: Props) {
   const rounds = [...new Set(screens.map((s) => s.round))];
   const init = getInitialState(screens, initialRound, initialDirection);
   const [activeRound, setActiveRound] = useState(init.round);
@@ -108,7 +110,7 @@ export function VersionSwitcher({ screens, initialRound, initialDirection, onDir
       <div
         onMouseDown={onMouseDown}
         style={floatStyle}
-        className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] flex flex-col gap-[6px] bg-white border border-[rgba(0,0,0,0.1)] rounded-[12px] shadow-lg px-[10px] py-[8px] select-none cursor-grab active:cursor-grabbing"
+        className={`fixed bottom-5 z-[200] flex flex-col gap-[6px] bg-white border border-[rgba(0,0,0,0.1)] rounded-[12px] shadow-lg px-[10px] py-[8px] select-none cursor-grab active:cursor-grabbing ${switcherPosition === "left" ? "left-5" : "left-1/2 -translate-x-1/2"}`}
       >
         {/* Rounds */}
         <div className="flex items-center gap-[4px]">

@@ -1,70 +1,141 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 
 export type TooltipPosition = "top" | "bottom" | "left" | "right";
+export type TooltipVariant = "info" | "neutral";
 
 export type TooltipProps = {
   content: React.ReactNode;
   children: React.ReactElement;
   position?: TooltipPosition;
-  delay?: number; // ms, default 300
+  variant?: TooltipVariant;
+  delay?: number;
   disabled?: boolean;
 };
 
-export function Tooltip({ content, children, position = "top", delay = 300, disabled = false }: TooltipProps) {
+const opposite: Record<TooltipPosition, TooltipPosition> = {
+  top: "bottom", bottom: "top", left: "right", right: "left",
+};
+
+export function Tooltip({
+  content,
+  children,
+  position = "bottom",
+  variant = "neutral",
+  delay = 300,
+  disabled = false,
+}: TooltipProps) {
   const [visible, setVisible] = useState(false);
+  const [tooltipStyle, setTooltipStyle] = useState<React.CSSProperties>({ position: "fixed", opacity: 0, pointerEvents: "none", zIndex: 300 });
+  const [resolvedPos, setResolvedPos] = useState<TooltipPosition>(position);
+  const wrapperRef = useRef<HTMLSpanElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const reposition = useCallback((pos: TooltipPosition, trigger: DOMRect, tooltip: DOMRect | null) => {
+    const GAP = 8;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const tw = tooltip?.width ?? 0;
+    const th = tooltip?.height ?? 36;
+    let finalPos = pos;
+    let top = 0, left = 0;
+
+    if (pos === "bottom") {
+      top = trigger.bottom + GAP;
+      left = trigger.left + trigger.width / 2 - tw / 2;
+      if (tooltip && top + th > vh) { finalPos = "top"; top = trigger.top - GAP - th; }
+    } else if (pos === "top") {
+      top = trigger.top - GAP - th;
+      left = trigger.left + trigger.width / 2 - tw / 2;
+      if (tooltip && top < 0) { finalPos = "bottom"; top = trigger.bottom + GAP; }
+    } else if (pos === "right") {
+      left = trigger.right + GAP;
+      top = trigger.top + trigger.height / 2 - th / 2;
+      if (tooltip && left + tw > vw) { finalPos = "left"; left = trigger.left - GAP - tw; }
+    } else {
+      left = trigger.left - GAP - tw;
+      top = trigger.top + trigger.height / 2 - th / 2;
+      if (tooltip && left < 0) { finalPos = "right"; left = trigger.right + GAP; }
+    }
+
+    // Keep within viewport bounds
+    left = Math.max(8, Math.min(left, vw - tw - 8));
+    top  = Math.max(8, Math.min(top,  vh - th - 8));
+
+    return { top, left, finalPos };
+  }, []);
 
   const show = () => {
     if (disabled) return;
-    timer.current = setTimeout(() => setVisible(true), delay);
+    timer.current = setTimeout(() => {
+      if (!wrapperRef.current) return;
+      const trigger = wrapperRef.current.getBoundingClientRect();
+      const { top, left, finalPos } = reposition(position, trigger, null);
+      setResolvedPos(finalPos);
+      // Render invisible first so we can measure actual size
+      setTooltipStyle({ position: "fixed", top, left, opacity: 0, pointerEvents: "none", zIndex: 300 });
+      setVisible(true);
+    }, delay);
   };
+
   const hide = () => {
     if (timer.current) clearTimeout(timer.current);
     setVisible(false);
+    setResolvedPos(position);
   };
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
-  const posStyles: Record<TooltipPosition, { container: string; arrow: string }> = {
-    top: {
-      container: "bottom-full left-1/2 -translate-x-1/2 mb-[6px]",
-      arrow: "top-full left-1/2 -translate-x-1/2 border-l-transparent border-r-transparent border-b-transparent border-t-[var(--foreground-primary,#1a1a1a)]",
-    },
-    bottom: {
-      container: "top-full left-1/2 -translate-x-1/2 mt-[6px]",
-      arrow: "bottom-full left-1/2 -translate-x-1/2 border-l-transparent border-r-transparent border-t-transparent border-b-[var(--foreground-primary,#1a1a1a)]",
-    },
-    left: {
-      container: "right-full top-1/2 -translate-y-1/2 mr-[6px]",
-      arrow: "left-full top-1/2 -translate-y-1/2 border-t-transparent border-b-transparent border-r-transparent border-l-[var(--foreground-primary,#1a1a1a)]",
-    },
-    right: {
-      container: "left-full top-1/2 -translate-y-1/2 ml-[6px]",
-      arrow: "right-full top-1/2 -translate-y-1/2 border-t-transparent border-b-transparent border-l-transparent border-r-[var(--foreground-primary,#1a1a1a)]",
-    },
+  // Second pass: measure actual tooltip size and finalize position + opacity
+  useEffect(() => {
+    if (!visible || !tooltipRef.current || !wrapperRef.current) return;
+    const trigger = wrapperRef.current.getBoundingClientRect();
+    const tooltip = tooltipRef.current.getBoundingClientRect();
+    const { top, left, finalPos } = reposition(position, trigger, tooltip);
+    setResolvedPos(finalPos);
+    setTooltipStyle({ position: "fixed", top, left, opacity: 1, pointerEvents: "none", zIndex: 300 });
+  }, [visible, position, reposition]);
+
+  const isInfo = variant === "info";
+  const bg = isInfo ? "#f1f3fe" : "#ffffff";
+  const textColor = isInfo ? "var(--accent,#1132ee)" : "var(--foreground-primary,#1a1a1a)";
+  const shadowClass = isInfo ? "" : "drop-shadow-[0px_0px_12px_rgba(0,0,0,0.15)]";
+
+  const flexDir: Record<TooltipPosition, string> = {
+    top: "flex-col items-center", bottom: "flex-col items-center",
+    left: "flex-row items-center", right: "flex-row items-center",
   };
+
+  const arrowCss: Record<TooltipPosition, React.CSSProperties> = {
+    top:    { width: 0, height: 0, flexShrink: 0, borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderTop: `6px solid ${bg}` },
+    bottom: { width: 0, height: 0, flexShrink: 0, borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderBottom: `6px solid ${bg}` },
+    left:   { width: 0, height: 0, flexShrink: 0, borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderLeft: `6px solid ${bg}` },
+    right:  { width: 0, height: 0, flexShrink: 0, borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderRight: `6px solid ${bg}` },
+  };
+
+  // Arrow comes before the body when the tooltip body is "after" the trigger
+  const arrowFirst = resolvedPos === "bottom" || resolvedPos === "right";
 
   return (
     <span
-      className="relative inline-flex"
+      ref={wrapperRef}
+      className="inline-flex self-start"
       onMouseEnter={show}
       onMouseLeave={hide}
       onFocus={show}
       onBlur={hide}
     >
       {children}
-      {visible && (
-        <span
-          role="tooltip"
-          className={`absolute z-[300] pointer-events-none ${posStyles[position].container}`}
-        >
-          <span className="block px-[8px] py-[5px] rounded-[6px] bg-[var(--foreground-primary,#1a1a1a)] text-white t-body-xs whitespace-nowrap shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
+      {visible && createPortal(
+        <div ref={tooltipRef} role="tooltip" style={tooltipStyle} className={`flex ${flexDir[resolvedPos]} ${shadowClass}`}>
+          {arrowFirst  && <span style={arrowCss[resolvedPos]} />}
+          <span className="block px-[12px] py-[8px] rounded-[4px] t-title-sm whitespace-nowrap" style={{ backgroundColor: bg, color: textColor }}>
             {content}
           </span>
-          <span
-            className={`absolute w-0 h-0 border-[5px] border-solid ${posStyles[position].arrow}`}
-          />
-        </span>
+          {!arrowFirst && <span style={arrowCss[resolvedPos]} />}
+        </div>,
+        document.body
       )}
     </span>
   );

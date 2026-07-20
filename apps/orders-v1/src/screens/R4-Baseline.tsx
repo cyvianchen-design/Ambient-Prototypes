@@ -4,7 +4,7 @@ import { ScribeLayout } from "../components/ScribeLayout";
 import type { CodeItem as CodeItemType } from "../data/mockCodes";
 import {
   icd10Pool, ordersPool, ordersAdjacent, icd10Adjacent,
-  initialIcd10, initialOrders, initialOrderSets,
+  initialIcd10, initialOrders, initialOrderSets, orderSetsPool,
   type CodeItem,
 } from "../data/mockCodes";
 
@@ -172,7 +172,7 @@ function buildInitialFlatOrders(): FlatOrder[] {
 // Within each group: high-confidence orders (no label, clean rows) → divider →
 // "needs review" orders (small "Review" tag) → (if any) pre-charted (disabled, "In chart").
 
-export default function R3DxC() {
+export default function R4Baseline() {
   const [activeTab, setActiveTab] = useState("diagnostics");
   const [infoOpenCode, setInfoOpenCode] = useState<string | null>(null);
   const [infoOpenOrderId, setInfoOpenOrderId] = useState<string | null>(null);
@@ -305,6 +305,20 @@ export default function R3DxC() {
     setPopover(null);
   }
 
+  function handleOrderSetSelect(set: typeof orderSetsPool[0]) {
+    const newOrders: FlatOrder[] = set.children
+      .filter((child) => !flatOrders.some((o) => o.label === child.label))
+      .map((child) => ({
+        id: `${set.id}__${child.id}__added`, label: child.label, company: child.company,
+        relatedIcd: child.relatedIcd ?? set.relatedIcd, checked: false,
+        fromOrderSet: set.baseLabel ?? set.id,
+        confidence: highConfidenceLabels.has(child.label) ? "high" : "low",
+      }));
+    setFlatOrders((prev) => [...prev, ...newOrders]);
+    if (newOrders.length > 0) setHighlightedOrderId(newOrders[0].id);
+    setPopover(null);
+  }
+
   function handleOrderVariantSelect(variant: typeof ordersPool[0]) {
     if (!popover?.orderId) return;
     setFlatOrders((prev) => prev.map((o) =>
@@ -426,7 +440,7 @@ export default function R3DxC() {
     if (popover?.list !== "order-company" || !popover.orderId) return [];
     const current = flatOrders.find((o) => o.id === popover.orderId);
     if (!current) return [];
-    return ordersPool.filter((x) => x.baseLabel === current.label && x.id !== current.id);
+    return ordersPool.filter((x) => x.baseLabel === current.label);
   }, [popover, flatOrders]);
 
   const POPOVER_MAX_H = 280;
@@ -510,7 +524,7 @@ export default function R3DxC() {
               color="neutral"
               size="XS"
               className="opacity-0 group-hover:opacity-100 transition-opacity"
-              onClick={(e) => openPopover(e, "reassign", undefined, order.id)}
+              onClick={(e) => openPopover(e, "reassign", order.relatedIcd, order.id)}
             />
           )}
           {items.length > 0 && (
@@ -559,7 +573,7 @@ export default function R3DxC() {
   }
 
   return (
-    <ScribeLayout activeTab={activeTab} onTabChange={setActiveTab}>
+    <ScribeLayout activeTab={activeTab} onTabChange={setActiveTab} syncDisabled={!someCodesChecked && !someOrdersChecked}>
 
       {activeTab === "clinical" && (() => {
         function highlightInText(text: string, needle: string | null) {
@@ -822,7 +836,7 @@ export default function R3DxC() {
             <Menu>
               <MenuHeader>Change vendor</MenuHeader>
               {companyVariants.map((v) => (
-                <MenuItem key={v.id} label={v.company ?? v.label} description={v.detail} onClick={() => handleOrderVariantSelect(v)} />
+                <MenuItem key={v.id} label={v.company ?? v.label} onClick={() => handleOrderVariantSelect(v)} />
               ))}
               {companyVariants.length === 0 && (
                 <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]">No other vendors available</p>
@@ -831,33 +845,50 @@ export default function R3DxC() {
           ) : popover.list === "order" ? (() => {
             const q = popoverQuery.toLowerCase();
             const matches = (o: typeof ordersPool[0]) => (o.baseLabel ?? o.label).toLowerCase().includes(q) || o.detail.toLowerCase().includes(q);
-            const existingIds = new Set(flatOrders.filter((o) => o.id !== popover.orderId).map((o) => o.id));
+            const existingLabels = new Set(flatOrders.map((o) => o.label));
             const adjSeen = new Set<string>();
             const filteredAdj = orderSuggestions.filter((o) => {
               if (q !== "" && !matches(o)) return false;
-              const k = o.baseLabel ?? o.label; if (adjSeen.has(k)) return false; adjSeen.add(k); return true;
+              const k = o.baseLabel ?? o.label;
+              if (existingLabels.has(k) || adjSeen.has(k)) return false;
+              adjSeen.add(k); return true;
             });
             const adjIds = new Set(orderSuggestions.map((o) => o.id));
             const adjLabels = new Set(filteredAdj.map((o) => o.baseLabel ?? o.label));
             const seen = new Set<string>();
             const filteredRest = ordersPool.filter((o) => {
-              if (existingIds.has(o.id) || adjIds.has(o.id)) return false;
+              if (adjIds.has(o.id)) return false;
               if (q !== "" && !matches(o)) return false;
-              const k = o.baseLabel ?? o.label; if (seen.has(k) || adjLabels.has(k)) return false; seen.add(k); return true;
+              const k = o.baseLabel ?? o.label;
+              if (existingLabels.has(k) || seen.has(k) || adjLabels.has(k)) return false;
+              seen.add(k); return true;
             });
             return (
               <Menu>
                 <MenuSearch value={popoverQuery} onChange={setPopoverQuery} onClose={() => setPopover(null)} placeholder="Search orders…" />
                 <div className="overflow-y-auto max-h-[280px]">
                   {filteredAdj.length > 0 && (<><MenuHeader>Suggested</MenuHeader>{filteredAdj.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
-                  {filteredRest.length > 0 && (<>{filteredAdj.length > 0 && <MenuHeader>All Orders</MenuHeader>}{filteredRest.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
+                  {(() => {
+                    const q = popoverQuery.toLowerCase();
+                    const seenSetLabels = new Set<string>();
+                    const filteredSets = orderSetsPool.filter((s) => {
+                      const lbl = s.baseLabel ?? s.id;
+                      if (seenSetLabels.has(lbl)) return false;
+                      seenSetLabels.add(lbl);
+                      return !q || lbl.toLowerCase().includes(q);
+                    });
+                    return filteredSets.length > 0 ? (<><MenuHeader>Order sets</MenuHeader>{filteredSets.map((s) => <MenuItem key={s.id} label={s.baseLabel ?? s.id} onClick={() => handleOrderSetSelect(s)} />)}</>) : null;
+                  })()}
+                  {filteredRest.length > 0 && (<><MenuHeader>All Orders</MenuHeader>{filteredRest.map((o) => <MenuItem key={o.id} label={o.baseLabel ?? o.label} onClick={() => handleOrderSelect(o)} />)}</>)}
                   {filteredAdj.length === 0 && filteredRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]">No orders found</p>}
                 </div>
               </Menu>
             );
           })() : (() => {
             const isReassign = popover.list === "reassign";
-            const exclude = isReassign ? [] : icd10.map((c) => c.code).filter((c) => c !== popover.code);
+            const exclude = isReassign
+              ? (popover.code ? [popover.code] : [])
+              : icd10.map((c) => c.code);
             const ph = isReassign ? "Change Dx association…" : popover.code ? `Replace ${popover.code}…` : "Search ICD-10 codes…";
             const q = popoverQuery.toLowerCase();
             const mc = (c: CodeItemType) => c.code.toLowerCase().includes(q) || c.description.toLowerCase().includes(q);
@@ -868,7 +899,7 @@ export default function R3DxC() {
               <Menu>
                 <MenuSearch value={popoverQuery} onChange={setPopoverQuery} onClose={() => setPopover(null)} placeholder={ph} />
                 <div className="overflow-y-auto max-h-[220px]">
-                  {fAdj.length > 0 && (<><MenuHeader>{isReassign ? "Current codes" : "Suggested"}</MenuHeader>{fAdj.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleIcd10Select} />)}</>)}
+                  {fAdj.length > 0 && (<><MenuHeader>{isReassign ? "Move order to" : "Suggested"}</MenuHeader>{fAdj.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleIcd10Select} />)}</>)}
                   {fRest.length > 0 && <MenuHeader>All Codes</MenuHeader>}
                   {fRest.map((c) => <CodeMenuItem key={c.code} item={c} onSelect={handleIcd10Select} />)}
                   {fAdj.length === 0 && fRest.length === 0 && <p className="px-[8px] py-[8px] text-[13px] text-[var(--foreground-secondary,#666)]">No codes found</p>}

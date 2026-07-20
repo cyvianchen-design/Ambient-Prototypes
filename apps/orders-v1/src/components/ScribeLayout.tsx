@@ -31,9 +31,10 @@ type Props = {
   activeTab: string;
   onTabChange: (id: string) => void;
   children: React.ReactNode;
+  syncDisabled?: boolean;
 };
 
-export function ScribeLayout({ activeTab, onTabChange, children }: Props) {
+export function ScribeLayout({ activeTab, onTabChange, children, syncDisabled }: Props) {
   const [selectedPatient, setSelectedPatient] = useState("2");
 
   return (
@@ -111,7 +112,7 @@ export function ScribeLayout({ activeTab, onTabChange, children }: Props) {
 
         {/* Bottom bar */}
         <div className="flex items-center justify-between max-w-[640px] w-full px-[12px] pt-[8px] pb-[12px] shrink-0">
-          <Button variant="primary" size="medium" prefix={<Icon name="cloud_upload" size={16} filled />}>
+          <Button variant="primary" size="medium" prefix={<Icon name="cloud_upload" size={16} filled />} disabled={syncDisabled}>
             Sync to EHR
           </Button>
           <Button variant="tertiary" size="medium" prefix={<MagicButton size={16} />}>
