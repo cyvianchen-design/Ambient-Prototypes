@@ -11,6 +11,17 @@ import R2Baseline from "./screens/R2-Baseline";
 import R2Outlined from "./screens/R2-Outlined";
 import R2Inline from "./screens/R2-Inline";
 import R2TwoStep from "./screens/R2-TwoStep";
+import R2ClickEdit from "./screens/R2-ClickEdit";
+import R2FilterTokens from "./screens/R2-FilterTokens";
+import R3Baseline from "./screens/R3-Baseline";
+import R3Table from "./screens/R3-Table";
+import R3InlineDots from "./screens/R3-InlineDots";
+import R3Inline from "./screens/R3-Inline";
+import R3InlineChips from "./screens/R3-InlineChips";
+import R3NewChips from "./screens/R3-NewChips";
+import R3SChips from "./screens/R3-SChips";
+import R3AccentChips from "./screens/R3-AccentChips";
+import MVPBaseline from "./screens/MVP-Baseline";
 
 const screens: ScreenDef[] = [
   { round: "R1", direction: "Baseline", component: R1Baseline },
@@ -23,8 +34,19 @@ const screens: ScreenDef[] = [
   { round: "R2", direction: "Outlined", component: R2Outlined },
   { round: "R2", direction: "Inline", component: R2Inline },
   { round: "R2", direction: "Two-step", component: R2TwoStep },
+  { round: "R2", direction: "Click-edit", component: R2ClickEdit },
+  { round: "R2", direction: "Filter tokens", component: R2FilterTokens },
+  { round: "R3", direction: "Baseline", component: R3Baseline },
+  { round: "R3", direction: "Table", component: R3Table },
+  { round: "R3", direction: "Inline w/ dots", component: R3InlineDots },
+  { round: "R3", direction: "Inline", component: R3Inline },
+  { round: "R3", direction: "Inline chips", component: R3InlineChips },
+  { round: "R3", direction: "New chips", component: R3NewChips },
+  { round: "R3", direction: "S Chips", component: R3SChips },
+  { round: "R3", direction: "Accent Chips", component: R3AccentChips },
+  { round: "MVP", direction: "Baseline", component: MVPBaseline },
 ];
 
 export default function App() {
-  return <VersionSwitcher screens={screens} initialRound="R2" />;
+  return <VersionSwitcher screens={screens} initialRound="MVP" initialDirection="Baseline" />;
 }

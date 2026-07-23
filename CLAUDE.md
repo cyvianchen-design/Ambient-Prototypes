@@ -230,6 +230,21 @@ Strict 4px grid only: `4`, `8`, `12`, `16`, `20`, `24`, `32`, `48`… Values lik
 
 The quick test: if you're spacing two DS components apart, or padding a card/panel/section, use 4px multiples. If you're sizing something *inside* a single component, 2px increments are fine.
 
+**When a Figma spec is provided, always follow it exactly — no rounding, no substitution.** The defaults below apply only when there is no Figma spec or explicit instruction:
+
+**Default spacing scale — use these when no Figma spec or explicit instruction is given:**
+
+| Gap / context | Value |
+|---|---|
+| Tight inline gap (icon + label, label + badge) | `4px` |
+| Between related elements within a block (label + input, header + description) | `8px` |
+| Between items in a list or form | `12px` |
+| Between distinct blocks within a card/section | `16px` |
+| Between cards or major sections | `24px` |
+| Card / panel internal padding | `16px` or `24px` |
+
+When in doubt, reach for `8px` for tight grouping and `16px` for section separation. Never invent values outside this scale without an explicit reason.
+
 ---
 
 ## Tailwind Usage
@@ -314,6 +329,17 @@ Every prototype app contains a `REQUIREMENTS.md` listing the hard functional req
 **Keep code and UI in sync.** When a direction or round is renamed, update everything together: the `direction`/`round` string in `App.tsx`, the screen filename, and the component's `export default function` name. The VersionSwitcher label is just display copy — the filename and export name must always reflect the same name so the codebase stays readable and unambiguous.
 
 **New directions go at the end by default.** When adding a new screen, append it after the last existing entry for that round in `App.tsx`. Only insert it at a specific position if the user explicitly asks.
+
+**Screen files must be self-contained. Never create shared components across directions.**
+
+Each screen file (e.g. `R3-AccentChips.tsx`, `MVP-Baseline.tsx`) is a frozen snapshot of a design direction. It must be fully self-contained — all view logic inlined directly in the file. Do not extract shared helper components (e.g. `R3TableView.tsx`) that multiple screen files import. If two directions share a component, any edit to that component silently changes all directions, making them no longer independent or comparable.
+
+The only shared code that is allowed across screen files is:
+- DS components from `packages/ui` (imported via `@ds/ui`)
+- Shared layout shells like `CustomizeLayout` that have no design opinion and exist purely to mount screens
+- Data/type files like `templateData.ts`
+
+If you find yourself creating a new file in `src/components/` that isn't destined for `packages/ui`, stop and inline the code instead.
 
 ---
 
