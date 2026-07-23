@@ -18,6 +18,8 @@ import {
   Table, TableCell, TableFooter, BadgesCell, StatusCell,
   Citation,
   ScribeShortField, ScribeLongField,
+  SelectChip,
+  SpotMenuItem,
 } from "@ds/ui";
 import type { TimeValue, TableColumn } from "@ds/ui";
 import type { Tab } from "@ds/ui";
@@ -258,9 +260,49 @@ function FormTab() {
   );
 }
 
+function SelectChipDemo() {
+  const [a, setA] = useState(false);
+  const [b, setB] = useState(true);
+  const [c, setC] = useState(false);
+  const [d, setD] = useState(true);
+  return (
+    <>
+      <Section title="SelectChip — S (toggle)">
+        <SelectChip label="Off" selected={a} onChange={setA} />
+        <SelectChip label="On" selected={b} onChange={setB} />
+        <SelectChip label="With icon (off)" selected={c} onChange={setC} icon="visibility_off" />
+        <SelectChip label="With icon (on)" selected={d} onChange={setD} icon="visibility_off" />
+        <SelectChip label="Disabled off" selected={false} onChange={() => {}} disabled />
+        <SelectChip label="Disabled on" selected={true} onChange={() => {}} disabled />
+      </Section>
+      <Section title="SelectChip — S (chevron when selected)">
+        <SelectChip label="Auto format" selected={false} onChange={() => {}} chevronWhenSelected />
+        <SelectChip label="Bullets" selected={true} onChange={() => {}} chevronWhenSelected />
+        <SelectChip label="Disabled off" selected={false} onChange={() => {}} chevronWhenSelected disabled />
+        <SelectChip label="Disabled on" selected={true} onChange={() => {}} chevronWhenSelected disabled />
+      </Section>
+      <Section title="SelectChip — XS (toggle)">
+        <SelectChip label="Off" size="XS" selected={a} onChange={setA} />
+        <SelectChip label="On" size="XS" selected={b} onChange={setB} />
+        <SelectChip label="With icon (off)" size="XS" selected={c} onChange={setC} icon="visibility_off" />
+        <SelectChip label="With icon (on)" size="XS" selected={d} onChange={setD} icon="visibility_off" />
+        <SelectChip label="Disabled off" size="XS" selected={false} onChange={() => {}} disabled />
+        <SelectChip label="Disabled on" size="XS" selected={true} onChange={() => {}} disabled />
+      </Section>
+      <Section title="SelectChip — XS (chevron when selected)">
+        <SelectChip label="Auto format" size="XS" selected={false} onChange={() => {}} chevronWhenSelected />
+        <SelectChip label="Bullets" size="XS" selected={true} onChange={() => {}} chevronWhenSelected />
+        <SelectChip label="Disabled off" size="XS" selected={false} onChange={() => {}} chevronWhenSelected disabled />
+        <SelectChip label="Disabled on" size="XS" selected={true} onChange={() => {}} chevronWhenSelected disabled />
+      </Section>
+    </>
+  );
+}
+
 function ChipsBadgesTab() {
   return (
     <div>
+      <SelectChipDemo />
       <Section title="Chip — S">
         <Chip label="Neutral" color="neutral" onClick={() => {}} />
         <Chip label="Accent" color="accent" onClick={() => {}} />
@@ -481,6 +523,14 @@ function MenuTab() {
         <VariantRow name="State: disabled">
           <MenuItem label="Clinical Note" disabled />
         </VariantRow>
+      </Section>
+      <Section title="SpotMenuItem">
+        <Menu className="w-[320px]">
+          <SpotMenuItem icon="format_list_bulleted" label="Bullet list" description="Each item on its own line with a bullet" onClick={() => {}} />
+          <SpotMenuItem icon="format_align_left" label="Paragraph" description="Flowing prose, no special structure" selected onClick={() => {}} />
+          <SpotMenuItem icon="table_chart" label="Table" description="Rows and columns for structured data" onClick={() => {}} />
+          <SpotMenuItem icon="subject" label="Auto format" description="Let Scribe decide the best format" disabled onClick={() => {}} />
+        </Menu>
       </Section>
     </div>
   );

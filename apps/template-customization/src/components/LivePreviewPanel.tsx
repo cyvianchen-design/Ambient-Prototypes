@@ -36,14 +36,12 @@ export function DynamicPreviewSections({ sections }: { sections: TemplateSection
         const visible = sec.subsections.filter((s) => s.status !== "disabled");
         if (visible.length === 0) return null;
         return (
-          <div key={sec.id}>
-            <div className="h-[28px] flex items-center pl-[8px]">
-              <span className="text-[13px] font-bold tracking-[0.13px] text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFeatureSettings: "'ss07'" }}>{sec.name}</span>
-            </div>
-            <div className="p-[8px] rounded-[6px] text-[#111827] text-[15px] leading-[1.4] flex flex-col gap-[12px]">
+          <div key={sec.id} className="flex flex-col gap-[8px]">
+            <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFeatureSettings: "'ss07'" }}>{sec.name}</span>
+            <div className="text-[var(--foreground-primary,#1a1a1a)] text-[15px] leading-[1.5] flex flex-col gap-[8px]">
               {visible.map((sub) => (
                 <div key={sub.id}>
-                  {sub.showTitle && <p className="font-bold mb-[4px]">{sub.name}</p>}
+                  {sub.showTitle && <p className="t-body-md mb-[2px]">{sub.name}</p>}
                   {bodyFor(sub)}
                 </div>
               ))}

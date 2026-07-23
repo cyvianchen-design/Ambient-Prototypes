@@ -31,7 +31,7 @@ export function Chip({
   disabled = false,
   className = "",
 }: ChipProps) {
-  const bg        = color === "accent" ? "bg-[var(--accent-10,#1132ee1a)]" : color === "success" ? "bg-[var(--green-50,#edf7ee)]" : "bg-[var(--black-5,#0000000d)]";
+  const bg        = color === "accent" ? "bg-[var(--litmus-25,#f1f3fe)]" : color === "success" ? "bg-[var(--green-50,#edf7ee)]" : "bg-[var(--black-5,#0000000d)]";
   const bgHover   = color === "accent" ? "hover:bg-[#e7eafd]" : color === "success" ? "hover:bg-[#d6efd8]" : "hover:bg-[#e6e6e6]";
   const textColor = color === "accent" ? "text-[#1132ee]" : color === "success" ? "text-[var(--green-600,#3f8d43)]" : "text-[#1a1a1a]";
 
@@ -95,7 +95,7 @@ export function Chip({
 
     if (onClick) {
       return (
-        <button onClick={onClick} disabled={disabled} className={`inline-flex items-center h-[28px] shrink-0 cursor-pointer ${className}`}>
+        <button onClick={onClick} disabled={disabled} className={`inline-flex items-center h-[28px] shrink-0 cursor-pointer outline-none ${className}`}>
           {pill}
         </button>
       );
@@ -140,7 +140,7 @@ export function Chip({
       <button
         onClick={onClick}
         disabled={disabled}
-        className={`${base} ${colors} ${hover} cursor-pointer ${className}`}
+        className={`${base} ${colors} ${hover} cursor-pointer outline-none ${className}`}
       >
         {labelEl}
         <Icon name="arrow_drop_down" size={16} className="shrink-0 opacity-60" />

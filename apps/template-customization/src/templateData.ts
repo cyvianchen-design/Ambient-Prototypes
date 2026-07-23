@@ -45,12 +45,10 @@ export function makeMacros(count: number, offset = 0): MacroItem[] {
 export type FormatOption = { value: string; label: string; description: string; icon: string };
 
 export const FORMAT_OPTIONS: FormatOption[] = [
-  { value: "Auto", label: "Auto", description: "AI formats based on your template settings.", icon: "auto_awesome" },
+  { value: "Auto", label: "Auto format", description: "AI formats based on your template settings.", icon: "format_paint" },
   { value: "Paragraph", label: "Paragraph", description: "Narrative style with full sentences.", icon: "subject" },
-  { value: "Numbers by Diagnosis", label: "Numbers by Diagnosis", description: "Numbered findings under each condition.", icon: "format_list_numbered" },
-  { value: "Bullets by Diagnosis", label: "Bullets by Diagnosis", description: "Bulleted findings under each condition.", icon: "format_list_bulleted" },
-  { value: "Bullets by Body Systems", label: "Bullets by Body Systems", description: "Bulleted findings under each body part.", icon: "format_list_bulleted" },
-  { value: "Flat Bullets", label: "Flat Bullets", description: "List all findings in one running list.", icon: "list" },
+  { value: "Bullets", label: "Bullets", description: "List findings in a running bullet list.", icon: "format_list_bulleted" },
+  { value: "Numbered", label: "Numbered", description: "List findings in a numbered list.", icon: "format_list_numbered" },
 ];
 
 export function formatDescription(value: string): string {
@@ -65,13 +63,13 @@ export function newSubsection(): Subsection {
     status: "standard",
     templateInstruction: "",
     format: "Auto",
-    length: "Auto",
+    length: "Standard",
     customFormatting: "",
     macroCount: 0,
   };
 }
 
-export const LENGTH_OPTIONS = ["Auto", "Standard", "Concise", "Detailed"];
+export const LENGTH_OPTIONS = ["Concise", "Standard", "Detailed"];
 
 export const INITIAL_SECTIONS: TemplateSection[] = [
   {
@@ -84,7 +82,7 @@ export const INITIAL_SECTIONS: TemplateSection[] = [
         showTitle: false,
         status: "standard",
         templateInstruction: `Chief complaint as reported by patient or EMS. Subjective/historical info only — no assessment, reasoning, provider education, or PE findings. EMS handoff vitals and medications included. Chronological order. Maintain subjective framing ("reports," "believes," "thinks"). End with pertinent denials.`,
-        format: "Bullets by Diagnosis",
+        format: "Bullets",
         length: "Standard",
         customFormatting: `Open with: "The patient is a [age] year-old [gender] [with a history of [PMH]] presenting to the ED for [reason]." If no PMH, omit bracketed clause. Chief complaint must be symptoms/concern, not a diagnosis. End with "Denies [symptom list]."`,
         macroCount: 0,
@@ -95,7 +93,7 @@ export const INITIAL_SECTIONS: TemplateSection[] = [
         showTitle: true,
         status: "standard",
         templateInstruction: `Patient's explicitly stated past medical history. Diagnoses only. Do not infer from medications or context.`,
-        format: "Bullets by Diagnosis",
+        format: "Bullets",
         length: "Standard",
         customFormatting: "",
         macroCount: 1,
@@ -106,7 +104,7 @@ export const INITIAL_SECTIONS: TemplateSection[] = [
         showTitle: true,
         status: "disabled",
         templateInstruction: "",
-        format: "Flat Bullets",
+        format: "Bullets",
         length: "Concise",
         customFormatting: "",
         macroCount: 0,
@@ -118,7 +116,7 @@ export const INITIAL_SECTIONS: TemplateSection[] = [
         status: "standard",
         templateInstruction:
           "Relevant social history (tobacco, alcohol, drugs, occupational exposure, living situation if clinically relevant).",
-        format: "Flat Bullets",
+        format: "Bullets",
         length: "Concise",
         customFormatting: "",
         macroCount: 1,
@@ -129,7 +127,7 @@ export const INITIAL_SECTIONS: TemplateSection[] = [
         showTitle: true,
         status: "standard",
         templateInstruction: "",
-        format: "Flat Bullets",
+        format: "Bullets",
         length: "Concise",
         customFormatting: "",
         macroCount: 0,
@@ -146,7 +144,7 @@ export const INITIAL_SECTIONS: TemplateSection[] = [
         showTitle: false,
         status: "standard",
         templateInstruction: "",
-        format: "Flat Bullets",
+        format: "Bullets",
         length: "Concise",
         customFormatting: "",
         macroCount: 2,
@@ -163,7 +161,7 @@ export const INITIAL_SECTIONS: TemplateSection[] = [
         showTitle: false,
         status: "standard",
         templateInstruction: "",
-        format: "Flat Bullets",
+        format: "Bullets",
         length: "Concise",
         customFormatting: "",
         macroCount: 5,
@@ -180,7 +178,7 @@ export const INITIAL_SECTIONS: TemplateSection[] = [
         showTitle: false,
         status: "standard",
         templateInstruction: "",
-        format: "Flat Bullets",
+        format: "Bullets",
         length: "Concise",
         customFormatting: "",
         macroCount: 5,
