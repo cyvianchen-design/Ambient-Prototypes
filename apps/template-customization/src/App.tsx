@@ -22,6 +22,9 @@ import R3NewChips from "./screens/R3-NewChips";
 import R3SChips from "./screens/R3-SChips";
 import R3AccentChips from "./screens/R3-AccentChips";
 import MVPBaseline from "./screens/MVP-Baseline";
+import MVPSnackbar from "./screens/MVP-Snackbar";
+import MVPHeaderRefresh from "./screens/MVP-HeaderRefresh";
+import MVPStickyRefresh from "./screens/MVP-StickyRefresh";
 
 const screens: ScreenDef[] = [
   { round: "R1", direction: "Baseline", component: R1Baseline },
@@ -45,8 +48,11 @@ const screens: ScreenDef[] = [
   { round: "R3", direction: "S Chips", component: R3SChips },
   { round: "R3", direction: "Accent Chips", component: R3AccentChips },
   { round: "MVP", direction: "Baseline", component: MVPBaseline },
+  { round: "MVP", direction: "Snackbar", component: MVPSnackbar },
+  { round: "MVP", direction: "Header Refresh", component: MVPHeaderRefresh },
+  { round: "MVP", direction: "Sticky Refresh", component: MVPStickyRefresh },
 ];
 
 export default function App() {
-  return <VersionSwitcher screens={screens} initialRound="MVP" initialDirection="Baseline" />;
+  return <VersionSwitcher screens={screens} initialRound="MVP" initialDirection="Sticky Refresh" />;
 }

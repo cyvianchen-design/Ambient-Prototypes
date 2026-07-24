@@ -295,7 +295,7 @@ const SHARED_INCLUDE_SOURCES = ["Last note", "Patient profile", "Scheduler's not
 function IncludeDataField({ mode }: { mode: Mode }) {
   if (mode === "shared") {
     return (
-      <div className="flex flex-wrap gap-[6px]">
+      <div className="flex flex-wrap gap-[8px]">
         {SHARED_INCLUDE_SOURCES.map((s) => (
           <Chip key={s} label={s} color="neutral" size="XS" />
         ))}
@@ -336,7 +336,7 @@ function IncludeDataField({ mode }: { mode: Mode }) {
   const availableData = OTHER_DATA_SOURCES.filter((d) => !selectedDataTypes.includes(d));
 
   return (
-    <div className="flex flex-wrap gap-[6px] items-center">
+    <div className="flex flex-wrap gap-[8px] items-center">
       {selected.map((item, i) => (
         <FilterToken
           key={i}
@@ -403,7 +403,7 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
       <div className={`flex flex-col gap-[16px]${!enabled ? " opacity-50" : ""}`}>
 
         {/* ── Template instruction ── */}
-        <div className="flex flex-col gap-[10px] -mt-[8px]">
+        <div className={`flex flex-col gap-[4px] ${mode === "shared" ? "-mt-[14px]" : "-mt-[8px]"}${mode === "shared" && !showInstructions ? " -mb-[8px]" : ""}`}>
           <div className="flex items-center justify-between">
             <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">Template instruction</span>
             {mode === "shared" && (
@@ -414,7 +414,7 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
           </div>
           {mode === "shared" ? (
             showInstructions && (
-              <p className="t-body-sm text-[var(--foreground-secondary,#666)] leading-[1.5]">{sub.templateInstruction || "No template instruction provided."}</p>
+              <p className="t-body-sm text-[var(--foreground-secondary,#666)] leading-[1.5] -mt-[4px]">{sub.templateInstruction || "No template instruction provided."}</p>
             )
           ) : (
             <TextArea value={sub.templateInstruction} onChange={(v) => update({ templateInstruction: v })} rows={4} placeholder="Describe what this subsection should capture…" />
@@ -423,7 +423,7 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
 
         {/* ── Include data ── */}
         <div className="h-px bg-[rgba(0,0,0,0.1)]" />
-        <div className="flex flex-col gap-[10px]">
+        <div className="flex flex-col gap-[8px]">
           <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]">Include data</span>
           <IncludeDataField mode={mode} />
         </div>
@@ -450,13 +450,13 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
             <span className="t-body-sm text-[var(--foreground-secondary,#666)]">{whenEmpty === "show" ? "Show empty state" : "Hide subsection"}</span>
           </div>
           {whenEmpty === "show" && mode === "my" && (
-            <div className="flex flex-col gap-[6px]">
+            <div className="flex flex-col gap-[8px]">
               <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Empty state</span>
               <p className="t-body-xs text-[var(--foreground-secondary,#666)]">What to show when there's no relevant content to pull from.</p>
               <TextArea value={sub.emptyState ?? ""} onChange={(v) => update({ emptyState: v })} rows={2} maxRows={4} placeholder="e.g. No significant findings documented." />
             </div>
           )}
-          <div className="flex flex-col gap-[6px] pt-[4px]">
+          <div className="flex flex-col gap-[8px] pt-[4px]">
             <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Custom formatting</span>
             <p className="t-body-xs text-[var(--foreground-secondary,#666)]">Anything the settings above don't cover — supplementary formatting instructions.</p>
             <TextArea value={sub.customFormatting} onChange={(v) => update({ customFormatting: v })} rows={3} maxRows={6} placeholder="e.g. bold abnormal values, group by laterality…" />

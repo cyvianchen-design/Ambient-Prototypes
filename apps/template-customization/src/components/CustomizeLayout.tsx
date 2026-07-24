@@ -12,11 +12,12 @@ const globalItems: { id: string; label: string; icon?: string; iconEl?: React.Re
   { id: "smart-suggest", label: "Smart Suggestions",   iconEl: <SmartSuggestion size={20} /> },
 ];
 
-const templateItems = [
+const templateItems: { id: string; label: string; isDefault?: boolean; myOnly?: boolean }[] = [
   { id: "soap-note",       label: "SOAP Note",            isDefault: true },
   { id: "progress-note",   label: "Progress Note" },
   { id: "initial-eval",    label: "Initial Evaluation" },
   { id: "annual-wellness", label: "Annual Wellness Exam" },
+  { id: "new-template",    label: "New Template",          myOnly: true },
 ];
 
 export type NavSection = "my-templates" | "shared-templates";
@@ -106,7 +107,7 @@ export function CustomizeLayout({
           <div className="px-[12px] h-[30px] flex items-center mt-[8px]">
             <span className="t-title-xs text-[var(--foreground-secondary)]">Shared Templates</span>
           </div>
-          {templateItems.map((item) => {
+          {templateItems.filter((item) => !item.myOnly).map((item) => {
             const isSelected = activeSection === "shared-templates" && selectedTemplate === item.id;
             return (
               <button

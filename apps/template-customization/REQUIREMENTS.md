@@ -8,6 +8,7 @@ Hard functional requirements that must survive any layout iteration. Each is wri
 
 ## Subsections (both views)
 - Reorder subsections within a section via drag-and-drop.
+- Move subsections between sections via drag-and-drop.
 - Rename a subsection inline (click the title to edit).
 - My Templates can add a subsection to a section, and delete a subsection (danger action).
 
@@ -17,6 +18,9 @@ Each subsection's settings are organized into two conceptual groups:
 - Stands on its own, separate from formatting.
 - Behavior / status is part of this group (it's section behavior, not presentation). My Templates: Standard / Optional. Shared Templates: Standard / Optional / Disabled. The status must be changeable wherever the subsection is edited.
 - Instruction text — My Templates: directly editable. Shared Templates: hidden by default with a control to reveal/hide; read-only.
+
+### Patient context
+- My Templates and Shared Templates provide the same controls to add, remove, and configure patient context sources.
 
 ### Formatting (how it's presented)
 Groups everything about presentation together:
@@ -28,4 +32,5 @@ Groups everything about presentation together:
 
 ## Preview
 - A live preview of the rendered note is available on the screen.
+- Select an example patient or a recent scribe as preview input; selecting a scribe automatically regenerates the preview without changing the original scribe.
 - A "Save Template" action is present.

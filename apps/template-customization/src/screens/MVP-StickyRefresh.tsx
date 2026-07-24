@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, ButtonGroup, Checkbox, Chip, EditableTitle, SelectChip, Icon, IconButton, Menu, MenuHeader, MenuItem, SpotMenuItem, Switch, Table, TextArea } from "@ds/ui";
+import { Button, Checkbox, Chip, EditableTitle, SelectChip, Icon, IconButton, Loader, Menu, MenuHeader, MenuItem, MenuSearch, SpotMenuItem, Switch, Table, TextArea } from "@ds/ui";
 import type { TableColumn } from "@ds/ui";
-import { SelectDropdown } from "./SelectDropdown";
-import { DynamicPreviewSections } from "./LivePreviewPanel";
+import { CustomizeLayout, NavSection } from "../components/CustomizeLayout";
+import { DynamicPreviewSections } from "../components/LivePreviewPanel";
 import {
-  FORMAT_OPTIONS,
   INITIAL_SECTIONS,
   LENGTH_OPTIONS,
   MacroItem,
@@ -23,17 +22,34 @@ const STATUS_STYLES: Record<SubsectionStatus, { dot: string; label: string }> = 
   disabled: { dot: "bg-[#999]", label: "Disabled" },
 };
 
+const MVP_FORMAT_OPTIONS = [
+  { value: "Auto", label: "Auto format", description: "AI chooses the best format and grouping.", icon: "format_paint" },
+  { value: "Paragraph", label: "Paragraph", description: "Narrative style with full sentences.", icon: "subject" },
+  { value: "Numbers by Diagnosis", label: "Numbers by Diagnosis", description: "Numbered findings grouped by diagnosis.", icon: "format_list_numbered" },
+  { value: "Bullets by Diagnosis", label: "Bullets by Diagnosis", description: "Bulleted findings grouped by diagnosis.", icon: "format_list_bulleted" },
+  { value: "Bullets by Body Systems", label: "Bullets by Body Systems", description: "Bulleted findings grouped by body system.", icon: "format_list_bulleted" },
+  { value: "Bullets", label: "Flat Bullets", description: "A single ungrouped list of findings.", icon: "format_list_bulleted" },
+];
+
+const TEMPLATE_NAMES: Record<string, string> = {
+  "soap-note": "SOAP Note",
+  "progress-note": "Progress Note",
+  "initial-eval": "Initial Evaluation",
+  "annual-wellness": "Annual Wellness Exam",
+  "new-template": "New Template",
+};
+
 function OutlineRow({
-  sub, active, isDragOver, onJump, onDragStart, onDragOver, onDrop,
+  sub, active, isDragOver, onJump, onDragStart, onDragOver, onDrop, onDragEnd,
 }: {
   sub: Subsection; active: boolean; isDragOver: boolean;
   onJump: () => void; onDragStart: () => void;
-  onDragOver: (e: React.DragEvent) => void; onDrop: () => void;
+  onDragOver: (e: React.DragEvent) => void; onDrop: () => void; onDragEnd: () => void;
 }) {
   const s = STATUS_STYLES[sub.status];
   return (
     <button
-      draggable onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop} onDragEnd={onDrop} onClick={onJump}
+      draggable onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop} onDragEnd={onDragEnd} onClick={onJump}
       className={`group w-full flex items-center gap-[8px] h-[34px] pl-[8px] pr-[12px] rounded-[8px] text-left transition-colors ${active ? "bg-[var(--litmus-25,#f1f3fe)]" : "hover:bg-[var(--surface-1,#f7f7f7)]"}`}
     >
       <span className="shrink-0 text-[#ccc] group-hover:text-[#999] cursor-grab active:cursor-grabbing flex items-center"><Icon name="drag_indicator" size={14} /></span>
@@ -62,8 +78,6 @@ function MacrosBlock({ mode, initialCount, trailingAction }: { mode: Mode; initi
     </div>
   );
 }
-
-// ── Include data table ────────────────────────────────────────────────────────
 
 const NOTE_TYPES = ["H&P", "Progress note", "Discharge summary", "Consult note", "Operative note"];
 
@@ -158,7 +172,6 @@ function SectionsMenu({ noteType, selected, onUpdate, onClose }: {
   );
 }
 
-// A single editable cell that opens a dropdown on click
 function EditableCell({ value, children, onClick }: { value: string; children?: React.ReactNode; onClick?: () => void }) {
   return (
     <button
@@ -388,8 +401,6 @@ function IncludeDataTable({ mode, initialItems = [] }: { mode: Mode; initialItem
   );
 }
 
-// ── Include data: inline rows ─────────────────────────────────────────────────
-
 function InlineEditRow({ item, onUpdate, onRemove, dots = true }: {
   item: IncludeItem;
   onUpdate: (u: IncludeItem) => void;
@@ -412,7 +423,6 @@ function InlineEditRow({ item, onUpdate, onRemove, dots = true }: {
       <span className="t-title-xs text-[var(--foreground-primary,#1a1a1a)] shrink-0">{label}</span>
       {dots && <span className="text-[var(--foreground-secondary,#666)] t-body-xs shrink-0">·</span>}
 
-      {/* Time frame */}
       <div className="relative shrink-0">
         <button onClick={() => toggle("time")}
           className="inline-flex items-center h-[20px] pl-[6px] pr-[2px] gap-[1px] rounded-[4px] t-body-xs text-[var(--foreground-primary,#1a1a1a)] hover:bg-[var(--black-5,#0000000d)] transition-colors">
@@ -431,7 +441,6 @@ function InlineEditRow({ item, onUpdate, onRemove, dots = true }: {
         )}
       </div>
 
-      {/* Author — notes only */}
       {item.kind === "note" && (
         <>
           {dots && <span className="text-[var(--foreground-secondary,#666)] t-body-xs shrink-0">·</span>}
@@ -515,8 +524,6 @@ function IncludeInlineRows({ mode, initialItems = [], dots = true }: { mode: Mod
     </div>
   );
 }
-
-// ── Include data: collapsed summary ───────────────────────────────────────────
 
 function IncludeSummary({ mode, initialItems = [] }: { mode: Mode; initialItems?: IncludeItem[] }) {
   const [selected, setSelected] = useState<IncludeItem[]>(initialItems);
@@ -602,8 +609,6 @@ function IncludeSummary({ mode, initialItems = [] }: { mode: Mode; initialItems?
     </div>
   );
 }
-
-// ── Include data: inline chips ────────────────────────────────────────────────
 
 function InlineChipsRow({ item, onUpdate, onRemove, chipSize = "XS", labelStyle = "title" }: {
   item: IncludeItem;
@@ -717,27 +722,21 @@ function IncludeInlineChips({ mode, initialItems = [], chipSize = "XS", labelSty
   );
 }
 
-// ── Subsection card ───────────────────────────────────────────────────────────
-
-function SubsectionCard({ mode, sub, onChange, onDelete, registerRef, includeVariant = "table" }: {
+function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
   mode: Mode; sub: Subsection; onChange: (s: Subsection) => void;
   onDelete: () => void; registerRef: (el: HTMLDivElement | null) => void;
-  includeVariant?: "table" | "inline" | "inline-nodots" | "chips" | "new-chips" | "s-chips" | "accent-chips" | "summary";
 }) {
   const [showInstructions, setShowInstructions] = useState(false);
-  const [chipTitleOpen, setChipTitleOpen] = useState(false);
   const [chipFormatOpen, setChipFormatOpen] = useState(false);
   const [chipLengthOpen, setChipLengthOpen] = useState(false);
   const [chipWhenEmptyOpen, setChipWhenEmptyOpen] = useState(false);
-  const [groupBy, setGroupBy] = useState<string | null>(null);
-  const [chipGroupByOpen, setChipGroupByOpen] = useState(false);
   const defaultSub = useRef<Subsection>(sub);
   function update(p: Partial<Subsection>) { onChange({ ...sub, ...p }); }
   const subsectionFields: (keyof Subsection)[] = ["name", "showTitle", "status", "generateWhen", "emptyState", "templateInstruction", "format", "length", "customFormatting"];
   const hasChanges = subsectionFields.some((k) => sub[k] !== defaultSub.current[k]);
   const whenEmpty = sub.generateWhen ?? "hide";
   const enabled = sub.status !== "disabled";
-  const lengthLabel = (l: string) => l === "Standard" ? "Standard length" : l;
+  const formatLabel = MVP_FORMAT_OPTIONS.find((option) => option.value === sub.format)?.label ?? sub.format;
 
   return (
     <div ref={registerRef} data-subid={sub.id} className="scroll-mt-[16px] border border-[rgba(0,0,0,0.1)] rounded-[10px] pt-[8px] px-[16px] pb-[16px] flex flex-col gap-[16px]">
@@ -753,7 +752,7 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef, includeVar
 
       <div className={`flex flex-col gap-[16px]${!enabled ? " opacity-50" : ""}`}>
 
-        {/* ── Template instruction ── */}
+        {/* ── Instruction ── */}
         <div className={`flex flex-col gap-[4px] ${mode === "shared" ? "-mt-[14px]" : "-mt-[8px]"}${mode === "shared" && !showInstructions ? " -mb-[8px]" : ""}`}>
           <div className="flex items-center justify-between">
             <p className="t-title-sm text-[var(--foreground-secondary,#666)]">Instruction <span className="t-body-xs font-normal ml-[8px]">What this subsection should cover.</span></p>
@@ -772,176 +771,70 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef, includeVar
           )}
         </div>
 
-        {/* ── Include data ── */}
+        {/* ── Patient context ── */}
         <div className="h-px bg-[rgba(0,0,0,0.1)]" />
         <div className="flex flex-col gap-[8px]">
           <p className="t-title-sm text-[var(--foreground-secondary,#666)]">Patient context <span className="t-body-xs font-normal ml-[8px]">Where to pull information from, beyond the recording.</span></p>
-          {includeVariant === "inline" ? (
-            <IncludeInlineRows mode={mode} initialItems={SUBSECTION_INCLUDE_DEFAULTS[sub.name] ?? []} dots={true} />
-          ) : includeVariant === "inline-nodots" ? (
-            <IncludeInlineRows mode={mode} initialItems={SUBSECTION_INCLUDE_DEFAULTS[sub.name] ?? []} dots={false} />
-          ) : includeVariant === "chips" || includeVariant === "new-chips" || includeVariant === "s-chips" || includeVariant === "accent-chips" ? (
-            <IncludeInlineChips mode={mode} initialItems={SUBSECTION_INCLUDE_DEFAULTS[sub.name] ?? []} labelStyle={includeVariant === "s-chips" || includeVariant === "accent-chips" ? "body" : "title"} />
-          ) : includeVariant === "summary" ? (
-            <IncludeSummary mode={mode} initialItems={SUBSECTION_INCLUDE_DEFAULTS[sub.name] ?? []} />
-          ) : (
-            <IncludeDataTable mode={mode} initialItems={SUBSECTION_INCLUDE_DEFAULTS[sub.name] ?? []} />
-          )}
+          <IncludeInlineChips mode="my" initialItems={SUBSECTION_INCLUDE_DEFAULTS[sub.name] ?? []} labelStyle="body" />
         </div>
 
+        {/* ── Formatting ── */}
         <div className="h-px bg-[rgba(0,0,0,0.1)]" />
         <div className="flex flex-col gap-[12px]">
           <p className="t-title-sm text-[var(--foreground-secondary,#666)]">Formatting <span className="t-body-xs font-normal ml-[8px]">How Ambient should write this section.</span></p>
 
-          {includeVariant === "new-chips" || includeVariant === "s-chips" || includeVariant === "accent-chips" ? (
-            <div className="flex items-center flex-wrap gap-[8px]">
-              {/* Title — SelectChip on/off */}
-              <SelectChip size={includeVariant === "new-chips" ? "XS" : "S"} color={includeVariant === "accent-chips" ? "accent" : "neutral"} label={sub.showTitle ? "Show title" : "Hide title"} selected={sub.showTitle} onChange={(v) => update({ showTitle: v })} />
+          <div className="flex items-center flex-wrap gap-[8px]">
+            <SelectChip size="S" color="accent" label={sub.showTitle ? "Show title" : "Hide title"} selected={sub.showTitle} onChange={(v) => update({ showTitle: v })} />
 
-              {/* Format — SelectChip, off=Auto, on=specific format */}
-              <div className="relative">
-                <SelectChip
-                  size={includeVariant === "new-chips" ? "XS" : "S"}
-                  color={includeVariant === "accent-chips" ? "accent" : "neutral"}
-                  label={sub.format === "Auto" ? "Auto format" : sub.format}
-                  selected={sub.format !== "Auto"}
-                  chevronWhenSelected
-                  onChange={() => setChipFormatOpen((o) => !o)}
-                />
-                {chipFormatOpen && (
-                  <>
-                    <div className="fixed inset-0 z-[9]" onClick={() => setChipFormatOpen(false)} />
-                    <div className="absolute top-full left-0 mt-[4px] z-10" onClick={(e) => e.stopPropagation()}>
-                      <Menu className="w-[380px]">
-                        {FORMAT_OPTIONS.map((o) => (
-                          <SpotMenuItem
-                            key={o.value}
-                            icon={o.icon}
-                            label={o.label}
-                            description={o.description}
-                            selected={sub.format === o.value}
-                            onClick={() => { update({ format: o.value }); setChipFormatOpen(false); }}
-                          />
-                        ))}
-                      </Menu>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              {/* Grouped by — SelectChip accent on/off, dropdown to pick option */}
-              <div className="relative">
-                <SelectChip
-                  size={includeVariant === "new-chips" ? "XS" : "S"}
-                  color={includeVariant === "accent-chips" ? "accent" : "neutral"}
-                  label={groupBy ?? "Auto grouping"}
-                  selected={groupBy !== null}
-                  chevronWhenSelected
-                  onChange={() => setChipGroupByOpen((o) => !o)}
-                />
-                {chipGroupByOpen && (
-                  <SegmentMenu
-                    options={["Auto grouping", "By diagnosis", "By body system", "By date"] as any}
-                    selected={groupBy ?? "Auto grouping"}
-                    onSelect={(v: string) => { setGroupBy(v === "Auto grouping" ? null : v); setChipGroupByOpen(false); }}
-                    onClose={() => setChipGroupByOpen(false)} />
-                )}
-              </div>
-
-              {/* Length — SelectChip, off=Standard, on=Concise or Detailed */}
-              <div className="relative">
-                <SelectChip
-                  size={includeVariant === "new-chips" ? "XS" : "S"}
-                  color={includeVariant === "accent-chips" ? "accent" : "neutral"}
-                  label={sub.length === "Standard" ? "Standard length" : sub.length}
-                  selected={sub.length !== "Standard"}
-                  chevronWhenSelected
-                  onChange={() => setChipLengthOpen((o) => !o)}
-                />
-                {chipLengthOpen && (
-                  <SegmentMenu
-                    options={LENGTH_OPTIONS as any}
-                    selected={sub.length}
-                    onSelect={(v) => { update({ length: v }); setChipLengthOpen(false); }}
-                    onClose={() => setChipLengthOpen(false)} />
-                )}
-              </div>
-
-              {/* When empty — SelectChip on/off */}
-              <SelectChip size={includeVariant === "new-chips" ? "XS" : "S"} color={includeVariant === "accent-chips" ? "accent" : "neutral"} label={whenEmpty === "show" ? "Show empty state" : "Skip when empty"} selected={whenEmpty === "show"} onChange={(v) => update({ generateWhen: v ? "show" : "hide" })} />
+            <div className="relative">
+              <SelectChip
+                size="S" color="accent"
+                label={formatLabel}
+                selected={sub.format !== "Auto"}
+                chevronWhenSelected
+                onChange={() => setChipFormatOpen((o) => !o)}
+              />
+              {chipFormatOpen && (
+                <>
+                  <div className="fixed inset-0 z-[9]" onClick={() => setChipFormatOpen(false)} />
+                  <div className="absolute top-full left-0 mt-[4px] z-10" onClick={(e) => e.stopPropagation()}>
+                    <Menu className="w-[380px]">
+                      {MVP_FORMAT_OPTIONS.map((o) => (
+                        <SpotMenuItem
+                          key={o.value}
+                          icon={o.icon}
+                          label={o.label}
+                          description={o.description}
+                          selected={sub.format === o.value}
+                          onClick={() => { update({ format: o.value }); setChipFormatOpen(false); }}
+                        />
+                      ))}
+                    </Menu>
+                  </div>
+                </>
+              )}
             </div>
-          ) : includeVariant === "chips" ? (
-            <div className="flex items-center flex-wrap gap-[8px]">
-              {/* Title dropdown */}
-              <div className="relative">
-                <Chip size="XS" color="neutral" label={sub.showTitle ? "Title shown" : "Title hidden"} onClick={() => setChipTitleOpen((o) => !o)} />
-                {chipTitleOpen && (
-                  <SegmentMenu
-                    options={["Title shown", "Title hidden"] as any}
-                    selected={sub.showTitle ? "Title shown" : "Title hidden"}
-                    onSelect={(v) => { update({ showTitle: v === "Title shown" }); setChipTitleOpen(false); }}
-                    onClose={() => setChipTitleOpen(false)} />
-                )}
-              </div>
 
-              {/* Format dropdown */}
-              <div className="relative">
-                <Chip size="XS" color="neutral" label={sub.format} onClick={() => setChipFormatOpen((o) => !o)} />
-                {chipFormatOpen && (
-                  <SegmentMenu
-                    options={FORMAT_OPTIONS.map((o) => o.value) as any}
-                    selected={sub.format}
-                    onSelect={(v) => { update({ format: v }); setChipFormatOpen(false); }}
-                    onClose={() => setChipFormatOpen(false)} />
-                )}
-              </div>
-
-              {/* Length dropdown */}
-              <div className="relative">
-                <Chip size="XS" color="neutral" label={lengthLabel(sub.length)} onClick={() => setChipLengthOpen((o) => !o)} />
-                {chipLengthOpen && (
-                  <SegmentMenu
-                    options={LENGTH_OPTIONS as any}
-                    selected={sub.length}
-                    onSelect={(v) => { update({ length: v }); setChipLengthOpen(false); }}
-                    onClose={() => setChipLengthOpen(false)} />
-                )}
-              </div>
-
-              {/* When empty dropdown */}
-              <div className="relative">
-                <Chip size="XS" color="neutral" label={whenEmpty === "show" ? "Show when empty" : "Hide when empty"} onClick={() => setChipWhenEmptyOpen((o) => !o)} />
-                {chipWhenEmptyOpen && (
-                  <SegmentMenu
-                    options={["Hide when empty", "Show when empty"] as any}
-                    selected={whenEmpty === "show" ? "Show when empty" : "Hide when empty"}
-                    onSelect={(v) => { update({ generateWhen: v === "Show when empty" ? "show" : "hide" }); setChipWhenEmptyOpen(false); }}
-                    onClose={() => setChipWhenEmptyOpen(false)} />
-                )}
-              </div>
+            <div className="relative">
+              <SelectChip
+                size="S" color="accent"
+                label={sub.length === "Standard" ? "Standard length" : sub.length}
+                selected={sub.length !== "Standard"}
+                chevronWhenSelected
+                onChange={() => setChipLengthOpen((o) => !o)}
+              />
+              {chipLengthOpen && (
+                <SegmentMenu
+                  options={LENGTH_OPTIONS as any}
+                  selected={sub.length}
+                  onSelect={(v) => { update({ length: v }); setChipLengthOpen(false); }}
+                  onClose={() => setChipLengthOpen(false)} />
+              )}
             </div>
-          ) : (
-            <>
-              <div className="flex items-center gap-[12px]">
-                <span className="w-[64px] shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">Title</span>
-                <Switch size="XS" checked={sub.showTitle} onChange={(v) => update({ showTitle: v })} />
-                <span className="t-body-sm text-[var(--foreground-secondary,#666)]">{sub.showTitle ? "Show" : "Hide"}</span>
-              </div>
-              <div className="flex items-center gap-[12px]">
-                <span className="w-[64px] shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">Format</span>
-                <SelectDropdown value={sub.format} options={FORMAT_OPTIONS} onChange={(v) => update({ format: v })} width="w-[200px]" menuWidth={380} />
-              </div>
-              <div className="flex items-center gap-[12px]">
-                <span className="w-[64px] shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">Length</span>
-                <SelectDropdown value={sub.length} options={LENGTH_OPTIONS} onChange={(v) => update({ length: v })} width="w-[200px]" />
-              </div>
-              <div className="flex items-center gap-[12px]">
-                <span className="shrink-0 t-title-sm text-[var(--foreground-secondary,#666)]">When empty</span>
-                <Switch size="XS" checked={whenEmpty === "show"} onChange={(v) => update({ generateWhen: v ? "show" : "hide" })} />
-                <span className="t-body-sm text-[var(--foreground-secondary,#666)]">{whenEmpty === "show" ? "Show empty state" : "Hide subsection"}</span>
-              </div>
-            </>
-          )}
+
+            <SelectChip size="S" color="accent" label={whenEmpty === "show" ? "Show empty state" : "Skip when empty"} selected={whenEmpty === "show"} onChange={(v) => update({ generateWhen: v ? "show" : "hide" })} />
+          </div>
+
           {whenEmpty === "show" && mode === "my" && (
             <div className="flex flex-col gap-[8px]">
               <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Empty state</span>
@@ -955,6 +848,7 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef, includeVar
           </div>
         </div>
 
+        {/* ── Macros ── */}
         <div className="h-px bg-[rgba(0,0,0,0.1)]" />
         <div className="flex flex-col gap-[8px]">
           <p className="t-title-sm text-[var(--foreground-secondary,#666)]">Macros <span className="t-body-xs font-normal ml-[8px]">Pre-set content structure for Ambient to follow.</span></p>
@@ -973,68 +867,192 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef, includeVar
   );
 }
 
-const ASSISTANT_SUGGESTIONS: { icon: string; label: string }[] = [
-  { icon: "add", label: "Add a Vitals subsection to this template" },
-  { icon: "swap_vert", label: "Reorder subsections by clinical priority" },
-  { icon: "library_add", label: "Import a subsection from another template" },
-  { icon: "ink_highlighter", label: "Tighten the HPI instruction to be more concise" },
-  { icon: "tune", label: "Suggest formatting for the Physical Exam" },
+
+const SAMPLE_PREVIEW_SOURCES = [
+  { id: "example", label: "Example patient" },
+  { id: "scribe-1", label: "Alex Morgan", description: "Today at 1:42 PM · Chest pain" },
+  { id: "scribe-2", label: "Jordan Lee", description: "Today at 11:18 AM · Follow-up" },
+  { id: "scribe-3", label: "Taylor Reed", description: "Today at 9:06 AM · Shortness of breath" },
+  { id: "scribe-4", label: "Casey Rivera", description: "Yesterday at 4:32 PM · Abdominal pain" },
+  { id: "scribe-5", label: "Riley Chen", description: "Yesterday at 2:15 PM · Medication review" },
+  { id: "scribe-6", label: "Cameron Ellis", description: "Yesterday at 10:48 AM · Annual wellness visit" },
+  { id: "scribe-7", label: "Morgan Blake", description: "Monday at 3:20 PM · Headache" },
+  { id: "scribe-8", label: "Jamie Brooks", description: "Monday at 1:05 PM · Post-op follow-up" },
+  { id: "scribe-9", label: "Avery Patel", description: "Monday at 9:36 AM · Back pain" },
+  { id: "scribe-10", label: "Quinn Harper", description: "Friday at 4:10 PM · Diabetes follow-up" },
+  { id: "scribe-11", label: "Parker James", description: "Friday at 11:22 AM · Cough" },
+  { id: "scribe-12", label: "Drew Sullivan", description: "Thursday at 2:54 PM · Lab review" },
 ];
 
-function AssistantContent() {
+function PreviewSourceDropdown({ onSourceChange }: { onSourceChange: (sourceId: string) => void }) {
+  const [selectedId, setSelectedId] = useState("example");
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [visibleCount, setVisibleCount] = useState(6);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const selected = SAMPLE_PREVIEW_SOURCES.find((source) => source.id === selectedId) ?? SAMPLE_PREVIEW_SOURCES[0];
+  const normalizedQuery = query.trim().toLowerCase();
+  const allScribes = SAMPLE_PREVIEW_SOURCES.slice(1);
+  const matchingScribes = allScribes.filter((source) =>
+    `${source.label} ${source.description}`.toLowerCase().includes(normalizedQuery)
+  );
+  const displayedScribes = normalizedQuery ? matchingScribes : matchingScribes.slice(0, visibleCount);
+
+  function closeMenu() {
+    setOpen(false);
+    setQuery("");
+    setVisibleCount(6);
+  }
+
+  function selectSource(id: string) {
+    if (id !== selectedId) onSourceChange(id);
+    setSelectedId(id);
+    closeMenu();
+  }
+
+  function handleResultsScroll(event: React.UIEvent<HTMLDivElement>) {
+    if (normalizedQuery) return;
+    const list = event.currentTarget;
+    if (list.scrollHeight - list.scrollTop - list.clientHeight < 24) {
+      setVisibleCount((count) => Math.min(count + 5, allScribes.length));
+    }
+  }
+
+  useEffect(() => {
+    if (!open) return;
+    function handleOutsideClick(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) closeMenu();
+    }
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [open]);
+
   return (
-    <div className="flex-1 min-h-0 flex flex-col gap-[8px] px-[24px] pb-[16px]">
-      <div className="flex-1 min-h-0 overflow-y-auto py-[8px] flex flex-col gap-[12px] w-full max-w-[640px] mx-auto">
-        <span className="t-title-sm text-[var(--foreground-primary,#1a1a1a)]" style={{ fontFeatureSettings: "'ss07'" }}>Get Started</span>
-        {ASSISTANT_SUGGESTIONS.map((s, i) => (
-          <button key={i} className="flex w-full items-center gap-[8px] rounded-[8px] bg-[var(--surface-2,#f2f2f2)] px-[12px] py-[10px] text-left hover:bg-[#eaeaea] transition-colors">
-            <span className="shrink-0 flex items-center text-[var(--foreground-primary,#1a1a1a)]"><Icon name={s.icon} size={16} /></span>
-            <span className="t-body-sm text-[var(--foreground-primary,#1a1a1a)]">{s.label}</span>
-          </button>
-        ))}
-      </div>
-      <div className="shrink-0 w-full max-w-[640px] mx-auto flex min-h-[48px] items-center gap-[4px] rounded-[6px] border border-[#8044ff] px-[12px] py-[8px]">
-        <input placeholder="Ask assistant" className="min-w-px flex-1 bg-transparent font-['Lato'] text-[15px] leading-[1.4] tracking-[0.15px] text-[var(--foreground-primary,#1a1a1a)] placeholder:text-[#808080] focus:outline-none" />
-        <IconButton variant="tertiary" size="medium" aria-label="Voice input" icon={<Icon name="mic" size={20} filled />} />
-        <IconButton variant="tertiary" size="medium" aria-label="Send" icon={<Icon name="send" size={20} filled />} />
-      </div>
+    <div ref={containerRef} className="relative">
+      <SelectChip
+        size="S"
+        color="accent"
+        label={selected.label}
+        selected={selectedId !== "example"}
+        chevronWhenSelected
+        onChange={() => open ? closeMenu() : setOpen(true)}
+      />
+      {open && (
+        <div className="absolute right-0 top-full mt-[4px] z-[100]">
+          <Menu className="w-[260px]">
+            <MenuSearch value={query} onChange={setQuery} onClose={closeMenu} placeholder="Search scribes…" />
+            <MenuItem
+              label="Example patient"
+              selected={selectedId === "example"}
+              onClick={() => selectSource("example")}
+            />
+            <MenuHeader>Recent scribes</MenuHeader>
+            <div className="max-h-[220px] overflow-y-auto" onScroll={handleResultsScroll}>
+              {displayedScribes.map((source) => (
+                <MenuItem
+                  key={source.id}
+                  label={source.label}
+                  description={source.description}
+                  selected={source.id === selectedId}
+                  onClick={() => selectSource(source.id)}
+                />
+              ))}
+              {displayedScribes.length === 0 && (
+                <p className="t-body-sm text-[var(--foreground-secondary,#666)] px-[8px] py-[8px]">No scribes found</p>
+              )}
+            </div>
+          </Menu>
+        </div>
+      )}
     </div>
   );
 }
 
-function PreviewSidebar({ sections, width, onResizeStart }: { sections: TemplateSection[]; width: number; onResizeStart: (e: React.MouseEvent) => void }) {
+function PreviewSidebar({ sections, width, queuedChangeCount, previewSourceId, isPreviewLoading, onRefresh, onSourceChange, onResizeStart }: {
+  sections: TemplateSection[];
+  width: number;
+  queuedChangeCount: number;
+  previewSourceId: string;
+  isPreviewLoading: boolean;
+  onRefresh: () => void;
+  onSourceChange: (sourceId: string) => void;
+  onResizeStart: (e: React.MouseEvent) => void;
+}) {
   return (
     <div className="relative shrink-0 h-full bg-white border-l border-[var(--shape-outline,rgba(0,0,0,0.1))] flex flex-col" style={{ width }}>
       <div onMouseDown={onResizeStart} className="group absolute left-0 top-0 h-full w-[20px] -ml-[10px] cursor-col-resize z-10 flex items-center justify-center">
         <div className="h-[40px] w-[3px] rounded-full bg-transparent group-hover:bg-[rgba(0,0,0,0.2)] transition-colors" />
       </div>
-      <div className="shrink-0 h-[56px] flex items-center px-[24px]">
+      <div className="shrink-0 h-[56px] flex items-center justify-between gap-[12px] px-[24px]">
         <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Preview</span>
+        <PreviewSourceDropdown onSourceChange={onSourceChange} />
       </div>
       <div className="flex-1 min-h-0 overflow-y-auto px-[24px] pb-[24px]">
-        <DynamicPreviewSections sections={sections} />
+        {isPreviewLoading ? (
+          <div className="h-full flex items-center justify-center">
+            <Loader size="M" label="Generating preview…" />
+          </div>
+        ) : (
+          <DynamicPreviewSections sections={sections} previewSourceId={previewSourceId} />
+        )}
       </div>
-      <div className="shrink-0 px-[24px] py-[12px] flex justify-end bg-white">
-        <Button variant="primary" size="medium" prefix={<Icon name="save" size={18} />}>Save Template</Button>
+      <div className="shrink-0 px-[24px] py-[12px] flex items-center justify-between gap-[16px] bg-white">
+        {queuedChangeCount > 0 && (
+          <div className="flex items-center gap-[8px]">
+            <Button
+              variant="tertiary"
+              size="small"
+              prefix={<Icon name="refresh" size={16} />}
+              onClick={onRefresh}
+              className="!pl-0"
+            >
+              Refresh
+            </Button>
+            <span className="t-body-xs text-[var(--foreground-secondary,#666)]">
+              {queuedChangeCount} template {queuedChangeCount === 1 ? "update" : "updates"} queued
+            </span>
+          </div>
+        )}
+        <Button variant="primary" size="medium" prefix={<Icon name="save" size={18} />} className="ml-auto">Save Template</Button>
       </div>
     </div>
   );
 }
 
-// ── Main view ────────────────────────────────────────────────────────────────
-
-export function R3TableView({ mode, includeVariant = "table", showAssistant = true }: { mode: Mode; includeVariant?: "table" | "inline" | "inline-nodots" | "chips" | "new-chips" | "s-chips" | "accent-chips" | "summary"; showAssistant?: boolean }) {
+function MVPView({ mode, selectedTemplate }: { mode: Mode; selectedTemplate: string }) {
   const [templateName, setTemplateName] = useState("SOAP Note");
   const [sections, setSections] = useState<TemplateSection[]>(INITIAL_SECTIONS);
   const [activeId, setActiveId] = useState<string>(INITIAL_SECTIONS[0].subsections[0].id);
-  const [centerTab, setCenterTab] = useState<string>("settings");
   const [drag, setDrag] = useState<{ sectionId: string; index: number } | null>(null);
   const [dragOver, setDragOver] = useState<{ sectionId: string; index: number } | null>(null);
   const [previewWidth, setPreviewWidth] = useState(440);
+  const [queuedChangeIds, setQueuedChangeIds] = useState<Set<string>>(() => new Set());
+  const [previewSourceId, setPreviewSourceId] = useState("example");
+  const [isPreviewLoading, setIsPreviewLoading] = useState(false);
+  const previewRefreshTimer = useRef<number | null>(null);
   const resizing = useRef(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
   const isJumping = useRef(false);
+
+  useEffect(() => {
+    const nextSections = selectedTemplate === "new-template"
+      ? [
+          { id: "hpi", name: "HPI", subsections: [] },
+          { id: "ros", name: "ROS", subsections: [] },
+          { id: "pe", name: "PE", subsections: [] },
+          { id: "assessment-plan", name: "A&P", subsections: [] },
+        ]
+      : INITIAL_SECTIONS;
+    setTemplateName(TEMPLATE_NAMES[selectedTemplate] ?? "SOAP Note");
+    setSections(nextSections);
+    setActiveId(nextSections[0]?.subsections[0]?.id ?? "");
+    setQueuedChangeIds(new Set());
+  }, [selectedTemplate]);
+
+  useEffect(() => () => {
+    if (previewRefreshTimer.current !== null) window.clearTimeout(previewRefreshTimer.current);
+  }, []);
 
   useEffect(() => {
     function move(e: MouseEvent) { if (!resizing.current) return; setPreviewWidth(Math.min(720, Math.max(320, window.innerWidth - e.clientX))); }
@@ -1057,64 +1075,128 @@ export function R3TableView({ mode, includeVariant = "table", showAssistant = tr
       },
       { root, rootMargin: "0px 0px -70% 0px", threshold: 0 }
     );
-    if (centerTab !== "settings") return;
     cardRefs.current.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [sections, centerTab]);
+  }, [sections]);
 
   function jumpTo(id: string) { setActiveId(id); isJumping.current = true; cardRefs.current.get(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); window.setTimeout(() => { isJumping.current = false; }, 600); }
-  function updateSub(updated: Subsection) { setSections((prev) => prev.map((sec) => ({ ...sec, subsections: sec.subsections.map((s) => s.id === updated.id ? updated : s) }))); }
+  function queueChanges(...ids: string[]) {
+    setQueuedChangeIds((current) => {
+      const next = new Set(current);
+      ids.forEach((id) => next.add(id));
+      return next;
+    });
+  }
+
+  function handlePreviewSourceChange(sourceId: string) {
+    if (previewRefreshTimer.current !== null) window.clearTimeout(previewRefreshTimer.current);
+    setQueuedChangeIds(new Set());
+    setIsPreviewLoading(true);
+    previewRefreshTimer.current = window.setTimeout(() => {
+      setPreviewSourceId(sourceId);
+      setIsPreviewLoading(false);
+      previewRefreshTimer.current = null;
+    }, 700);
+  }
+
+  function updateSub(updated: Subsection) {
+    const current = sections.flatMap((section) => section.subsections).find((subsection) => subsection.id === updated.id);
+    if (current) {
+      const changedFields = [
+        current.templateInstruction !== updated.templateInstruction ? `${updated.id}:instruction` : null,
+        current.customFormatting !== updated.customFormatting ? `${updated.id}:formatting` : null,
+        current.emptyState !== updated.emptyState ? `${updated.id}:empty-state` : null,
+      ].filter((id): id is string => id !== null);
+      if (changedFields.length > 0) queueChanges(...changedFields);
+    }
+    setSections((prev) => prev.map((sec) => ({ ...sec, subsections: sec.subsections.map((s) => s.id === updated.id ? updated : s) })));
+  }
   function deleteSub(sectionId: string, id: string) { setSections((prev) => prev.map((sec) => sec.id === sectionId ? { ...sec, subsections: sec.subsections.filter((s) => s.id !== id) } : sec)); }
-  function addSub(sectionId: string) { const sub = newSubsection(); setSections((prev) => prev.map((sec) => sec.id === sectionId ? { ...sec, subsections: [...sec.subsections, sub] } : sec)); window.setTimeout(() => jumpTo(sub.id), 50); }
+  function addSub(sectionId: string) {
+    const sub = newSubsection();
+    queueChanges(`new-subsection:${sub.id}`);
+    setSections((prev) => prev.map((sec) => sec.id === sectionId ? { ...sec, subsections: [...sec.subsections, sub] } : sec));
+    window.setTimeout(() => jumpTo(sub.id), 50);
+  }
 
   function handleDrop(sectionId: string, toIdx: number) {
-    if (!drag || drag.sectionId !== sectionId) { setDrag(null); setDragOver(null); return; }
-    setSections((prev) => prev.map((sec) => {
-      if (sec.id !== sectionId) return sec;
-      const items = [...sec.subsections];
-      const [moved] = items.splice(drag.index, 1);
-      items.splice(toIdx, 0, moved);
-      return { ...sec, subsections: items };
-    }));
+    if (!drag) { setDragOver(null); return; }
+    setSections((prev) => {
+      let moved: Subsection | undefined;
+      const withoutMoved = prev.map((sec) => {
+        if (sec.id !== drag.sectionId) return sec;
+        const subsections = [...sec.subsections];
+        [moved] = subsections.splice(drag.index, 1);
+        return { ...sec, subsections };
+      });
+      if (!moved) return prev;
+      return withoutMoved.map((sec) => {
+        if (sec.id !== sectionId) return sec;
+        const subsections = [...sec.subsections];
+        subsections.splice(toIdx, 0, moved!);
+        return { ...sec, subsections };
+      });
+    });
     setDrag(null); setDragOver(null);
   }
 
   return (
     <div className="flex h-full overflow-hidden">
       <div className="flex-1 min-w-0 flex flex-col">
-        <div className="shrink-0 h-[56px] flex items-center pl-[16px] pr-[24px]">
-          <div className="flex-1 min-w-0">
-            <EditableTitle value={templateName} onChange={setTemplateName} size="lg" />
-          </div>
-          {showAssistant && <div className="shrink-0 ml-[24px]"><ButtonGroup size="small" value={centerTab} onChange={setCenterTab} items={[{ label: "Settings", value: "settings" }, { label: "Assistant", value: "assistant" }]} /></div>}
+        <div className="shrink-0 h-[56px] flex items-center gap-[24px] pl-[16px] pr-[24px]">
+          <EditableTitle value={templateName} onChange={setTemplateName} size="lg" />
         </div>
         <div className="flex-1 min-h-0 flex">
-          {(!showAssistant || centerTab === "settings") ? (
-            <>
-              <div className="w-[200px] shrink-0 h-full overflow-y-auto py-[8px]">
+          <>
+            <div className="w-[200px] shrink-0 h-full overflow-y-auto py-[8px]">
                 {sections.map((sec) => (
                   <div key={sec.id} className="mb-[8px]">
-                    <div className="px-[16px] h-[28px] flex items-center">
+                    <div
+                      className="px-[16px] h-[28px] flex items-center"
+                      onDragOver={(e) => { if (drag && sec.subsections.length === 0) { e.preventDefault(); setDragOver({ sectionId: sec.id, index: 0 }); } }}
+                      onDrop={() => { if (sec.subsections.length === 0) handleDrop(sec.id, 0); }}
+                    >
                       <span className="t-title-xs text-[var(--foreground-secondary,#666)]">{sec.name}</span>
                     </div>
-                    <div className="px-[8px] flex flex-col gap-[2px]">
+                    <div className="relative px-[8px] flex flex-col gap-[2px]">
                       {sec.subsections.map((sub, idx) => {
-                        const showDropLine = !!dragOver && dragOver.sectionId === sec.id && dragOver.index === idx && !!drag && drag.index !== idx;
+                        const showDropLine = !!dragOver && dragOver.sectionId === sec.id && dragOver.index === idx && !!drag && (drag.sectionId !== sec.id || drag.index !== idx);
                         return (
                           <div key={sub.id} className="relative">
                             {showDropLine && <div className="absolute -top-[1px] left-[4px] right-[4px] h-[2px] rounded-full bg-[var(--accent,#1132ee)] z-10" />}
                             <OutlineRow sub={sub} active={sub.id === activeId} isDragOver={false} onJump={() => jumpTo(sub.id)}
                               onDragStart={() => setDrag({ sectionId: sec.id, index: idx })}
                               onDragOver={(e) => { e.preventDefault(); setDragOver({ sectionId: sec.id, index: idx }); }}
-                              onDrop={() => handleDrop(sec.id, idx)} />
+                              onDrop={() => handleDrop(sec.id, idx)}
+                              onDragEnd={() => { setDrag(null); setDragOver(null); }} />
                           </div>
                         );
                       })}
+                      {sec.subsections.length === 0 && drag && dragOver?.sectionId === sec.id && (
+                        <div
+                          className="absolute -top-[4px] left-[12px] right-[12px] h-[8px] z-10 flex items-center"
+                          onDragOver={(e) => { e.preventDefault(); setDragOver({ sectionId: sec.id, index: 0 }); }}
+                          onDrop={() => handleDrop(sec.id, 0)}
+                        >
+                          <div className="w-full h-[2px] rounded-full bg-[var(--accent,#1132ee)]" />
+                        </div>
+                      )}
                       {mode === "my" && (
-                        <button onClick={() => addSub(sec.id)} className="w-full flex items-center gap-[8px] h-[30px] pl-[8px] rounded-[8px] text-left text-[var(--accent,#1132ee)] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors">
-                          <Icon name="add" size={14} />
-                          <span className="t-title-sm">Add subsection</span>
-                        </button>
+                        <div
+                          className="relative"
+                          onDragOver={(e) => { if (drag && sec.subsections.length > 0) { e.preventDefault(); setDragOver({ sectionId: sec.id, index: sec.subsections.length }); } }}
+                          onDrop={() => { if (sec.subsections.length > 0) handleDrop(sec.id, sec.subsections.length); }}
+                        >
+                          {drag && sec.subsections.length > 0 && dragOver?.sectionId === sec.id && dragOver.index === sec.subsections.length && (drag.sectionId !== sec.id || drag.index !== sec.subsections.length - 1) && (
+                            <div className="absolute -top-[4px] left-[4px] right-[4px] h-[8px] z-10 flex items-center">
+                              <div className="w-full h-[2px] rounded-full bg-[var(--accent,#1132ee)]" />
+                            </div>
+                          )}
+                          <button onClick={() => addSub(sec.id)} className="w-full flex items-center gap-[8px] h-[30px] pl-[8px] rounded-[8px] text-left text-[var(--accent,#1132ee)] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors">
+                            <Icon name="add" size={14} />
+                            <span className="t-title-sm">Add subsection</span>
+                          </button>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -1129,7 +1211,6 @@ export function R3TableView({ mode, includeVariant = "table", showAssistant = tr
                       </div>
                       {sec.subsections.map((sub) => (
                         <SubsectionCard key={sub.id} mode={mode} sub={sub} onChange={updateSub} onDelete={() => deleteSub(sec.id, sub.id)}
-                          includeVariant={includeVariant}
                           registerRef={(el) => { if (el) cardRefs.current.set(sub.id, el); else cardRefs.current.delete(sub.id); }} />
                       ))}
                       {mode === "my" && (
@@ -1140,12 +1221,29 @@ export function R3TableView({ mode, includeVariant = "table", showAssistant = tr
                 </div>
               </div>
             </>
-          ) : (
-            <AssistantContent />
-          )}
         </div>
       </div>
-      <PreviewSidebar sections={sections} width={previewWidth} onResizeStart={startResize} />
+      <PreviewSidebar
+        sections={sections}
+        width={previewWidth}
+        queuedChangeCount={queuedChangeIds.size}
+        previewSourceId={previewSourceId}
+        isPreviewLoading={isPreviewLoading}
+        onRefresh={() => handlePreviewSourceChange(previewSourceId)}
+        onSourceChange={handlePreviewSourceChange}
+        onResizeStart={startResize}
+      />
     </div>
+  );
+}
+
+export default function MVPStickyRefresh() {
+  const [activeSection, setActiveSection] = useState<NavSection>("my-templates");
+  const [selectedTemplate, setSelectedTemplate] = useState("soap-note");
+  return (
+    <CustomizeLayout activeSection={activeSection} selectedTemplate={selectedTemplate}
+      onSectionChange={setActiveSection} onTemplateChange={setSelectedTemplate}>
+      <MVPView mode={activeSection === "my-templates" ? "my" : "shared"} selectedTemplate={selectedTemplate} />
+    </CustomizeLayout>
   );
 }
