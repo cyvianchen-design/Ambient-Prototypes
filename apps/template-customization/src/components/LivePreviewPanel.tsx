@@ -24,12 +24,29 @@ const PREVIEW_BODY: Record<string, React.ReactNode> = {
   "mdm-main": <p>67-year-old male with clinical picture concerning for acute coronary syndrome. Serial troponins and ECGs ordered; started on aspirin and heparin per protocol. Cardiology consulted. Monitoring on telemetry.</p>,
 };
 
-function bodyFor(sub: { id: string; templateInstruction: string }): React.ReactNode {
+const SCRIBE_PREVIEW_SUMMARIES: Record<string, string> = {
+  "scribe-1": "The patient presents with acute substernal chest pressure beginning this afternoon, associated with mild shortness of breath and diaphoresis. Symptoms improve with rest. Denies syncope, fever, or pleuritic pain.",
+  "scribe-2": "The patient returns for follow-up and reports overall improvement since the previous visit. Medications are well tolerated, with no new adverse effects or acute concerns.",
+  "scribe-3": "The patient presents with worsening shortness of breath over three days, most noticeable with exertion. Reports intermittent dry cough and fatigue. Denies chest pain or lower-extremity swelling.",
+  "scribe-4": "The patient presents with intermittent lower abdominal discomfort beginning yesterday. Reports decreased appetite without vomiting, fever, or urinary symptoms.",
+  "scribe-5": "The patient presents for medication review. Current medications, adherence, and potential side effects were discussed, with no urgent concerns identified.",
+  "scribe-6": "The patient presents for an annual wellness visit. Preventive screenings, immunizations, functional status, and health maintenance priorities were reviewed.",
+  "scribe-7": "The patient reports recurrent headaches over the past week without focal neurologic symptoms, vision loss, fever, or recent trauma.",
+  "scribe-8": "The patient returns for postoperative follow-up and reports expected improvement in pain and mobility. Denies fever, drainage, or other wound concerns.",
+  "scribe-9": "The patient presents with lower back pain after increased activity. Pain is worse with movement and without weakness, numbness, or bowel or bladder changes.",
+  "scribe-10": "The patient presents for diabetes follow-up. Home glucose trends, medication adherence, nutrition, and activity goals were reviewed.",
+  "scribe-11": "The patient presents with a persistent cough and congestion. Denies significant dyspnea, chest pain, hemoptysis, or prolonged fever.",
+  "scribe-12": "The patient presents to review recent laboratory results. Findings and recommended follow-up were discussed, with no acute symptoms reported.",
+};
+
+function bodyFor(sub: { id: string; templateInstruction: string }, previewSourceId: string): React.ReactNode {
+  const scribeSummary = SCRIBE_PREVIEW_SUMMARIES[previewSourceId];
+  if (scribeSummary && sub.id === "summary") return <p>{scribeSummary}</p>;
   return PREVIEW_BODY[sub.id] ?? <p className="italic text-[#6b7280]">{sub.templateInstruction || "Generated content will appear here."}</p>;
 }
 
 // State-driven preview: reflects subsection order, Title toggle, and disabled status.
-export function DynamicPreviewSections({ sections }: { sections: TemplateSection[] }) {
+export function DynamicPreviewSections({ sections, previewSourceId = "example" }: { sections: TemplateSection[]; previewSourceId?: string }) {
   return (
     <div className="flex flex-col gap-[16px]" style={{ fontFamily: "Lato, sans-serif" }}>
       {sections.map((sec) => {
@@ -42,7 +59,7 @@ export function DynamicPreviewSections({ sections }: { sections: TemplateSection
               {visible.map((sub) => (
                 <div key={sub.id}>
                   {sub.showTitle && <p className="t-body-md mb-[2px]">{sub.name}</p>}
-                  {bodyFor(sub)}
+                  {bodyFor(sub, previewSourceId)}
                 </div>
               ))}
             </div>

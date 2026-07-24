@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Checkbox, Chip, EditableTitle, SelectChip, Icon, IconButton, Menu, MenuHeader, MenuItem, SpotMenuItem, Switch, Table, TextArea } from "@ds/ui";
+import { Button, Checkbox, Chip, EditableTitle, SelectChip, Icon, IconButton, Menu, MenuHeader, MenuItem, MenuSearch, SpotMenuItem, Switch, Table, TextArea } from "@ds/ui";
 import type { TableColumn } from "@ds/ui";
 import { CustomizeLayout, NavSection } from "../components/CustomizeLayout";
-import { SelectDropdown } from "../components/SelectDropdown";
 import { DynamicPreviewSections } from "../components/LivePreviewPanel";
 import {
-  FORMAT_OPTIONS,
   INITIAL_SECTIONS,
   LENGTH_OPTIONS,
   MacroItem,
@@ -24,17 +22,34 @@ const STATUS_STYLES: Record<SubsectionStatus, { dot: string; label: string }> = 
   disabled: { dot: "bg-[#999]", label: "Disabled" },
 };
 
+const MVP_FORMAT_OPTIONS = [
+  { value: "Auto", label: "Auto format", description: "AI chooses the best format and grouping.", icon: "format_paint" },
+  { value: "Paragraph", label: "Paragraph", description: "Narrative style with full sentences.", icon: "subject" },
+  { value: "Numbers by Diagnosis", label: "Numbers by Diagnosis", description: "Numbered findings grouped by diagnosis.", icon: "format_list_numbered" },
+  { value: "Bullets by Diagnosis", label: "Bullets by Diagnosis", description: "Bulleted findings grouped by diagnosis.", icon: "format_list_bulleted" },
+  { value: "Bullets by Body Systems", label: "Bullets by Body Systems", description: "Bulleted findings grouped by body system.", icon: "format_list_bulleted" },
+  { value: "Bullets", label: "Flat Bullets", description: "A single ungrouped list of findings.", icon: "format_list_bulleted" },
+];
+
+const TEMPLATE_NAMES: Record<string, string> = {
+  "soap-note": "SOAP Note",
+  "progress-note": "Progress Note",
+  "initial-eval": "Initial Evaluation",
+  "annual-wellness": "Annual Wellness Exam",
+  "new-template": "New Template",
+};
+
 function OutlineRow({
-  sub, active, isDragOver, onJump, onDragStart, onDragOver, onDrop,
+  sub, active, isDragOver, onJump, onDragStart, onDragOver, onDrop, onDragEnd,
 }: {
   sub: Subsection; active: boolean; isDragOver: boolean;
   onJump: () => void; onDragStart: () => void;
-  onDragOver: (e: React.DragEvent) => void; onDrop: () => void;
+  onDragOver: (e: React.DragEvent) => void; onDrop: () => void; onDragEnd: () => void;
 }) {
   const s = STATUS_STYLES[sub.status];
   return (
     <button
-      draggable onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop} onDragEnd={onDrop} onClick={onJump}
+      draggable onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop} onDragEnd={onDragEnd} onClick={onJump}
       className={`group w-full flex items-center gap-[8px] h-[34px] pl-[8px] pr-[12px] rounded-[8px] text-left transition-colors ${active ? "bg-[var(--litmus-25,#f1f3fe)]" : "hover:bg-[var(--surface-1,#f7f7f7)]"}`}
     >
       <span className="shrink-0 text-[#ccc] group-hover:text-[#999] cursor-grab active:cursor-grabbing flex items-center"><Icon name="drag_indicator" size={14} /></span>
@@ -715,14 +730,13 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
   const [chipFormatOpen, setChipFormatOpen] = useState(false);
   const [chipLengthOpen, setChipLengthOpen] = useState(false);
   const [chipWhenEmptyOpen, setChipWhenEmptyOpen] = useState(false);
-  const [groupBy, setGroupBy] = useState<string | null>(null);
-  const [chipGroupByOpen, setChipGroupByOpen] = useState(false);
   const defaultSub = useRef<Subsection>(sub);
   function update(p: Partial<Subsection>) { onChange({ ...sub, ...p }); }
   const subsectionFields: (keyof Subsection)[] = ["name", "showTitle", "status", "generateWhen", "emptyState", "templateInstruction", "format", "length", "customFormatting"];
   const hasChanges = subsectionFields.some((k) => sub[k] !== defaultSub.current[k]);
   const whenEmpty = sub.generateWhen ?? "hide";
   const enabled = sub.status !== "disabled";
+  const formatLabel = MVP_FORMAT_OPTIONS.find((option) => option.value === sub.format)?.label ?? sub.format;
 
   return (
     <div ref={registerRef} data-subid={sub.id} className="scroll-mt-[16px] border border-[rgba(0,0,0,0.1)] rounded-[10px] pt-[8px] px-[16px] pb-[16px] flex flex-col gap-[16px]">
@@ -739,7 +753,7 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
       <div className={`flex flex-col gap-[16px]${!enabled ? " opacity-50" : ""}`}>
 
         {/* ── Instruction ── */}
-        <div className="flex flex-col gap-[10px] -mt-[8px]">
+        <div className={`flex flex-col gap-[4px] ${mode === "shared" ? "-mt-[14px]" : "-mt-[8px]"}${mode === "shared" && !showInstructions ? " -mb-[8px]" : ""}`}>
           <div className="flex items-center justify-between">
             <p className="t-title-sm text-[var(--foreground-secondary,#666)]">Instruction <span className="t-body-xs font-normal ml-[8px]">What this subsection should cover.</span></p>
             {mode === "shared" && (
@@ -750,7 +764,7 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
           </div>
           {mode === "shared" ? (
             showInstructions && (
-              <p className="t-body-sm text-[var(--foreground-secondary,#666)] leading-[1.5]">{sub.templateInstruction || "No template instruction provided."}</p>
+              <p className="t-body-sm text-[var(--foreground-secondary,#666)] leading-[1.5] -mt-[4px]">{sub.templateInstruction || "No template instruction provided."}</p>
             )
           ) : (
             <TextArea value={sub.templateInstruction} onChange={(v) => update({ templateInstruction: v })} rows={4} placeholder="Describe what this subsection should capture…" />
@@ -759,9 +773,9 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
 
         {/* ── Patient context ── */}
         <div className="h-px bg-[rgba(0,0,0,0.1)]" />
-        <div className="flex flex-col gap-[10px]">
+        <div className="flex flex-col gap-[8px]">
           <p className="t-title-sm text-[var(--foreground-secondary,#666)]">Patient context <span className="t-body-xs font-normal ml-[8px]">Where to pull information from, beyond the recording.</span></p>
-          <IncludeInlineChips mode={mode} initialItems={SUBSECTION_INCLUDE_DEFAULTS[sub.name] ?? []} labelStyle="body" />
+          <IncludeInlineChips mode="my" initialItems={SUBSECTION_INCLUDE_DEFAULTS[sub.name] ?? []} labelStyle="body" />
         </div>
 
         {/* ── Formatting ── */}
@@ -769,13 +783,13 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
         <div className="flex flex-col gap-[12px]">
           <p className="t-title-sm text-[var(--foreground-secondary,#666)]">Formatting <span className="t-body-xs font-normal ml-[8px]">How Ambient should write this section.</span></p>
 
-          <div className="flex items-center flex-wrap gap-[6px]">
+          <div className="flex items-center flex-wrap gap-[8px]">
             <SelectChip size="S" color="accent" label={sub.showTitle ? "Show title" : "Hide title"} selected={sub.showTitle} onChange={(v) => update({ showTitle: v })} />
 
             <div className="relative">
               <SelectChip
                 size="S" color="accent"
-                label={sub.format === "Auto" ? "Auto format" : sub.format}
+                label={formatLabel}
                 selected={sub.format !== "Auto"}
                 chevronWhenSelected
                 onChange={() => setChipFormatOpen((o) => !o)}
@@ -785,7 +799,7 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
                   <div className="fixed inset-0 z-[9]" onClick={() => setChipFormatOpen(false)} />
                   <div className="absolute top-full left-0 mt-[4px] z-10" onClick={(e) => e.stopPropagation()}>
                     <Menu className="w-[380px]">
-                      {FORMAT_OPTIONS.map((o) => (
+                      {MVP_FORMAT_OPTIONS.map((o) => (
                         <SpotMenuItem
                           key={o.value}
                           icon={o.icon}
@@ -798,23 +812,6 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
                     </Menu>
                   </div>
                 </>
-              )}
-            </div>
-
-            <div className="relative">
-              <SelectChip
-                size="S" color="accent"
-                label={groupBy ?? "Auto grouping"}
-                selected={groupBy !== null}
-                chevronWhenSelected
-                onChange={() => setChipGroupByOpen((o) => !o)}
-              />
-              {chipGroupByOpen && (
-                <SegmentMenu
-                  options={["Auto grouping", "By diagnosis", "By body system", "By date"] as any}
-                  selected={groupBy ?? "Auto grouping"}
-                  onSelect={(v: string) => { setGroupBy(v === "Auto grouping" ? null : v); setChipGroupByOpen(false); }}
-                  onClose={() => setChipGroupByOpen(false)} />
               )}
             </div>
 
@@ -839,13 +836,13 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
           </div>
 
           {whenEmpty === "show" && mode === "my" && (
-            <div className="flex flex-col gap-[6px]">
+            <div className="flex flex-col gap-[8px]">
               <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Empty state</span>
               <p className="t-body-xs text-[var(--foreground-secondary,#666)]">What to show when there's no relevant content to pull from.</p>
               <TextArea value={sub.emptyState ?? ""} onChange={(v) => update({ emptyState: v })} rows={2} maxRows={4} placeholder="e.g. No significant findings documented." />
             </div>
           )}
-          <div className="flex flex-col gap-[6px] pt-[4px]">
+          <div className="flex flex-col gap-[8px] pt-[4px]">
             <p className="t-body-xs text-[var(--foreground-secondary,#666)]">Other specific formatting preferences and instructions</p>
             <TextArea value={sub.customFormatting} onChange={(v) => update({ customFormatting: v })} rows={3} maxRows={6} placeholder="e.g. bold abnormal values, group by laterality…" />
           </div>
@@ -871,14 +868,118 @@ function SubsectionCard({ mode, sub, onChange, onDelete, registerRef }: {
 }
 
 
-function PreviewSidebar({ sections, width, onResizeStart }: { sections: TemplateSection[]; width: number; onResizeStart: (e: React.MouseEvent) => void }) {
+const SAMPLE_PREVIEW_SOURCES = [
+  { id: "example", label: "Example patient" },
+  { id: "scribe-1", label: "Alex Morgan", description: "Today at 1:42 PM · Chest pain" },
+  { id: "scribe-2", label: "Jordan Lee", description: "Today at 11:18 AM · Follow-up" },
+  { id: "scribe-3", label: "Taylor Reed", description: "Today at 9:06 AM · Shortness of breath" },
+  { id: "scribe-4", label: "Casey Rivera", description: "Yesterday at 4:32 PM · Abdominal pain" },
+  { id: "scribe-5", label: "Riley Chen", description: "Yesterday at 2:15 PM · Medication review" },
+  { id: "scribe-6", label: "Cameron Ellis", description: "Yesterday at 10:48 AM · Annual wellness visit" },
+  { id: "scribe-7", label: "Morgan Blake", description: "Monday at 3:20 PM · Headache" },
+  { id: "scribe-8", label: "Jamie Brooks", description: "Monday at 1:05 PM · Post-op follow-up" },
+  { id: "scribe-9", label: "Avery Patel", description: "Monday at 9:36 AM · Back pain" },
+  { id: "scribe-10", label: "Quinn Harper", description: "Friday at 4:10 PM · Diabetes follow-up" },
+  { id: "scribe-11", label: "Parker James", description: "Friday at 11:22 AM · Cough" },
+  { id: "scribe-12", label: "Drew Sullivan", description: "Thursday at 2:54 PM · Lab review" },
+];
+
+function PreviewSourceDropdown() {
+  const [selectedId, setSelectedId] = useState("example");
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [visibleCount, setVisibleCount] = useState(6);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const selected = SAMPLE_PREVIEW_SOURCES.find((source) => source.id === selectedId) ?? SAMPLE_PREVIEW_SOURCES[0];
+  const normalizedQuery = query.trim().toLowerCase();
+  const allScribes = SAMPLE_PREVIEW_SOURCES.slice(1);
+  const matchingScribes = allScribes.filter((source) =>
+    `${source.label} ${source.description}`.toLowerCase().includes(normalizedQuery)
+  );
+  const displayedScribes = normalizedQuery ? matchingScribes : matchingScribes.slice(0, visibleCount);
+
+  function closeMenu() {
+    setOpen(false);
+    setQuery("");
+    setVisibleCount(6);
+  }
+
+  function selectSource(id: string) {
+    setSelectedId(id);
+    closeMenu();
+  }
+
+  function handleResultsScroll(event: React.UIEvent<HTMLDivElement>) {
+    if (normalizedQuery) return;
+    const list = event.currentTarget;
+    if (list.scrollHeight - list.scrollTop - list.clientHeight < 24) {
+      setVisibleCount((count) => Math.min(count + 5, allScribes.length));
+    }
+  }
+
+  useEffect(() => {
+    if (!open) return;
+    function handleOutsideClick(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) closeMenu();
+    }
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [open]);
+
+  return (
+    <div ref={containerRef} className="relative">
+      <SelectChip
+        size="S"
+        color="accent"
+        label={selected.label}
+        selected={selectedId !== "example"}
+        chevronWhenSelected
+        onChange={() => open ? closeMenu() : setOpen(true)}
+      />
+      {open && (
+        <div className="absolute right-0 top-full mt-[4px] z-[100]">
+          <Menu className="w-[260px]">
+            <MenuSearch value={query} onChange={setQuery} onClose={closeMenu} placeholder="Search scribes…" />
+            <MenuItem
+              label="Example patient"
+              selected={selectedId === "example"}
+              onClick={() => selectSource("example")}
+            />
+            <MenuHeader>Recent scribes</MenuHeader>
+            <div className="max-h-[220px] overflow-y-auto" onScroll={handleResultsScroll}>
+              {displayedScribes.map((source) => (
+                <MenuItem
+                  key={source.id}
+                  label={source.label}
+                  description={source.description}
+                  selected={source.id === selectedId}
+                  onClick={() => selectSource(source.id)}
+                />
+              ))}
+              {displayedScribes.length === 0 && (
+                <p className="t-body-sm text-[var(--foreground-secondary,#666)] px-[8px] py-[8px]">No scribes found</p>
+              )}
+            </div>
+          </Menu>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PreviewSidebar({ sections, width, onResizeStart }: {
+  sections: TemplateSection[];
+  width: number;
+  onResizeStart: (e: React.MouseEvent) => void;
+}) {
   return (
     <div className="relative shrink-0 h-full bg-white border-l border-[var(--shape-outline,rgba(0,0,0,0.1))] flex flex-col" style={{ width }}>
       <div onMouseDown={onResizeStart} className="group absolute left-0 top-0 h-full w-[20px] -ml-[10px] cursor-col-resize z-10 flex items-center justify-center">
         <div className="h-[40px] w-[3px] rounded-full bg-transparent group-hover:bg-[rgba(0,0,0,0.2)] transition-colors" />
       </div>
-      <div className="shrink-0 h-[56px] flex items-center px-[24px]">
+      <div className="shrink-0 h-[56px] flex items-center justify-between gap-[12px] px-[24px]">
         <span className="t-title-sm text-[var(--foreground-secondary,#666)]">Preview</span>
+        <PreviewSourceDropdown />
       </div>
       <div className="flex-1 min-h-0 overflow-y-auto px-[24px] pb-[24px]">
         <DynamicPreviewSections sections={sections} />
@@ -890,7 +991,7 @@ function PreviewSidebar({ sections, width, onResizeStart }: { sections: Template
   );
 }
 
-function MVPView({ mode }: { mode: Mode }) {
+function MVPView({ mode, selectedTemplate }: { mode: Mode; selectedTemplate: string }) {
   const [templateName, setTemplateName] = useState("SOAP Note");
   const [sections, setSections] = useState<TemplateSection[]>(INITIAL_SECTIONS);
   const [activeId, setActiveId] = useState<string>(INITIAL_SECTIONS[0].subsections[0].id);
@@ -901,6 +1002,20 @@ function MVPView({ mode }: { mode: Mode }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
   const isJumping = useRef(false);
+
+  useEffect(() => {
+    const nextSections = selectedTemplate === "new-template"
+      ? [
+          { id: "hpi", name: "HPI", subsections: [] },
+          { id: "ros", name: "ROS", subsections: [] },
+          { id: "pe", name: "PE", subsections: [] },
+          { id: "assessment-plan", name: "A&P", subsections: [] },
+        ]
+      : INITIAL_SECTIONS;
+    setTemplateName(TEMPLATE_NAMES[selectedTemplate] ?? "SOAP Note");
+    setSections(nextSections);
+    setActiveId(nextSections[0]?.subsections[0]?.id ?? "");
+  }, [selectedTemplate]);
 
   useEffect(() => {
     function move(e: MouseEvent) { if (!resizing.current) return; setPreviewWidth(Math.min(720, Math.max(320, window.innerWidth - e.clientX))); }
@@ -928,19 +1043,34 @@ function MVPView({ mode }: { mode: Mode }) {
   }, [sections]);
 
   function jumpTo(id: string) { setActiveId(id); isJumping.current = true; cardRefs.current.get(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); window.setTimeout(() => { isJumping.current = false; }, 600); }
-  function updateSub(updated: Subsection) { setSections((prev) => prev.map((sec) => ({ ...sec, subsections: sec.subsections.map((s) => s.id === updated.id ? updated : s) }))); }
+  function updateSub(updated: Subsection) {
+    setSections((prev) => prev.map((sec) => ({ ...sec, subsections: sec.subsections.map((s) => s.id === updated.id ? updated : s) })));
+  }
   function deleteSub(sectionId: string, id: string) { setSections((prev) => prev.map((sec) => sec.id === sectionId ? { ...sec, subsections: sec.subsections.filter((s) => s.id !== id) } : sec)); }
-  function addSub(sectionId: string) { const sub = newSubsection(); setSections((prev) => prev.map((sec) => sec.id === sectionId ? { ...sec, subsections: [...sec.subsections, sub] } : sec)); window.setTimeout(() => jumpTo(sub.id), 50); }
+  function addSub(sectionId: string) {
+    const sub = newSubsection();
+    setSections((prev) => prev.map((sec) => sec.id === sectionId ? { ...sec, subsections: [...sec.subsections, sub] } : sec));
+    window.setTimeout(() => jumpTo(sub.id), 50);
+  }
 
   function handleDrop(sectionId: string, toIdx: number) {
-    if (!drag || drag.sectionId !== sectionId) { setDrag(null); setDragOver(null); return; }
-    setSections((prev) => prev.map((sec) => {
-      if (sec.id !== sectionId) return sec;
-      const items = [...sec.subsections];
-      const [moved] = items.splice(drag.index, 1);
-      items.splice(toIdx, 0, moved);
-      return { ...sec, subsections: items };
-    }));
+    if (!drag) { setDragOver(null); return; }
+    setSections((prev) => {
+      let moved: Subsection | undefined;
+      const withoutMoved = prev.map((sec) => {
+        if (sec.id !== drag.sectionId) return sec;
+        const subsections = [...sec.subsections];
+        [moved] = subsections.splice(drag.index, 1);
+        return { ...sec, subsections };
+      });
+      if (!moved) return prev;
+      return withoutMoved.map((sec) => {
+        if (sec.id !== sectionId) return sec;
+        const subsections = [...sec.subsections];
+        subsections.splice(toIdx, 0, moved!);
+        return { ...sec, subsections };
+      });
+    });
     setDrag(null); setDragOver(null);
   }
 
@@ -955,27 +1085,52 @@ function MVPView({ mode }: { mode: Mode }) {
             <div className="w-[200px] shrink-0 h-full overflow-y-auto py-[8px]">
                 {sections.map((sec) => (
                   <div key={sec.id} className="mb-[8px]">
-                    <div className="px-[16px] h-[28px] flex items-center">
+                    <div
+                      className="px-[16px] h-[28px] flex items-center"
+                      onDragOver={(e) => { if (drag && sec.subsections.length === 0) { e.preventDefault(); setDragOver({ sectionId: sec.id, index: 0 }); } }}
+                      onDrop={() => { if (sec.subsections.length === 0) handleDrop(sec.id, 0); }}
+                    >
                       <span className="t-title-xs text-[var(--foreground-secondary,#666)]">{sec.name}</span>
                     </div>
-                    <div className="px-[8px] flex flex-col gap-[2px]">
+                    <div className="relative px-[8px] flex flex-col gap-[2px]">
                       {sec.subsections.map((sub, idx) => {
-                        const showDropLine = !!dragOver && dragOver.sectionId === sec.id && dragOver.index === idx && !!drag && drag.index !== idx;
+                        const showDropLine = !!dragOver && dragOver.sectionId === sec.id && dragOver.index === idx && !!drag && (drag.sectionId !== sec.id || drag.index !== idx);
                         return (
                           <div key={sub.id} className="relative">
                             {showDropLine && <div className="absolute -top-[1px] left-[4px] right-[4px] h-[2px] rounded-full bg-[var(--accent,#1132ee)] z-10" />}
                             <OutlineRow sub={sub} active={sub.id === activeId} isDragOver={false} onJump={() => jumpTo(sub.id)}
                               onDragStart={() => setDrag({ sectionId: sec.id, index: idx })}
                               onDragOver={(e) => { e.preventDefault(); setDragOver({ sectionId: sec.id, index: idx }); }}
-                              onDrop={() => handleDrop(sec.id, idx)} />
+                              onDrop={() => handleDrop(sec.id, idx)}
+                              onDragEnd={() => { setDrag(null); setDragOver(null); }} />
                           </div>
                         );
                       })}
+                      {sec.subsections.length === 0 && drag && dragOver?.sectionId === sec.id && (
+                        <div
+                          className="absolute -top-[4px] left-[12px] right-[12px] h-[8px] z-10 flex items-center"
+                          onDragOver={(e) => { e.preventDefault(); setDragOver({ sectionId: sec.id, index: 0 }); }}
+                          onDrop={() => handleDrop(sec.id, 0)}
+                        >
+                          <div className="w-full h-[2px] rounded-full bg-[var(--accent,#1132ee)]" />
+                        </div>
+                      )}
                       {mode === "my" && (
-                        <button onClick={() => addSub(sec.id)} className="w-full flex items-center gap-[8px] h-[30px] pl-[8px] rounded-[8px] text-left text-[var(--accent,#1132ee)] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors">
-                          <Icon name="add" size={14} />
-                          <span className="t-title-sm">Add subsection</span>
-                        </button>
+                        <div
+                          className="relative"
+                          onDragOver={(e) => { if (drag && sec.subsections.length > 0) { e.preventDefault(); setDragOver({ sectionId: sec.id, index: sec.subsections.length }); } }}
+                          onDrop={() => { if (sec.subsections.length > 0) handleDrop(sec.id, sec.subsections.length); }}
+                        >
+                          {drag && sec.subsections.length > 0 && dragOver?.sectionId === sec.id && dragOver.index === sec.subsections.length && (drag.sectionId !== sec.id || drag.index !== sec.subsections.length - 1) && (
+                            <div className="absolute -top-[4px] left-[4px] right-[4px] h-[8px] z-10 flex items-center">
+                              <div className="w-full h-[2px] rounded-full bg-[var(--accent,#1132ee)]" />
+                            </div>
+                          )}
+                          <button onClick={() => addSub(sec.id)} className="w-full flex items-center gap-[8px] h-[30px] pl-[8px] rounded-[8px] text-left text-[var(--accent,#1132ee)] hover:bg-[var(--surface-1,#f7f7f7)] transition-colors">
+                            <Icon name="add" size={14} />
+                            <span className="t-title-sm">Add subsection</span>
+                          </button>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -1002,7 +1157,11 @@ function MVPView({ mode }: { mode: Mode }) {
             </>
         </div>
       </div>
-      <PreviewSidebar sections={sections} width={previewWidth} onResizeStart={startResize} />
+      <PreviewSidebar
+        sections={sections}
+        width={previewWidth}
+        onResizeStart={startResize}
+      />
     </div>
   );
 }
@@ -1013,7 +1172,7 @@ export default function MVPBaseline() {
   return (
     <CustomizeLayout activeSection={activeSection} selectedTemplate={selectedTemplate}
       onSectionChange={setActiveSection} onTemplateChange={setSelectedTemplate}>
-      <MVPView mode={activeSection === "my-templates" ? "my" : "shared"} />
+      <MVPView mode={activeSection === "my-templates" ? "my" : "shared"} selectedTemplate={selectedTemplate} />
     </CustomizeLayout>
   );
 }

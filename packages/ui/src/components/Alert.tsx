@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "./Button";
 
 export type AlertVariant = "neutral" | "info" | "success" | "warning" | "danger";
 
@@ -192,7 +193,7 @@ export function Notification({
 export type SnackbarProps = {
   variant?: AlertVariant;
   message: string;
-  action?: { label: string; onClick: () => void };
+  action?: { label: string; onClick: () => void; prefix?: React.ReactNode };
   onDismiss?: () => void;
   className?: string;
 };
@@ -234,12 +235,15 @@ export function Snackbar({
       </span>
 
       {action && (
-        <button
+        <Button
+          variant="tertiary"
+          size="small"
+          prefix={action.prefix}
           onClick={action.onClick}
-          className="t-title-sm text-[var(--accent,#1132ee)] hover:underline shrink-0 ml-[4px]"
+          className="ml-[4px] !h-[22px] !py-0"
         >
           {action.label}
-        </button>
+        </Button>
       )}
 
       {onDismiss && (
